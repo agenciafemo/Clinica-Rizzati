@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre a clínica | Rizzatti Dermatologia e Saúde</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:ital@0;1&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            --navy: #758899;
+            --navy-dark: #6b7a8a;
+            --bronze: #c8886c;
+            --azure: #d7bea8;
+            --white: #FFFFFF;
+            --gray-light: #efebe8;
+
+            --bege: #e8e0d5;
+            --bege-claro: #f3eee7;
+
+            --font-primary: 'Bodoni Moda', serif;
+            --font-display: 'Playfair Display', serif;
+        }
+
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            color: var(--navy);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: var(--white);
+            padding-top: 80px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        button {
+            font-family: 'Jost', sans-serif;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        /* ===== NAVBAR ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 80px;
+            padding: 0 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(117, 136, 153, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(213, 149, 96, 0.15);
+            box-shadow: 0 4px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo, .nav-menu, .nav-cta, .nav-divider, .hamburger {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: 0.15em;
+        }
+
+        .logo-img {
+            height: 44px;
+            width: auto;
+            display: block;
+            filter: brightness(0) invert(1);
+            opacity: 0.95;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-img:hover {
+            opacity: 1;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            font-family: 'Jost', sans-serif;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.75);
+            position: relative;
+            transition: color 0.3s ease;
+            padding: 4px 0;
+        }
+
+        .nav-menu a:hover {
+            color: rgba(255, 255, 255, 1);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--bronze);
+            transition: width 0.35s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.12);
+            margin: 0 1.5rem;
+        }
+
+        .nav-cta {
+            font-family: 'Jost', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            background: transparent;
+            color: var(--bronze);
+            border: 1px solid rgba(213, 149, 96, 0.5);
+            padding: 10px 24px;
+            cursor: pointer;
+            transition: all 0.35s ease;
+            white-space: nowrap;
+        }
+
+        .nav-cta:hover {
+            background: var(--bronze);
+            color: #758899;
+            border-color: var(--bronze);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 1.5rem;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: var(--navy-dark);
+                padding: 2rem;
+                gap: 1.5rem;
+                border-bottom: 1px solid rgba(213, 149, 96, 0.15);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-divider, .nav-cta {
+                display: none;
+            }
+        }
+
+        /* ===== PAGE CONTENT ===== */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-primary);
+            font-weight: 400;
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--bronze);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Hero Section */
+        .sobre-hero {
+            padding-top: 100px;
+            padding-bottom: 100px;
+            background-color: var(--white);
+        }
+
+        .sobre-hero .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+        }
+
+        /* Moldura de cantos bronze */
+        .hero-image-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -16px;
+            left: -16px;
+            width: 100px;
+            height: 100px;
+            border-top: 2px solid var(--bronze);
+            border-left: 2px solid var(--bronze);
+            z-index: 2;
+        }
+
+        .hero-image-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: -16px;
+            right: -16px;
+            width: 100px;
+            height: 100px;
+            border-bottom: 2px solid var(--bronze);
+            border-right: 2px solid var(--bronze);
+            z-index: 2;
+        }
+
+        .hero-image {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+            border-radius: 4px;
+            display: block;
+        }
+
+        /* Flor decorativa */
+        .historia-flor {
+            margin-top: 40px;
+            width: 60px;
+            opacity: 0.9;
+        }
+
+        .historia-flor img {
+            width: 100%;
+            mix-blend-mode: multiply;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            max-width: 500px;
+            color: #758899;
+        }
+
+        /* Espaço Section */
+        .espaco-section {
+            text-align: center;
+        }
+
+        .espaco-section h2 {
+            font-size: clamp(2.2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+        }
+
+        .espaco-section .subtitle {
+            font-size: 1.1rem;
+            max-width: 650px;
+            margin: 0 auto 4rem auto;
+            color: rgba(56,71,93,0.85);
+        }
+
+        .ambiente-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .ambiente-foto {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            height: 400px;
+            border-radius: 4px;
+        }
+
+        .ambiente-foto img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.7s ease;
+        }
+
+        .ambiente-foto:hover img {
+            transform: scale(1.08);
+        }
+
+        /* Overlay bronze sutil no hover */
+        .ambiente-foto::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(213,149,96,0);
+            transition: background 0.5s ease;
+        }
+
+        .ambiente-foto:hover::after {
+            background: rgba(213,149,96,0.15);
+        }
+
+        /* Fallback para gallery-grid antiga se existir */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        /* Pilares Section */
+        .pilares-section {
+            position: relative;
+            overflow: hidden;
+            background-color: var(--bege-claro);
+            text-align: center;
+        }
+
+        .pilares-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('BACK.png');
+            background-size: 300px;
+            background-repeat: repeat;
+            opacity: 0.04;
+            mix-blend-mode: multiply;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .pilares-section h2 {
+            position: relative;
+            z-index: 1;
+            font-size: clamp(2.2rem, 4vw, 3rem);
+            margin-bottom: 4rem;
+        }
+
+        .pilares-grid {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            text-align: left;
+        }
+
+        .pilar-item {
+            background: var(--white);
+            border: 1px solid rgba(56,71,93,0.08);
+            border-top: 3px solid var(--bronze);
+            padding: 48px 36px;
+            text-align: center;
+            border-radius: 4px;
+            transition: all 0.4s ease;
+        }
+
+        .pilar-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px #38475d;
+        }
+
+        .pilar-icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 28px;
+            border: 1px solid rgba(213,149,96,0.35);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s ease;
+        }
+
+        .pilar-icon svg {
+            width: 32px;
+            height: 32px;
+            transition: transform 0.4s ease;
+        }
+
+        /* Hover: crculo preenche levemente + cone cresce sutil */
+        .pilar-item:hover .pilar-icon {
+            background: rgba(213,149,96,0.1);
+            border-color: var(--bronze);
+        }
+
+        .pilar-item:hover .pilar-icon svg {
+            transform: scale(1.08);
+        }
+
+        .pilar-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #758899;
+        }
+
+        .pilar-item p {
+            font-size: 1rem;
+            color: #758899;
+        }
+
+        /* Segurança geral de contraste em toda a página */
+        body p {
+            color: #758899;
+        }
+
+        /* ===== PAGE CTA ===== */
+        .page-cta {
+            position: relative;
+            overflow: hidden;
+            background: var(--bronze);
+            text-align: center;
+            padding: 80px 2rem;
+        }
+
+        .page-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('BACK.png');
+            background-size: 400px;
+            background-repeat: repeat;
+            opacity: 0.08;
+            mix-blend-mode: multiply;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .page-cta-title {
+            position: relative;
+            z-index: 1;
+            font-family: var(--font-primary);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            color: #FFFFFF;
+            text-shadow: 0 1px 12px rgba(0,0,0,0.12);
+            margin-bottom: 12px;
+        }
+
+        .page-cta-title .italic {
+            font-style: italic;
+            color: #FFFFFF;
+        }
+
+        .page-cta-sub {
+            position: relative;
+            z-index: 1;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 32px;
+        }
+
+        .page-cta-btn {
+            position: relative;
+            z-index: 1;
+            background: #38475d;
+            color: #FFFFFF;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 18px 42px;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 28px rgba(56,71,93,0.3);
+        }
+
+        /* Moldura decorativa ao redor do botão */
+        .page-cta-btn::before {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border: 1px solid rgba(255,255,255,0.5);
+            transition: inset 0.4s ease, border-color 0.4s ease;
+            pointer-events: none;
+        }
+
+        .page-cta-btn:hover {
+            background: #2e3a4a;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 36px rgba(56,71,93,0.45);
+        }
+
+        .page-cta-btn:hover::before {
+            inset: -10px;
+            border-color: rgba(255,255,255,0.8);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            position: relative;
+            overflow: hidden;
+            background: var(--navy-dark);
+            color: var(--white);
+            padding: 60px 6vw;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('BACK.png');
+            background-size: 300px;
+            background-repeat: repeat;
+            background-position: center;
+            opacity: 0.05;
+            mix-blend-mode: screen;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4rem;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(213, 149, 96, 0.15);
+            padding-bottom: 3rem;
+        }
+
+        .footer-col h4 {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--bronze);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-desc {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.75);
+        }
+
+        .footer-logo-img {
+            height: 32px;
+            width: auto;
+            margin-bottom: 1rem;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .footer-menu a {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.75);
+            transition: color 0.3s ease;
+        }
+
+        .footer-menu a:hover {
+            color: var(--bronze);
+        }
+
+        .footer-doctor {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-doctor-name {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--white);
+        }
+
+        .footer-doctor-cred {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .footer-contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .contact-item svg {
+            width: 20px;
+            height: 20px;
+            color: var(--bronze);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+        .footer-copyright {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .footer-dev {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .footer-dev a {
+            color: var(--bronze);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .sobre-hero .grid, .pilares-grid, .ambiente-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-image {
+                height: 400px;
+                order: -1;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 80px;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .sobre-hero {
+                padding-top: 80px;
+                padding-bottom: 80px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav>
+        <div class="logo">
+            <img src="LOGO.png" alt="Rizzatti Dermatologia e Saúde" class="logo-img">
+        </div>
+
+        <ul class="nav-menu">
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="sobre.html">A clínica</a></li>
+            <li><a href="index.html#servicos">Serviços</a></li>
+            <li><a href="index.html#corpo-clinico">Corpo Clínico</a></li>
+            <li><a href="index.html#contato">Contato</a></li>
+        </ul>
+
+        <div class="nav-divider"></div>
+
+        <button class="nav-cta" onclick="window.open('https://wa.me/5548991485818', '_blank')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Agendar Consulta
+        </button>
+
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section class="sobre-hero">
+            <div class="container">
+                <div class="grid">
+                    <div class="hero-content">
+                        <span class="eyebrow">Nossa História</span>
+                        <h1>Tradição e Inovação em Cuidado Dermatológico</h1>
+                        <p>Fundada sobre os pilares da excelência médica e do cuidado humanizado, a clínica Rizzatti nasceu do desejo de oferecer uma experiência dermatológica única. Combinamos a tradição de três gerações de médicos com a mais avançada tecnologia para cuidar da saúde e beleza da sua pele em cada detalhe.</p>
+                        <div class="historia-flor">
+                            <img src="FLOR.png" alt="">
+                        </div>
+                    </div>
+                    <div class="hero-image-wrapper">
+                        <img src="RECEPCAO1.png" alt="recepçãoão da clínica Rizzatti" class="hero-image">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- O ESPAÇO SECTION -->
+        <section class="espaco-section">
+            <div class="container">
+                <h2>Um Ambiente Pensado para o seu Bem-Estar</h2>
+                <p class="subtitle">Cada detalhe da nossa clínica foi projetado para criar uma atmosfera de tranquilidade, sofisticação e conforto, garantindo que sua visita seja uma experiência relaxante e acolhedora.</p>
+                <div class="ambiente-grid">
+                    <div class="ambiente-foto">
+                        <img src="RECEPCAO.png" alt="Detalhe da decoração da clínica">
+                    </div>
+                    <div class="ambiente-foto">
+                        <img src="PROCEDIMENTOS.png" alt="Sala de procedimentos moderna">
+                    </div>
+                    <div class="ambiente-foto">
+                        <img src="RECEPCAO2.png" alt="Ambiente da clínica Rizzatti">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PILARES SECTION -->
+        <section class="pilares-section">
+            <div class="container">
+                <h2>Nossos Pilares</h2>
+                <div class="pilares-grid">
+                    <div class="pilar-item">
+                        <div class="pilar-icon">
+                            <svg viewBox="0 0 32 32" fill="none" stroke="#c8886c" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">
+                                <path d="M16 7 L29 13 L16 19 L3 13 Z"/>
+                                <path d="M9 15.5 V21 C9 21 12 23 16 23 C20 23 23 21 23 21 V15.5"/>
+                                <line x1="29" y1="13" x2="29" y2="19"/>
+                            </svg>
+                        </div>
+                        <h3>Excelência Médica</h3>
+                        <p>Nosso corpo Clínico é formado por especialistas titulados, em constante atualização para oferecer tratamentos baseados nas mais recentes evidências científicas.</p>
+                    </div>
+                    <div class="pilar-item">
+                        <div class="pilar-icon">
+                            <svg viewBox="0 0 32 32" fill="none" stroke="#c8886c" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">
+                                <path d="M16 5 L18 13 L26 15 L18 17 L16 25 L14 17 L6 15 L14 13 Z"/>
+                                <path d="M25 6 L25.8 8.5 L28 9 L25.8 9.5 L25 12"/>
+                            </svg>
+                        </div>
+                        <h3>Tecnologia de Ponta</h3>
+                        <p>Investimos nos equipamentos mais modernos e seguros do mercado, como o laser Fotona Starwalker e o diagnóstico capilar FotoFinder, para garantir preciso e resultados superiores.</p>
+                    </div>
+                    <div class="pilar-item">
+                        <div class="pilar-icon">
+                            <svg viewBox="0 0 32 32" fill="none" stroke="#c8886c" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">
+                                <path d="M16 26 C16 26 5 19 5 12 C5 8.5 7.5 6 11 6 C13.5 6 15.5 7.5 16 9 C16.5 7.5 18.5 6 21 6 C24.5 6 27 8.5 27 12 C27 19 16 26 16 26 Z"/>
+                            </svg>
+                        </div>
+                        <h3>Cuidado Humanizado</h3>
+                        <p>Acreditamos em uma medicina baseada na empatia. Cada paciente é único, e dedicamos nosso tempo para ouvir, entender e criar um plano de cuidado individualizado.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA FINAL -->
+        <section class="page-cta">
+            <h2 class="page-cta-title">Pronto para cuidar da sua <span class="italic">pele?</span></h2>
+            <p class="page-cta-sub">Agende uma avaliação com nossa equipe especializada.</p>
+            <a href="https://wa.me/5548991485818" target="_blank" class="page-cta-btn">Agendar via WhatsApp →</a>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <!-- Coluna 1: Logo e Descriço -->
+                <div class="footer-col">
+                    <img src="LOGO.png" alt="Rizzatti Dermatologia e Saúde" class="footer-logo-img">
+                    <p class="footer-desc">Cuidado completo da sua pele, em um só lugar. Dermatologia, Estética e Tricologia avançada em Palhoça-SC.</p>
+                </div>
+
+                <!-- Coluna 2: Navegaço -->
+                <div class="footer-col">
+                    <h4 class="footer-title">Navegaço</h4>
+                    <div class="footer-menu">
+                        <a href="index.html#home">Home</a>
+                        <a href="sobre.html">Sobre a clínica</a>
+                        <a href="index.html#servicos">Especialidades</a>
+                        <a href="index.html#contato">Localizaço</a>
+                    </div>
+                </div>
+
+                <!-- Coluna 3: Corpo Clínico -->
+                <div class="footer-col">
+                    <h4 class="footer-title">Corpo Clínico</h4>
+                    <div class="footer-doctor">
+                        <span class="footer-doctor-name">Dra. Karoline Rizzatti</span>
+                        <span class="footer-doctor-cred">CRM/SC 17360 · RQE 13318</span>
+                    </div>
+                </div>
+
+                <!-- Coluna 4: Contato -->
+                <div class="footer-col">
+                    <h4 class="footer-title">Contato</h4>
+                    <div class="footer-contact-info">
+                        <div class="contact-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <span>Rua Rubens de Arruda Ramos<br>Passeio Pedra Branca, Palhoça-SC</span>
+                        </div>
+                        <div class="contact-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                            <a href="https://wa.me/5548991485818" target="_blank">(48) 99148-5818</a>
+                        </div>
+                        <div class="contact-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="16" height="16" rx="4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></rect><circle cx="12" cy="12" r="3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle><line x1="16.5" y1="7.5" x2="16.5" y2="7.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line></svg>
+                            <a href="https://instagram.com/rizzatti.dermatologia" target="_blank">@rizzatti.dermatologia</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-copyright">© 2026 Rizzatti Dermatologia e Saúde. Todos os direitos reservados.</div>
+                <div class="footer-dev">Site desenvolvido por <a href="#" target="_blank">//FEMO</a></div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // NAVBAR - HAMBURGER MENU TOGGLE
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        hamburger.addEventListener('click', () => navMenu.classList.toggle('active'));
+        document.querySelectorAll('.nav-menu a').forEach(link =>
+            link.addEventListener('click', () => navMenu.classList.remove('active'))
+        );
+    </script>
+
+</body>
+</html>
+
+

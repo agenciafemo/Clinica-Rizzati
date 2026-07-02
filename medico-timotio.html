@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Timotio Dorn | Rizzatti Dermatologia e Saúde</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:ital@0;1&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            --navy: #758899;
+            --navy-dark: #6b7a8a;
+            --bronze: #c8886c;
+            --azure: #d7bea8;
+            --white: #FFFFFF;
+            --gray-light: #f5f7f9;
+
+            --bege: #e8e0d5;
+            --bege-claro: #f3eee7;
+
+            --font-primary: 'Bodoni Moda', serif;
+            --font-display: 'Playfair Display', serif;
+        }
+
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            color: var(--navy);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: var(--white);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        button {
+            font-family: 'Jost', sans-serif;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        /* ===== DOCTOR PROFILE SECTION ===== */
+        .profile-section {
+            padding: 100px 6vw 100px;
+            min-height: 100vh;
+            margin-top: 80px;
+        }
+
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 0.85fr 1.15fr; /* Layout 40% / 60% */
+            gap: 5rem;
+            align-items: start;
+        }
+
+        /* LEFT COLUMN (STICKY) */
+        .profile-sidebar {
+            position: sticky;
+            top: 120px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .profile-image-wrapper {
+            aspect-ratio: 3 / 4;
+            width: 100%;
+            background: #e8ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            position: relative;
+            border: 1px solid rgba(213, 149, 96, 0.25);
+            box-shadow: 0 30px 60px rgba(46, 58, 74, 0.1);
+        }
+
+        .profile-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 0px; /* Ajuste vertical (valor positivo move para baixo) */
+            filter: contrast(1.05) grayscale(5%);
+            transition: filter 0.5s ease;
+        }
+
+        .profile-image-wrapper:hover img {
+            filter: contrast(1) grayscale(0%);
+        }
+
+        .profile-name {
+            font-family: var(--font-primary);
+            font-size: 2.2rem;
+            font-weight: 400;
+            color: var(--navy-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-credentials-short {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(117, 136, 153, 0.7);
+        }
+
+        /* RIGHT COLUMN (CONTENT) */
+        .profile-content {
+            background: var(--gray-light);
+            padding: 4.5rem;
+            border-radius: 4px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+            max-width: 720px;
+        }
+
+        .profile-quote {
+            position: relative;
+            margin-bottom: 3.5rem;
+        }
+
+        .quote-icon {
+            position: absolute;
+            top: -15px;
+            left: -20px;
+            font-family: var(--font-display);
+            font-size: 4rem;
+            color: var(--bronze);
+            opacity: 0.4;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .profile-quote p {
+            font-family: var(--font-primary);
+            font-style: italic;
+            font-size: 1.45rem;
+            color: var(--navy-dark);
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+            max-width: 100%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .profile-bio {
+            margin-bottom: 3.5rem;
+        }
+
+        .profile-bio p {
+            font-family: 'Jost', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 300;
+            color: rgba(117, 136, 153, 0.85);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-education-title {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--navy-dark);
+            margin-bottom: 1.8rem;
+            border-bottom: 1px solid rgba(213, 149, 96, 0.3);
+            padding-bottom: 0.8rem;
+        }
+
+        .profile-education-list {
+            list-style: none;
+            margin-bottom: 4rem;
+        }
+
+        .profile-education-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.2rem;
+            margin-bottom: 1.2rem;
+            font-family: 'Jost', sans-serif;
+            font-size: 1rem;
+            font-weight: 300;
+            color: rgba(117, 136, 153, 0.85);
+            line-height: 1.5;
+        }
+
+        .bullet-icon {
+            width: 14px;
+            height: 14px;
+            color: var(--bronze);
+            flex-shrink: 0;
+            margin-top: 5px;
+        }
+
+        .btn-profile-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--navy-dark);
+            color: var(--white);
+            font-family: 'Jost', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 1.2rem 3rem;
+            border: 1px solid var(--navy-dark);
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 25px rgba(46, 58, 74, 0.15);
+        }
+
+        .btn-profile-cta:hover {
+            background: transparent;
+            color: var(--navy-dark);
+            box-shadow: 0 5px 15px rgba(46, 58, 74, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .profile-sidebar {
+                position: static;
+                text-align: center;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .profile-section {
+                padding: 120px 1.5rem 60px;
+            }
+
+            .profile-content {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .profile-quote p {
+                font-size: 1.2rem;
+            }
+
+            .btn-profile-cta {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* ===== NAVBAR ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 80px;
+            padding: 0 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(117, 136, 153, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(213, 149, 96, 0.15);
+            box-shadow: 0 4px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo, .nav-menu, .nav-cta, .nav-divider, .hamburger {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: 0.15em;
+        }
+
+        .logo-img {
+            height: 44px;
+            width: auto;
+            display: block;
+            filter: brightness(0) invert(1);
+            opacity: 0.95;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-img:hover {
+            opacity: 1;
+        }
+
+        .logo-symbol {
+            font-size: 1.8rem;
+            color: var(--bronze);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            font-family: 'Jost', sans-serif;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.75);
+            position: relative;
+            transition: color 0.3s ease;
+            padding: 4px 0;
+        }
+
+        .nav-menu a:hover {
+            color: rgba(255, 255, 255, 1);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--bronze);
+            transition: width 0.35s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.12);
+            margin: 0 1.5rem;
+        }
+
+        .nav-cta {
+            font-family: 'Jost', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            background: transparent;
+            color: var(--bronze);
+            border: 1px solid rgba(213, 149, 96, 0.5);
+            padding: 10px 24px;
+            cursor: pointer;
+            transition: all 0.35s ease;
+            white-space: nowrap;
+        }
+
+        .nav-cta:hover {
+            background: var(--bronze);
+            color: #758899;
+            border-color: var(--bronze);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 1.5rem;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: var(--navy-dark);
+                padding: 2rem;
+                gap: 1.5rem;
+                border-bottom: 1px solid rgba(213, 149, 96, 0.15);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-divider, .nav-cta {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav>
+        <div class="logo">
+            <img src="LOGO.png" alt="Rizzatti Dermatologia e Saúde" class="logo-img">
+        </div>
+
+        <ul class="nav-menu">
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="sobre.html">Sobre</a></li>
+            <li><a href="index.html#servicos">Serviços</a></li>
+            <li><a href="index.html#corpo-clinico">Corpo Clínico</a></li>
+            <li><a href="index.html#contato">Contato</a></li>
+        </ul>
+
+        <div class="nav-divider"></div>
+
+        <button class="nav-cta" onclick="window.open('https://wa.me/5548991485818', '_blank')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Agendar Consulta
+        </button>
+
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- DOCTOR PROFILE SECTION -->
+    <section class="profile-section">
+        <div class="profile-container">
+            
+            <!-- COLUNA ESQUERDA (Foto e Info Rápida) -->
+            <div class="profile-sidebar">
+                <div class="profile-image-wrapper">
+                    <img src="TIMOTIO.PNG" alt="Dr. Timotio Dorn">
+                </div>
+                <h1 class="profile-name">Dr. Timotio Dorn</h1>
+                <p class="profile-credentials-short">CRM/SC 22594 · RQE 13225</p>
+            </div>
+
+            <!-- COLUNA DIREITA (conteúdo e Biografia) -->
+            <div class="profile-content">
+                <div class="profile-quote">
+                    <span class="quote-icon">œ</span>
+                    <p>A dermatologia vai muito além da estética; é sobre devolver a autoestima, a confiança e a Saúde para cada paciente, de forma ética, segura e extremamente acolhedora.</p>
+                </div>
+
+                <div class="profile-bio">
+                    <p>Com uma paixo genuna pelo cuidado humano, o Dr. Timotio dedica sua carreira   excelência na prática médica. Sua abordagem é fundamentada na escuta atenta e no planejamento individualizado, entendendo que cada paciente possui necessidades ºnicas.</p>
+
+                    <p>Sempre em constante atualização, busca unir as mais avançadas técnicas Cirúrgicas e estéticas aos protocolos Clínicos mais seguros, garantindo resultados naturais e harm´nicos que respeitam a essência de quem confia em seu trabalho.</p>
+                </div>
+
+                <h3 class="profile-education-title">formação e Experiência</h3>
+                <ul class="profile-education-list">
+                    <li>
+                        <!-- cone Elegante (Losango Diamante) -->
+                        <svg class="bullet-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L22 12L12 22L2 12L12 2Z"/></svg>
+                        <span>Graduaço em Medicina pela renomada instituiço [Inserir Universidade].</span>
+                    </li>
+                    <li>
+                        <svg class="bullet-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L22 12L12 22L2 12L12 2Z"/></svg>
+                        <span>Residência Médica em Dermatologia pela [Inserir Instituiço], referência nacional na especialidade.</span>
+                    </li>
+                    <li>
+                        <svg class="bullet-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L22 12L12 22L2 12L12 2Z"/></svg>
+                        <span>Membro Titular da Sociedade Brasileira de Dermatologia (SBD).</span>
+                    </li>
+                    <li>
+                        <svg class="bullet-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L22 12L12 22L2 12L12 2Z"/></svg>
+                        <span>Aprimoramento contnuo em Cirurgia Dermatológica e Procedimentos Minimamente Invasivos.</span>
+                    </li>
+                </ul>
+
+                <!-- CTA WHATSAPP -->
+                <div class="profile-action">
+                    <!-- O link href abaixo já está formatado com o texto pré-preenchido exigido -->
+                    <a href="https://wa.me/5548991485818?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20consulta%20com%20o(a)%20Dr.%20Timotio%20Dorn." class="btn-profile-cta" target="_blank">
+                        Agendar Consulta →
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+</body>
+</html>
+

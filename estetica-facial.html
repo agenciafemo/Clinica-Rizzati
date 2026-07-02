@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estética Facial | Rizzatti Dermatologia e Saúde</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:ital@0;1&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            --navy: #758899;
+            --navy-dark: #6b7a8a;
+            --bronze: #c8886c;
+            --azure: #d7bea8;
+            --white: #FFFFFF;
+            --gray-light: #efebe8;
+
+            --bege: #e8e0d5;
+            --bege-claro: #f3eee7;
+
+            --font-primary: 'Bodoni Moda', serif;
+            --font-display: 'Playfair Display', serif;
+        }
+
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            color: var(--navy);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: var(--white);
+            padding-top: 80px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        button {
+            font-family: 'Jost', sans-serif;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        /* ===== NAVBAR ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 80px;
+            padding: 0 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(117, 136, 153, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(213, 149, 96, 0.15);
+            box-shadow: 0 4px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo, .nav-menu, .nav-cta, .nav-divider, .hamburger {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: 0.15em;
+        }
+
+        .logo-img {
+            height: 44px;
+            width: auto;
+            display: block;
+            filter: brightness(0) invert(1);
+            opacity: 0.95;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-img:hover {
+            opacity: 1;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            font-family: 'Jost', sans-serif;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.75);
+            position: relative;
+            transition: color 0.3s ease;
+            padding: 4px 0;
+        }
+
+        .nav-menu a:hover {
+            color: rgba(255, 255, 255, 1);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--bronze);
+            transition: width 0.35s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.12);
+            margin: 0 1.5rem;
+        }
+
+        .nav-cta {
+            font-family: 'Jost', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            background: transparent;
+            color: var(--bronze);
+            border: 1px solid rgba(213, 149, 96, 0.5);
+            padding: 10px 24px;
+            cursor: pointer;
+            transition: all 0.35s ease;
+            white-space: nowrap;
+        }
+
+        .nav-cta:hover {
+            background: var(--bronze);
+            color: #758899;
+            border-color: var(--bronze);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 1.5rem;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: var(--navy-dark);
+                padding: 2rem;
+                gap: 1.5rem;
+                border-bottom: 1px solid rgba(213, 149, 96, 0.15);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-divider, .nav-cta {
+                display: none;
+            }
+        }
+
+        /* ===== PAGE HERO ===== */
+        .page-hero {
+            position: relative;
+            min-height: 60vh;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: -80px;
+            padding-top: 80px;
+        }
+
+        .page-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(56,71,93,0.92), rgba(56,71,93,0.7));
+        }
+
+        .page-hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            padding: 0 2rem;
+            color: var(--white);
+        }
+
+        .page-hero-tag {
+            font-family: 'Jost', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--bronze);
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        .page-hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .page-hero-title .italic-bronze {
+            font-style: italic;
+            color: var(--bronze);
+        }
+
+        .page-hero-sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.85);
+        }
+
+        /* ===== PROCEDIMENTOS ===== */
+        .procedimentos {
+            background: var(--white);
+            padding: 90px 6vw;
+        }
+
+        .proc-intro {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .proc-eyebrow {
+            font-family: 'Jost', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--bronze);
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        .proc-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 300;
+            color: var(--navy);
+        }
+
+        .proc-title .italic-bronze {
+            font-style: italic;
+            color: var(--bronze);
+        }
+
+        .proc-list {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .proc-item {
+            padding: 40px 0;
+            border-bottom: 1px solid #38475d;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .proc-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .proc-item:first-child {
+            border-top: 1px solid #38475d;
+        }
+
+        .proc-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: var(--navy);
+            margin-bottom: 14px;
+            position: relative;
+            padding-left: 28px;
+        }
+
+        .proc-name::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%) rotate(45deg);
+            width: 10px;
+            height: 10px;
+            background: var(--bronze);
+        }
+
+        .proc-desc {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: rgba(56,71,93,0.75);
+        }
+
+        /* ===== PAGE CTA ===== */
+        .page-cta {
+            background: var(--bronze);
+            text-align: center;
+            padding: 80px 2rem;
+        }
+
+        .page-cta-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .page-cta-title .italic {
+            font-style: italic;
+        }
+
+        .page-cta-sub {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(56,71,93,0.7);
+            margin-bottom: 32px;
+        }
+
+        .page-cta-btn {
+            background: var(--navy);
+            color: var(--white);
+            font-family: 'Jost', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 16px 40px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .page-cta-btn:hover {
+            background: var(--navy-dark);
+            transform: translateY(-2px);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--navy-dark);
+            color: var(--white);
+            padding: 60px 6vw;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4rem;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(213, 149, 96, 0.15);
+            padding-bottom: 3rem;
+        }
+
+        .footer-col h4 {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--bronze);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-desc {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.75);
+        }
+
+        .footer-logo-img {
+            height: 32px;
+            width: auto;
+            margin-bottom: 1rem;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .footer-menu a {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.75);
+            transition: color 0.3s ease;
+        }
+
+        .footer-menu a:hover {
+            color: var(--bronze);
+        }
+
+        .footer-doctor {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-doctor-name {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--white);
+        }
+
+        .footer-doctor-cred {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .footer-contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .contact-item svg {
+            width: 20px;
+            height: 20px;
+            color: var(--bronze);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+        .footer-copyright {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .footer-dev {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .footer-dev a {
+            color: var(--bronze);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 80px;
+            }
+
+            .page-hero {
+                min-height: 50vh;
+            }
+
+            .procedimentos {
+                padding: 60px 1.5rem;
+            }
+
+            .proc-item {
+                padding: 30px 0;
+            }
+
+            .page-cta {
+                padding: 60px 1.5rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav>
+        <div class="logo">
+            <img src="LOGO.png" alt="Rizzatti Dermatologia e Saúde" class="logo-img">
+        </div>
+
+        <ul class="nav-menu">
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="sobre.html">Sobre</a></li>
+            <li><a href="index.html#servicos">Serviços</a></li>
+            <li><a href="index.html#corpo-clinico">Corpo Clínico</a></li>
+            <li><a href="index.html#contato">Contato</a></li>
+        </ul>
+
+        <div class="nav-divider"></div>
+
+        <button class="nav-cta" onclick="window.open('https://wa.me/5548991485818', '_blank')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Agendar Consulta
+        </button>
+
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="page-hero" style="background-image: url('ESP_ESTETICA.jpg')">
+        <div class="page-hero-overlay"></div>
+        <div class="page-hero-content">
+            <span class="page-hero-tag">Resultado natural</span>
+            <h1 class="page-hero-title">Estética <span class="italic-bronze">Facial</span></h1>
+            <p class="page-hero-sub">Procedimentos Inovaçãodores para rejuvenescimento e harmonia facial.</p>
+        </div>
+    </section>
+
+    <!-- PROCEDIMENTOS -->
+    <section class="procedimentos">
+        <div class="proc-intro">
+            <span class="proc-eyebrow">Nossos tratamentos</span>
+            <h2 class="proc-title">Beleza <span class="italic-bronze">natural</span></h2>
+        </div>
+
+        <div class="proc-list">
+            <div class="proc-item">
+                <h3 class="proc-name">Toxina botulnica</h3>
+                <p class="proc-desc">A toxina botulnica é um medicamento altamente eficaz no combate  s rugas e linhas de expresso, especialmente nas áreas da testa e ao redor dos olhos. Além disso, pode ser aplicado com sucesso na regio do pescoço e ao redor da boca. Atuando no relaxamento dos mºsculos faciais, suavizando as rugas e linhas de expresso. Proporcionando uma aparência mais jovem e rejuvenescida.</p>
+            </div>
+
+            <div class="proc-item">
+                <h3 class="proc-name">Biostimuladores de colágeno</h3>
+                <p class="proc-desc">Os Bioestimuladores de Colágeno so substncias injetadas e bioabsorvveis que, no apenas repµe o volume perdido da face, mas como trabalham profundamente na pele para estimular as células formadoras de colágeno a trabalharem mais, resultando na reduço da flacidez e na melhora da qualidade da pele.</p>
+            </div>
+
+            <div class="proc-item">
+                <h3 class="proc-name">Preenchimento facial</h3>
+                <p class="proc-desc">O preenchimento facial é um procedimento estético no cirºrgico que envolve a utilizaço de substncias, como o ácido hialur´nico, para correço de imperfeiçµes e realce da aparência facial. O ácido hialur´nico é popular devido   sua compatibilidade com o corpo humano e sua capacidade de proporcionar hidrataço   pele. O procedimento é rápido, minimamente invasivo e proporciona resultados imediatos, sendo uma escolha popular para rejuvenescimento facial sem cirurgia.</p>
+            </div>
+
+            <div class="proc-item">
+                <h3 class="proc-name">Bioremodelador celular</h3>
+                <p class="proc-desc">O bioremodelador celular é composto por uma fórmula exclusiva de ácido hialur´nico puro, com o principal objetivo de promover um rejuvenescimento natural da pele. Esse procedimento busca preservar a harmonia facial, sem causar qualquer aumento de volume indesejado na área onde é aplicado. Isso permite resultados mais sutis, alinhados com a busca pela beleza natural e saudável da pele.</p>
+            </div>
+
+            <div class="proc-item">
+                <h3 class="proc-name">Laser</h3>
+                <p class="proc-desc">O tratamento a laser é usado para estimular a renovaço celular e tratar diversas preocupaçµes dermatológicas. Eficaz no combate a manchas hiperpigmentadas, proporcionando uma melhoria notável, especialmente em manchas mais escuras. Além disso, o tratamento a laser é uma opço para melhorar a aparência de diferentes tipos de cicatrizes, como as resultantes de cesáreas ou de acnes, por exemplo.</p>
+            </div>
+
+            <div class="proc-item">
+                <h3 class="proc-name">Ultrassom micro/macrofocado</h3>
+                <p class="proc-desc">Essa tecnologia atua nas camadas profundas da pele, tratando a flacidez e a gordura localizada. Estimula a produço de colágeno para tornar a pele mais firme e utiliza técnicas para quebrar as células de gordura, reduzindo áreas problemáticas.</p>
+            </div>
+
+            <div class="proc-item">
+                <h3 class="proc-name">Microagulhamento</h3>
+                <p class="proc-desc">O microagulhamento é um procedimento que utiliza microagulhas para criar perfuraçµes na pele, desencadeando um estmulo inflamatório controlado que aumenta a sntese de colágeno. Essa técnica melhora a absorço de produtos na pele, permitindo a aplicaço de cosméticos especficos para diversas condiçµes estéticas.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="page-cta">
+        <h2 class="page-cta-title">Pronto para cuidar da sua <span class="italic">pele?</span></h2>
+        <p class="page-cta-sub">Agende uma avaliação com nossa equipe especializada.</p>
+        <a href="https://wa.me/5548991485818" target="_blank" class="page-cta-btn">Agendar via WhatsApp →’</a>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <img src="LOGO.png" alt="Rizzatti Dermatologia e Saúde" class="footer-logo-img">
+                    <p class="footer-desc">Cuidado completo da sua pele, em um só lugar. Dermatologia, Estética e Tricologia avançada em Palhoça-SC.</p>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">Navegaço</h4>
+                    <div class="footer-menu">
+                        <a href="index.html#home">Home</a>
+                        <a href="sobre.html">Sobre a clínica</a>
+                        <a href="index.html#servicos">Especialidades</a>
+                        <a href="index.html#contato">Localizaço</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">Corpo Clínico</h4>
+                    <div class="footer-doctor">
+                        <span class="footer-doctor-name">Dra. Karoline Rizzatti</span>
+                        <span class="footer-doctor-cred">CRM/SC 17360 · RQE 13318</span>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">Contato</h4>
+                    <div class="footer-contact-info">
+                        <div class="contact-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <span>Rua Rubens de Arruda Ramos<br>Passeio Pedra Branca, Palhoça-SC</span>
+                        </div>
+                        <div class="contact-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                            <a href="https://wa.me/5548991485818" target="_blank">(48) 99148-5818</a>
+                        </div>
+                        <div class="contact-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="16" height="16" rx="4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></rect><circle cx="12" cy="12" r="3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle><line x1="16.5" y1="7.5" x2="16.5" y2="7.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line></svg>
+                            <a href="https://instagram.com/rizzatti.dermatologia" target="_blank">@rizzatti.dermatologia</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-copyright">© 2026 Rizzatti Dermatologia e Saúde. Todos os direitos reservados.</div>
+                <div class="footer-dev">Site desenvolvido por <a href="#" target="_blank">//FEMO</a></div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // NAVBAR - HAMBURGER MENU TOGGLE
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        hamburger.addEventListener('click', () => navMenu.classList.toggle('active'));
+        document.querySelectorAll('.nav-menu a').forEach(link =>
+            link.addEventListener('click', () => navMenu.classList.remove('active'))
+        );
+
+        // SCROLL REVEAL - PROCEDIMENTOS
+        const procItems = document.querySelectorAll('.proc-item');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        procItems.forEach(item => observer.observe(item));
+    </script>
+</body>
+</html>
+
+

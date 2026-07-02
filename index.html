@@ -3,8 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rizzatti Dermatologia e Saúde | Dermatologia de confiança em Palhoça-SC</title>
-    <meta name="description" content="clínica especializada em Dermatologia, Estética e Tricologia em Palhoça-SC. Dra. Karoline Rizzatti - Especialista SBD.">
+    <title>Rizzatti Dermatologia e Saúde | Clínica em Palhoça-SC</title>
+    <meta name="description" content="Clínica de dermatologia em Palhoça-SC (Pedra Branca), com Dra. Karoline Rizzatti e Dr. Timotio Dorn. Dermatologia clínica, cirúrgica, estética e tricologia. Agende sua consulta.">
+    <link rel="canonical" href="https://www.clinicarizzatti.com.br/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Rizzatti Dermatologia e Saúde | Clínica em Palhoça-SC">
+    <meta property="og:description" content="Dermatologia clínica, cirúrgica, estética e tricologia em Palhoça-SC. Agende sua consulta com a Dra. Karoline Rizzatti e o Dr. Timotio Dorn.">
+    <meta property="og:image" content="https://www.clinicarizzatti.com.br/LOGO.png">
+    <meta property="og:url" content="https://www.clinicarizzatti.com.br/">
+    <meta property="og:locale" content="pt_BR">
+    <meta name="twitter:card" content="summary_large_image">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -300,9 +310,9 @@
             letter-spacing: 0.35em;
             text-transform: uppercase;
             color: var(--azure);
-            opacity: 0.85;
+            opacity: 0.95;
             margin-bottom: 24px;
-            text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.75), 0 4px 24px rgba(0,0,0,0.6), 0 0 40px rgba(0,0,0,0.4);
         }
 
         .hero-title {
@@ -312,7 +322,7 @@
             line-height: 1.1;
             margin-bottom: 0;
             color: var(--white);
-            text-shadow: 0 2px 16px rgba(0,0,0,0.35);
+            text-shadow: 0 4px 16px rgba(0,0,0,0.8), 0 8px 50px rgba(0,0,0,0.65), 0 0 90px rgba(0,0,0,0.5);
         }
 
         .hero-title .italic-bronze {
@@ -333,9 +343,9 @@
             font-style: italic;
             font-size: clamp(1.1rem, 2vw, 1.5rem);
             font-weight: 400;
-            color: rgba(255, 255, 255, 0.65);
+            color: rgba(255, 255, 255, 0.85);
             margin-bottom: 28px;
-            text-shadow: 0 1px 10px rgba(0,0,0,0.4);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.7), 0 4px 30px rgba(0,0,0,0.5), 0 0 50px rgba(0,0,0,0.35);
         }
 
         .hero-cta-group {
@@ -1627,6 +1637,42 @@
             }
         }
     </style>
+
+    <!-- Dados estruturados: Clínica -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MedicalClinic",
+        "name": "Rizzatti Dermatologia e Saúde",
+        "image": "https://www.clinicarizzatti.com.br/LOGO.png",
+        "url": "https://www.clinicarizzatti.com.br/",
+        "telephone": "+5548991485818",
+        "priceRange": "$$",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Rua Rubens de Arruda Ramos, Passeio Pedra Branca",
+            "addressLocality": "Palhoça",
+            "addressRegion": "SC",
+            "addressCountry": "BR"
+        },
+        "medicalSpecialty": ["Dermatology", "Dermatologic Surgery"],
+        "sameAs": [
+            "https://instagram.com/rizzatti.dermatologia"
+        ],
+        "physician": [
+            {
+                "@type": "Physician",
+                "name": "Dra. Karoline Rizzatti",
+                "url": "https://www.clinicarizzatti.com.br/medico-karoline.html"
+            },
+            {
+                "@type": "Physician",
+                "name": "Dr. Timotio Dorn",
+                "url": "https://www.clinicarizzatti.com.br/medico-timotio.html"
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
     <!-- NAVBAR -->
@@ -1724,7 +1770,7 @@
                     <div class="service-card service-card-lg" data-bg="ESP_TRICOLOGICA.webp">
                         <div class="card-overlay"></div>
                         <div class="card-content">
-                            <h3 class="service-title">Tricológica</h3>
+                            <h3 class="service-title">Tricológia</h3>
                             <a href="tricologica.html" class="service-link">Saiba mais →</a>
                         </div>
                     </div>
@@ -1753,7 +1799,7 @@
                     <div class="service-card service-card-sm" data-bg="ESP_CLINICA.jpg">
                         <div class="card-overlay"></div>
                         <div class="card-content">
-                            <h3 class="service-title">Clínica Dermatológica</h3>
+                            <h3 class="service-title">Clínica</h3>
                             <a href="clinica.html" class="service-link">Saiba mais →</a>
                         </div>
                     </div>
@@ -1761,7 +1807,7 @@
                     <div class="service-card service-card-sm" data-bg="ESP_CIRURGICA.jpg">
                         <div class="card-overlay"></div>
                         <div class="card-content">
-                            <h3 class="service-title">Cirurgia Dermatológica</h3>
+                            <h3 class="service-title">Cirurgia</h3>
                             <a href="cirurgica.html" class="service-link">Saiba mais →</a>
                         </div>
                     </div>
@@ -1912,20 +1958,20 @@
     <footer>
         <div class="footer-content">
             <div class="footer-grid">
-                <!-- Coluna 1: Logo e Descriço -->
+                <!-- Coluna 1: Logo e Descrição -->
                 <div class="footer-col">
                     <img src="LOGO.png" alt="Rizzatti Dermatologia e Saúde" class="footer-logo-img">
                     <p class="footer-desc">Cuidado completo da sua pele, em um só lugar. Dermatologia, Estética e Tricologia avançada em Palhoça-SC.</p>
                 </div>
 
-                <!-- Coluna 2: Navegaço -->
+                <!-- Coluna 2: Navegação -->
                 <div class="footer-col">
-                    <h4 class="footer-title">Navegaço</h4>
+                    <h4 class="footer-title">Navegação</h4>
                     <div class="footer-menu">
                         <a href="#home">Home</a>
                         <a href="sobre.html">Sobre a clínica</a>
                         <a href="#servicos">Especialidades</a>
-                        <a href="#contato">Localizaço</a>
+                        <a href="#contato">Localização</a>
                     </div>
                 </div>
 

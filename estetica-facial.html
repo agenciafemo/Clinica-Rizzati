@@ -2,10 +2,16 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <script>
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.documentElement.classList.add('js-transition');
+        }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estética Facial em Palhoça-SC | Rizzatti Dermatologia e Saúde</title>
     <meta name="description" content="Toxina botulínica, preenchimento, bioestimuladores e laser facial em Palhoça-SC. Tratamentos estéticos conduzidos por dermatologista.">
     <link rel="canonical" href="https://www.clinicarizzatti.com.br/estetica-facial.html">
+    <link rel="icon" type="image/png" href="FLOR.png">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Estética Facial em Palhoça-SC | Rizzatti Dermatologia e Saúde">
     <meta property="og:description" content="Toxina botulínica, preenchimento, bioestimuladores e laser facial em Palhoça-SC. Tratamentos estéticos conduzidos por dermatologista.">
@@ -41,6 +47,33 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        /* ===== TRANSIÇÃO ENTRE PÁGINAS (cross-fade) ===== */
+        @media (prefers-reduced-motion: no-preference) {
+            @view-transition {
+                navigation: auto;
+            }
+        }
+
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+            animation-duration: 350ms;
+            animation-timing-function: ease-in-out;
+        }
+
+        html.js-transition body {
+            opacity: 0;
+        }
+
+        html.js-transition.loaded body {
+            opacity: 1;
+            transition: opacity 350ms ease;
+        }
+
+        html.fade-out body {
+            opacity: 0 !important;
+            transition: opacity 250ms ease !important;
         }
 
         html {
@@ -153,6 +186,104 @@
 
         .nav-menu a:hover::after {
             width: 100%;
+        }
+
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .dropdown-arrow {
+            display: inline-block;
+            font-size: 9px;
+            margin-left: 4px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-dropdown:hover .dropdown-arrow,
+        .nav-dropdown.open .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(6px);
+            min-width: 230px;
+            list-style: none;
+            padding: 10px 0;
+            margin: 0;
+            background: rgba(117, 136, 153, 0.97);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(213, 149, 96, 0.15);
+            border-top: 2px solid var(--bronze);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            z-index: 20;
+        }
+
+        .nav-dropdown:hover .dropdown-menu,
+        .nav-dropdown.open .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 26px;
+            font-family: 'Jost', sans-serif;
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.75);
+            white-space: nowrap;
+            transition: color 0.25s ease, background 0.25s ease;
+        }
+
+        .dropdown-menu a::after {
+            content: none;
+        }
+
+        .dropdown-menu a:hover {
+            color: var(--white);
+            background: rgba(200, 136, 108, 0.18);
+        }
+
+        @media (max-width: 768px) {
+            .nav-dropdown {
+                width: 100%;
+            }
+
+            .dropdown-menu {
+                position: static;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+                background: rgba(0, 0, 0, 0.15);
+                border: none;
+                box-shadow: none;
+                max-height: 0;
+                overflow: hidden;
+                padding: 0;
+                transition: max-height 0.35s ease, padding 0.35s ease;
+            }
+
+            .nav-dropdown.open .dropdown-menu {
+                max-height: 400px;
+                padding: 8px 0;
+            }
+
+            .dropdown-menu a {
+                padding: 10px 16px 10px 32px;
+            }
         }
 
         .nav-divider {
@@ -373,6 +504,97 @@
             color: rgba(56,71,93,0.75);
         }
 
+        /* ===== TECNOLOGIAS QUE UTILIZAMOS ===== */
+        .tech-used {
+            background: var(--gray-light);
+            padding: 80px 6vw 90px;
+        }
+
+        .tech-used-intro {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 50px;
+        }
+
+        .tech-used-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            position: relative;
+            overflow: hidden;
+            display: block;
+            min-height: 360px;
+            background: #758899;
+            isolation: isolate;
+        }
+
+        .service-card .card-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+            transform: scale(1);
+            transition: transform 6s ease-out;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            will-change: transform;
+        }
+
+        .service-card:hover .card-bg {
+            transform: scale(1.15);
+        }
+
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                #38475d 0%,
+                rgba(117, 136, 153, 0.2) 55%,
+                rgba(117, 136, 153, 0.08) 100%
+            );
+            z-index: 1;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 2;
+            padding: 28px;
+            display: flex;
+            align-items: flex-end;
+            height: 100%;
+        }
+
+        .service-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 400;
+            color: white;
+            font-size: clamp(1.4rem, 2vw, 1.8rem);
+            margin: 0;
+        }
+
+        @media (max-width: 1024px) {
+            .tech-used-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .tech-used {
+                padding: 60px 1.5rem;
+            }
+
+            .tech-used-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* ===== PAGE CTA ===== */
         .page-cta {
             background: var(--azure);
@@ -423,94 +645,100 @@
         footer {
             background: var(--navy-dark);
             color: var(--white);
-            padding: 60px 6vw;
+            padding: 5rem 2rem 2rem;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('BACK.png');
+            background-size: 300px;
+            background-repeat: repeat;
+            background-position: center;
+            opacity: 0.04;
+            mix-blend-mode: screen;
+            pointer-events: none;
+            z-index: 0;
         }
 
         .footer-content {
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         .footer-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 4rem;
-            margin-bottom: 3rem;
-            border-bottom: 1px solid rgba(213, 149, 96, 0.15);
-            padding-bottom: 3rem;
+            grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
         }
 
-        .footer-col h4 {
-            font-family: 'Jost', sans-serif;
-            font-size: 0.85rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--bronze);
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .footer-logo-img {
+            height: 38px;
+            width: auto;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
             margin-bottom: 1.5rem;
         }
 
         .footer-desc {
-            font-family: 'Jost', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
             line-height: 1.6;
-            color: rgba(255,255,255,0.75);
+            margin-bottom: 1.5rem;
+            max-width: 350px;
         }
 
-        .footer-logo-img {
-            height: 32px;
-            width: auto;
-            margin-bottom: 1rem;
-            filter: brightness(0) invert(1);
+        .footer-title {
+            font-family: 'Jost', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
         }
 
         .footer-menu {
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
+            gap: 1rem;
+            font-size: 0.95rem;
         }
 
         .footer-menu a {
-            font-family: 'Jost', sans-serif;
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.75);
-            transition: color 0.3s ease;
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .footer-menu a:hover {
             color: var(--bronze);
         }
 
-        .footer-doctor {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .footer-doctor-name {
-            font-family: 'Jost', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--white);
-        }
-
-        .footer-doctor-cred {
-            font-family: 'Jost', sans-serif;
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.6);
-        }
-
         .footer-contact-info {
             display: flex;
             flex-direction: column;
             gap: 1.2rem;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
         }
 
         .contact-item {
             display: flex;
             align-items: flex-start;
             gap: 0.8rem;
-            font-size: 0.9rem;
-            line-height: 1.5;
         }
 
         .contact-item svg {
@@ -521,22 +749,50 @@
             margin-top: 2px;
         }
 
+        .footer-contact-info a {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer-contact-info a:hover {
+            color: var(--bronze);
+        }
+
+        .footer-doctor-name {
+            font-family: 'Jost', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--white);
+            margin-bottom: 0.4rem;
+            display: block;
+        }
+
+        .footer-doctor-cred {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.05em;
+        }
+
         .footer-bottom {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
             font-size: 0.85rem;
-        }
-
-        .footer-copyright {
-            color: rgba(255,255,255,0.6);
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .footer-dev {
-            color: rgba(255,255,255,0.6);
+            font-family: 'Jost', sans-serif;
         }
 
         .footer-dev a {
+            color: var(--white);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-dev a:hover {
             color: var(--bronze);
         }
 
@@ -591,8 +847,19 @@
         <ul class="nav-menu">
             <li><a href="index.html#home">Home</a></li>
             <li><a href="sobre.html">Sobre</a></li>
-            <li><a href="index.html#servicos">Serviços</a></li>
-            <li><a href="index.html#corpo-clinico">Corpo Clínico</a></li>
+            <li class="nav-dropdown">
+                <a href="javascript:void(0)" class="dropdown-toggle">Especialidades <span class="dropdown-arrow">&#9662;</span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="clinica.html">Clínica</a></li>
+                    <li><a href="cirurgica.html">Cirúrgica</a></li>
+                    <li><a href="estetica-facial.html">Estética Facial</a></li>
+                    <li><a href="estetica-corporal.html">Estética Corporal</a></li>
+                    <li><a href="tricologica.html">Tricologia</a></li>
+                    <li><a href="tecnologias.html">Tecnologias</a></li>
+                </ul>
+            </li>
+            <li><a href="corpo-clinico.html">Corpo Clínico</a></li>
+            <li><a href="tecnologias.html">Tecnologias</a></li>
             <li><a href="index.html#contato">Contato</a></li>
         </ul>
 
@@ -667,6 +934,46 @@
         </div>
     </section>
 
+    <!-- TECNOLOGIAS QUE UTILIZAMOS -->
+    <section class="tech-used">
+        <div class="tech-used-intro">
+            <span class="proc-eyebrow">Tecnologia</span>
+            <h2 class="proc-title">Tecnologias que <span class="italic-bronze">utilizamos</span></h2>
+        </div>
+        <div class="tech-used-grid">
+            <a href="tecnologias.html#liftera" class="service-card" data-bg="LIFTERA.png">
+                <div class="card-overlay"></div>
+                <div class="card-content">
+                    <h3 class="service-title">Liftera</h3>
+                </div>
+            </a>
+            <a href="tecnologias.html#aura" class="service-card" data-bg="AURA.png">
+                <div class="card-overlay"></div>
+                <div class="card-content">
+                    <h3 class="service-title">Aura</h3>
+                </div>
+            </a>
+            <a href="tecnologias.html#etherea" class="service-card" data-bg="ETHEREA.png">
+                <div class="card-overlay"></div>
+                <div class="card-content">
+                    <h3 class="service-title">Etherea MX</h3>
+                </div>
+            </a>
+            <a href="tecnologias.html#laser-co2" class="service-card" data-bg="HEGON.png">
+                <div class="card-overlay"></div>
+                <div class="card-content">
+                    <h3 class="service-title">Laser de CO₂ Fracionado</h3>
+                </div>
+            </a>
+            <a href="tecnologias.html#megaderm" class="service-card" data-bg="LMG.png">
+                <div class="card-overlay"></div>
+                <div class="card-content">
+                    <h3 class="service-title">MegaDERM</h3>
+                </div>
+            </a>
+        </div>
+    </section>
+
     <!-- CTA FINAL -->
     <section class="page-cta">
         <h2 class="page-cta-title">Pronto para cuidar da sua <span class="italic">pele?</span></h2>
@@ -733,9 +1040,25 @@
         const hamburger = document.getElementById('hamburger');
         const navMenu = document.querySelector('.nav-menu');
         hamburger.addEventListener('click', () => navMenu.classList.toggle('active'));
-        document.querySelectorAll('.nav-menu a').forEach(link =>
-            link.addEventListener('click', () => navMenu.classList.remove('active'))
-        );
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            if (link.classList.contains('dropdown-toggle')) return;
+            link.addEventListener('click', () => navMenu.classList.remove('active'));
+        });
+
+        // DROPDOWN "ESPECIALIDADES"
+        const navDropdown = document.querySelector('.nav-dropdown');
+        const dropdownToggle = document.querySelector('.dropdown-toggle');
+        if (navDropdown && dropdownToggle) {
+            dropdownToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                navDropdown.classList.toggle('open');
+            });
+            document.addEventListener('click', (e) => {
+                if (!navDropdown.contains(e.target)) {
+                    navDropdown.classList.remove('open');
+                }
+            });
+        }
 
         // SCROLL REVEAL - PROCEDIMENTOS
         const procItems = document.querySelectorAll('.proc-item');
@@ -751,6 +1074,46 @@
         }, { threshold: 0.1 });
 
         procItems.forEach(item => observer.observe(item));
+
+        // INJETAR .card-bg NAS TECNOLOGIAS UTILIZADAS
+        document.querySelectorAll('.service-card').forEach(card => {
+            const bg = card.getAttribute('data-bg');
+            if (bg) {
+                const layer = document.createElement('div');
+                layer.className = 'card-bg';
+                layer.style.backgroundImage = `url('${bg}')`;
+                card.insertBefore(layer, card.firstChild);
+            }
+        });
+
+        // TRANSIÇÃO ENTRE PÁGINAS (fade-in / fade-out)
+        function markPageLoaded() {
+            document.documentElement.classList.add('loaded');
+        }
+        document.addEventListener('DOMContentLoaded', markPageLoaded);
+        window.addEventListener('load', markPageLoaded);
+        setTimeout(markPageLoaded, 1500);
+
+        document.addEventListener('click', function (e) {
+            const link = e.target.closest('a');
+            if (!link) return;
+            if (link.target === '_blank') return;
+            if (link.hasAttribute('download')) return;
+
+            const href = link.getAttribute('href') || '';
+            if (!href || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+            if (href.startsWith('#')) return;
+            if (link.hostname && link.hostname !== window.location.hostname) return;
+            if (!/\.html(#.*)?$/.test(href)) return;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            if ('startViewTransition' in document) return;
+
+            e.preventDefault();
+            document.documentElement.classList.add('fade-out');
+            setTimeout(function () {
+                window.location.href = href;
+            }, 250);
+        });
     </script>
 </body>
 </html>

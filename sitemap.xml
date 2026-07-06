@@ -9,6 +9,10 @@
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>https://www.clinicarizzatti.com.br/corpo-clinico.html</loc>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>https://www.clinicarizzatti.com.br/clinica.html</loc>
         <priority>0.8</priority>
     </url>
@@ -26,6 +30,10 @@
     </url>
     <url>
         <loc>https://www.clinicarizzatti.com.br/tricologica.html</loc>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://www.clinicarizzatti.com.br/tecnologias.html</loc>
         <priority>0.8</priority>
     </url>
     <url>

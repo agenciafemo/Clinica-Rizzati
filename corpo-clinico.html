@@ -8,15 +8,15 @@
         }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cirurgia Dermatológica em Palhoça-SC | Rizzatti Dermatologia e Saúde</title>
-    <meta name="description" content="Cirurgia dermatológica em Pedra Branca, Palhoça-SC: Mohs, remoção de lesões, cicatrizes e pequenas cirurgias com segurança e técnica precisa.">
-    <link rel="canonical" href="https://www.clinicarizzatti.com.br/cirurgica.html">
+    <title>Corpo Clínico em Palhoça-SC | Rizzatti Dermatologia e Saúde</title>
+    <meta name="description" content="Conheça a equipe médica da Clínica Rizzatti em Palhoça-SC: Dra. Karoline Rizzatti e Dr. Timotio Dorn, especialistas em dermatologia.">
+    <link rel="canonical" href="https://www.clinicarizzatti.com.br/corpo-clinico.html">
     <link rel="icon" type="image/png" href="FLOR.png">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Cirurgia Dermatológica em Palhoça-SC | Rizzatti Dermatologia e Saúde">
-    <meta property="og:description" content="Cirurgia dermatológica em Pedra Branca, Palhoça-SC: Mohs, remoção de lesões, cicatrizes e pequenas cirurgias com segurança e técnica precisa.">
-    <meta property="og:image" content="https://www.clinicarizzatti.com.br/ESP_CIRURGICA.jpg">
-    <meta property="og:url" content="https://www.clinicarizzatti.com.br/cirurgica.html">
+    <meta property="og:title" content="Corpo Clínico em Palhoça-SC | Rizzatti Dermatologia e Saúde">
+    <meta property="og:description" content="Conheça a equipe médica da Clínica Rizzatti em Palhoça-SC: Dra. Karoline Rizzatti e Dr. Timotio Dorn, especialistas em dermatologia.">
+    <meta property="og:image" content="https://www.clinicarizzatti.com.br/KAROLMED.png">
+    <meta property="og:url" content="https://www.clinicarizzatti.com.br/corpo-clinico.html">
     <meta property="og:locale" content="pt_BR">
     <meta name="twitter:card" content="summary_large_image">
 
@@ -417,91 +417,118 @@
             color: rgba(255,255,255,0.85);
         }
 
-        /* ===== PROCEDIMENTOS ===== */
-        .procedimentos {
+        /* ===== EQUIPE ===== */
+        .equipe {
             background: var(--white);
             padding: 90px 6vw;
         }
 
-        .proc-intro {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 60px;
-        }
-
-        .proc-eyebrow {
-            font-family: 'Jost', sans-serif;
-            font-size: 11px;
-            letter-spacing: 0.35em;
-            text-transform: uppercase;
-            color: var(--bronze);
-            display: block;
-            margin-bottom: 16px;
-        }
-
-        .proc-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2rem, 4vw, 2.8rem);
-            font-weight: 300;
-            color: var(--navy);
-        }
-
-        .proc-title .italic-bronze {
-            font-style: italic;
-            color: var(--bronze);
-        }
-
-        .proc-list {
-            max-width: 900px;
+        .equipe-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4rem;
+            max-width: 780px;
             margin: 0 auto;
+        }
+
+        .doctor-card {
             display: flex;
             flex-direction: column;
-            gap: 0;
-        }
-
-        .proc-item {
-            padding: 40px 0;
-            border-bottom: 1px solid #38475d;
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transform: translateY(28px);
+            transition: all 0.5s ease;
         }
 
-        .proc-item.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .doctor-card:hover {
+            transform: translateY(-8px);
         }
 
-        .proc-item:first-child {
-            border-top: 1px solid #38475d;
-        }
-
-        .proc-name {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.6rem;
-            font-weight: 500;
-            color: var(--navy);
-            margin-bottom: 14px;
+        .doctor-image-wrapper {
+            aspect-ratio: 3 / 4;
+            width: 100%;
+            background: var(--white);
+            margin-bottom: 1.8rem;
+            overflow: hidden;
+            border-radius: 4px;
             position: relative;
-            padding-left: 28px;
+            border: 1px solid rgba(213, 149, 96, 0.2);
         }
 
-        .proc-name::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%) rotate(45deg);
-            width: 10px;
-            height: 10px;
-            background: var(--bronze);
+        .doctor-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: contrast(1.05) grayscale(15%);
+            transition: filter 0.5s ease;
         }
 
-        .proc-desc {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.15rem;
-            line-height: 1.8;
-            color: rgba(56,71,93,0.75);
+        .doctor-card:hover .doctor-img {
+            filter: contrast(1) grayscale(0%);
+        }
+
+        .img-karoline {
+            object-position: center -20px;
+        }
+
+        .img-timotio {
+            object-position: center -17px;
+        }
+
+        .doctor-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .doctor-name {
+            font-family: var(--font-primary);
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: var(--navy-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .doctor-cred {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(56,71,93,0.7);
+            margin-bottom: 0.8rem;
+        }
+
+        .doctor-social {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.85rem;
+            color: var(--bronze);
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .doctor-social:hover {
+            color: var(--navy-dark);
+        }
+
+        .doctor-link {
+            display: inline-block;
+            background: #FFFFFF;
+            color: #c8886c;
+            font-family: 'Jost', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 12px 24px;
+            border: 1px solid #c8886c;
+            transition: all 0.35s ease;
+            text-decoration: none;
+        }
+
+        .doctor-link:hover {
+            background: #c8886c;
+            color: #FFFFFF;
         }
 
         /* ===== PAGE CTA ===== */
@@ -715,12 +742,14 @@
                 min-height: 50vh;
             }
 
-            .procedimentos {
+            .equipe {
                 padding: 60px 1.5rem;
             }
 
-            .proc-item {
-                padding: 30px 0;
+            .equipe-grid {
+                grid-template-columns: 1fr;
+                max-width: 340px;
+                gap: 3rem;
             }
 
             .page-cta {
@@ -789,66 +818,42 @@
     </nav>
 
     <!-- HERO -->
-    <section class="page-hero" style="background-image: url('ESP_CIRURGICA.jpg')">
+    <section class="page-hero" style="background-image: url('CONSULTORIO.png')">
         <div class="page-hero-overlay"></div>
         <div class="page-hero-content">
-            <span class="page-hero-tag">Inédito em Pedra Branca</span>
-            <h1 class="page-hero-title">Dermatologia <span class="italic-bronze">Cirúrgica</span></h1>
-            <p class="page-hero-sub">Estrutura completa e cuidado especializado para procedimentos seguros e precisos.</p>
+            <span class="page-hero-tag">Nossa Equipe</span>
+            <h1 class="page-hero-title">Corpo <span class="italic-bronze">Clínico</span></h1>
+            <p class="page-hero-sub">Médicos especialistas, atendimento humanizado.</p>
         </div>
     </section>
 
-    <!-- PROCEDIMENTOS -->
-    <section class="procedimentos">
-        <div class="proc-intro">
-            <span class="proc-eyebrow">Nossos procedimentos</span>
-            <h2 class="proc-title">Cuidado cirúrgico <span class="italic-bronze">especializado</span></h2>
-        </div>
-
-        <div class="proc-list">
-            <div class="proc-item">
-                <h3 class="proc-name">Cirurgia Micrográfica de Mohs</h3>
-                <p class="proc-desc">A cirurgia micrográfica de Mohs é a técnica mais precisa, eficaz e com melhores benefícios estéticos para o tratamento dos tipos mais frequentes de câncer da pele não melanoma (carcinoma basocelular e epidermoide). Durante o procedimento, o tecido é removido em camadas muito finas e ultrafinas, permitindo um exame microscópico imediato de cada camada até que toda a lesão tenha sido removida.</p>
+    <!-- EQUIPE -->
+    <section class="equipe">
+        <div class="equipe-grid">
+            <!-- Card 1 -->
+            <div class="doctor-card">
+                <div class="doctor-image-wrapper">
+                    <img src="KAROLMED.png" alt="Dra. Karoline Rizzatti" class="doctor-img img-karoline">
+                </div>
+                <div class="doctor-info">
+                    <h3 class="doctor-name">Dra. Karoline Rizzatti</h3>
+                    <p class="doctor-cred">CRM/SC 17360 · RQE 13318 · Especialista SBD</p>
+                    <a href="https://instagram.com/karolrizzatti.dermato" target="_blank" class="doctor-social">@karolrizzatti.dermato</a>
+                    <a href="medico-karoline.html" class="doctor-link">SAIBA MAIS →</a>
+                </div>
             </div>
 
-            <div class="proc-item">
-                <h3 class="proc-name">Cirurgia para Hidradenite Supurativa</h3>
-                <p class="proc-desc">A hidradenite supurativa é uma condição inflamatória crônica que afeta as glândulas apócrinas da pele. O tratamento cirúrgico é indicado para casos resistentes ao tratamento clínico. Nossos procedimentos cirúrgicos são especializados em remover áreas afetadas com segurança e eficácia, minimizando cicatrizes.</p>
-            </div>
-
-            <div class="proc-item">
-                <h3 class="proc-name">Cirurgia de Rinofima</h3>
-                <p class="proc-desc">O rinofima é uma forma avançada de rosácea que causa espessamento e desfiguração do nariz. A cirurgia dermatológica é o tratamento mais eficaz, reduzindo o volume do tecido nasal hipertrofiado e restaurando a forma natural do nariz. Oferecemos técnicas modernas para resultados estéticos superiores.</p>
-            </div>
-
-            <div class="proc-item">
-                <h3 class="proc-name">Cirurgia para Bromidrose</h3>
-                <p class="proc-desc">A bromidrose é o odor corporal excessivo causado pela atividade das glândulas apócrinas. Quando o tratamento clínico não é eficaz, a cirurgia de remoção dessas glândulas oferece resultados duradouros. Realizamos o procedimento com técnicas minimamente invasivas.</p>
-            </div>
-
-            <div class="proc-item">
-                <h3 class="proc-name">Cirurgia do Aparelho Ungueal</h3>
-                <p class="proc-desc">As doenças das unhas podem exigir intervenção cirúrgica, incluindo remoção de unhas (matricectomia), correção de unhas encravadas ou tratamento de tumores ungueais. Nossos cirurgiões utilizam técnicas precisas para preservar a função e estética das unhas.</p>
-            </div>
-
-            <div class="proc-item">
-                <h3 class="proc-name">Cirurgia para Xantelasma</h3>
-                <p class="proc-desc">O xantelasma é um depósito de lipídios na região das pálpebras. A cirurgia dermatológica remove essas lesões, restaurando a aparência natural dos olhos. Utilizamos técnicas precisas para evitar danos aos tecidos adjacentes delicados.</p>
-            </div>
-
-            <div class="proc-item">
-                <h3 class="proc-name">Tratamento de Cicatrizes Queloideanas</h3>
-                <p class="proc-desc">As cicatrizes queloideanas são proliferações excessivas de tecido cicatricial que ultrapassam os limites da ferida original. Oferecemos múltiplas opções de tratamento cirúrgico, incluindo excisão, injeções intra-lesionais e laserterapia para reduzir volume e melhorar a aparência.</p>
-            </div>
-
-            <div class="proc-item">
-                <h3 class="proc-name">Correção de Cicatrizes</h3>
-                <p class="proc-desc">Cicatrizes podem ser corrigidas através de diversas técnicas cirúrgicas, como revisão de cicatrizes, enxertos de pele e rearranjo técnico. Cada caso é avaliado individualmente para determinar a melhor abordagem, buscando sempre o melhor resultado estético possível.</p>
-            </div>
-
-            <div class="proc-item">
-                <h3 class="proc-name">Pequenas Cirurgias</h3>
-                <p class="proc-desc">Realizamos diversas pequenas cirurgias dermatológicas, incluindo remoção de lesões benignas, lipomas, cistos epidérmicos e outras lesões cutâneas. Todos os procedimentos são realizados com anestesia local em ambiente seguro e estéril.</p>
+            <!-- Card 2 -->
+            <div class="doctor-card">
+                <div class="doctor-image-wrapper">
+                    <img src="TIMOTIO.png" alt="Dr. Timotio Dorn" class="doctor-img img-timotio">
+                </div>
+                <div class="doctor-info">
+                    <h3 class="doctor-name">Dr. Timotio Dorn</h3>
+                    <p class="doctor-cred">CRM/SC 22594 · RQE 13225</p>
+                    <a href="https://instagram.com/drtimotiodorn" target="_blank" class="doctor-social">@drtimotiodorn</a>
+                    <a href="medico-timotio.html" class="doctor-link">SAIBA MAIS →</a>
+                </div>
             </div>
         </div>
     </section>
@@ -943,20 +948,21 @@
             });
         }
 
-        // SCROLL REVEAL - PROCEDIMENTOS
-        const procItems = document.querySelectorAll('.proc-item');
+        // SCROLL REVEAL - CARDS DA EQUIPE
+        const doctorCards = document.querySelectorAll('.doctor-card');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry, index) => {
                 if (entry.isIntersecting) {
                     setTimeout(() => {
-                        entry.target.classList.add('visible');
-                    }, index * 100);
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, index * 120);
                     observer.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.1 });
 
-        procItems.forEach(item => observer.observe(item));
+        doctorCards.forEach(card => observer.observe(card));
 
         // TRANSIÇÃO ENTRE PÁGINAS (fade-in / fade-out)
         function markPageLoaded() {
@@ -989,5 +995,3 @@
     </script>
 </body>
 </html>
-
-

@@ -2,10 +2,16 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <script>
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.documentElement.classList.add('js-transition');
+        }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rizzatti Dermatologia e Saúde | Clínica em Palhoça-SC</title>
     <meta name="description" content="Clínica de dermatologia em Palhoça-SC (Pedra Branca), com Dra. Karoline Rizzatti e Dr. Timotio Dorn. Dermatologia clínica, cirúrgica, estética e tricologia. Agende sua consulta.">
     <link rel="canonical" href="https://www.clinicarizzatti.com.br/">
+    <link rel="icon" type="image/png" href="FLOR.png">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
@@ -43,6 +49,33 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        /* ===== TRANSIÇÃO ENTRE PÁGINAS (cross-fade) ===== */
+        @media (prefers-reduced-motion: no-preference) {
+            @view-transition {
+                navigation: auto;
+            }
+        }
+
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+            animation-duration: 350ms;
+            animation-timing-function: ease-in-out;
+        }
+
+        html.js-transition body {
+            opacity: 0;
+        }
+
+        html.js-transition.loaded body {
+            opacity: 1;
+            transition: opacity 350ms ease;
+        }
+
+        html.fade-out body {
+            opacity: 0 !important;
+            transition: opacity 250ms ease !important;
         }
 
         html {
@@ -181,6 +214,104 @@
 
         .nav-menu a:hover::after {
             width: 100%;
+        }
+
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .dropdown-arrow {
+            display: inline-block;
+            font-size: 9px;
+            margin-left: 4px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-dropdown:hover .dropdown-arrow,
+        .nav-dropdown.open .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(6px);
+            min-width: 230px;
+            list-style: none;
+            padding: 10px 0;
+            margin: 0;
+            background: rgba(117, 136, 153, 0.97);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(213, 149, 96, 0.15);
+            border-top: 2px solid var(--bronze);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            z-index: 20;
+        }
+
+        .nav-dropdown:hover .dropdown-menu,
+        .nav-dropdown.open .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 26px;
+            font-family: 'Jost', sans-serif;
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.75);
+            white-space: nowrap;
+            transition: color 0.25s ease, background 0.25s ease;
+        }
+
+        .dropdown-menu a::after {
+            content: none;
+        }
+
+        .dropdown-menu a:hover {
+            color: var(--white);
+            background: rgba(200, 136, 108, 0.18);
+        }
+
+        @media (max-width: 768px) {
+            .nav-dropdown {
+                width: 100%;
+            }
+
+            .dropdown-menu {
+                position: static;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+                background: rgba(0, 0, 0, 0.15);
+                border: none;
+                box-shadow: none;
+                max-height: 0;
+                overflow: hidden;
+                padding: 0;
+                transition: max-height 0.35s ease, padding 0.35s ease;
+            }
+
+            .nav-dropdown.open .dropdown-menu {
+                max-height: 400px;
+                padding: 8px 0;
+            }
+
+            .dropdown-menu a {
+                padding: 10px 16px 10px 32px;
+            }
         }
 
         .nav-divider {
@@ -956,8 +1087,10 @@
 
         .corpo-clinico-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 3rem;
+            max-width: 780px;
+            margin: 0 auto;
         }
 
         .doctor-card {
@@ -980,11 +1113,6 @@
             overflow: hidden;
             border-radius: 4px;
             position: relative;
-        }
-
-        .placeholder-wrapper {
-            background: #e8ecef;
-            border: 1px dashed rgba(117, 136, 153, 0.15);
         }
 
         .doctor-img {
@@ -1084,7 +1212,9 @@
 
         /* ===== CTA CENTRAL ===== */
         .cta-central {
-            background: var(--bronze);
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(0, 0, 0, 0.06) 55%, rgba(0, 0, 0, 0.16) 100%),
+                var(--bronze);
             color: var(--navy);
             padding: 7rem 2rem;
             text-align: center;
@@ -1096,13 +1226,23 @@
             content: '';
             position: absolute;
             inset: 0;
-            background-image: url('BACK.png');
-            background-size: 400px;
-            background-repeat: repeat;
-            opacity: 0.08;
-            mix-blend-mode: multiply;
             pointer-events: none;
             z-index: 0;
+            display: none;
+        }
+
+        /* Textura com intensidade variável (mask-image); sem suporte, cai no bronze liso acima */
+        @supports (mask-image: linear-gradient(#000, transparent)) or (-webkit-mask-image: linear-gradient(#000, transparent)) {
+            .cta-central::before {
+                display: block;
+                background-image: url('BACK.png');
+                background-size: 400px;
+                background-repeat: repeat;
+                opacity: 0.16;
+                mix-blend-mode: multiply;
+                -webkit-mask-image: radial-gradient(circle at 14% 20%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.5) 30%, rgba(0, 0, 0, 0) 70%);
+                mask-image: radial-gradient(circle at 14% 20%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.5) 30%, rgba(0, 0, 0, 0) 70%);
+            }
         }
 
         .cta-central-text {
@@ -1187,33 +1327,61 @@
         .localizacao {
             background: var(--navy-dark);
             color: var(--white);
-            padding: 8rem 6vw;
+            padding: 6rem 6vw 0;
         }
 
-        .localizacao-container {
+        .localizacao .section-container {
             max-width: 1200px;
             margin: 0 auto;
+        }
+
+        .localizacao .section-eyebrow {
+            opacity: 1;
+        }
+
+        .localizacao .section-title {
+            color: var(--white);
+        }
+
+        /* --- LINHA SUPERIOR: card + carrossel --- */
+        .localizacao-top {
             display: grid;
-            grid-template-columns: 0.8fr 1.2fr;
-            gap: 5rem;
-            align-items: center;
+            grid-template-columns: 0.85fr 1.15fr;
+            gap: 3.5rem;
+            align-items: stretch;
         }
 
         .localizacao-info {
+            background: var(--gray-light);
+            color: var(--navy-dark);
+            border: 1px solid rgba(213, 149, 96, 0.4);
+            border-radius: 10px;
+            padding: 2.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.6rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
             opacity: 0;
             animation: fadeInLeft 0.8s ease forwards;
         }
 
+        .localizacao-logo {
+            height: 44px;
+            width: auto;
+            align-self: flex-start;
+            /* LOGO.png é branca; filtro recolore para --bronze (#c8886c) sobre o fundo claro do card */
+            filter: brightness(0) saturate(100%) invert(82%) sepia(86%) saturate(634%) hue-rotate(297deg) brightness(75%) contrast(113%);
+        }
+
         .info-block {
-            margin-bottom: 3.5rem;
             display: flex;
             align-items: flex-start;
-            gap: 1.5rem;
+            gap: 1.2rem;
         }
 
         .info-icon {
-            width: 26px;
-            height: 26px;
+            width: 24px;
+            height: 24px;
             color: var(--bronze);
             flex-shrink: 0;
             margin-top: 2px;
@@ -1225,33 +1393,38 @@
 
         .info-title {
             font-family: 'Jost', sans-serif;
-            font-size: 0.85rem;
+            font-size: 0.78rem;
             font-weight: 500;
-            letter-spacing: 0.25em;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
-            margin-bottom: 1.2rem;
+            margin-bottom: 0.6rem;
             color: var(--bronze);
         }
 
         .info-text {
             font-family: 'Bodoni Moda', serif;
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             font-weight: 300;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.7;
+            color: rgba(56, 71, 93, 0.85);
         }
 
         .info-link {
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--navy-dark);
             font-family: 'Bodoni Moda', serif;
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             font-weight: 300;
             text-decoration: none;
             position: relative;
-            padding-bottom: 4px;
-            display: inline-block;
-            margin-bottom: 10px;
+            padding-bottom: 3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             transition: color 0.4s ease;
+        }
+
+        .contact-line-icon {
+            flex-shrink: 0;
         }
 
         .info-link::after {
@@ -1273,22 +1446,201 @@
             width: 100%;
         }
 
-        .localizacao-map {
-            border: 1px solid rgba(213, 149, 96, 0.25);
-            border-radius: 12px;
-            min-height: 480px;
-            overflow: hidden;
+        .localizacao-routes {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 1rem 0;
+            border-top: 1px solid rgba(213, 149, 96, 0.3);
+            border-bottom: 1px solid rgba(213, 149, 96, 0.3);
+        }
+
+        .route-link {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--navy-dark);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .route-link:hover {
+            color: var(--bronze);
+            transform: translateX(3px);
+        }
+
+        .localizacao-book-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            align-self: flex-start;
+            background: var(--navy);
+            color: var(--white);
+            font-family: 'Jost', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 1rem 1.8rem;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .localizacao-book-btn:hover {
+            background: var(--navy-dark);
+            transform: translateY(-2px);
+        }
+
+        .localizacao-book-btn svg {
+            flex-shrink: 0;
+        }
+
+        /* --- CARROSSEL DE IMAGENS --- */
+        .localizacao-carousel {
             position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            min-height: 420px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
             opacity: 0;
             animation: fadeInRight 0.8s ease forwards;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-track {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 420px;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 0.7s ease;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.85);
+            color: var(--bronze);
+            border: 1px solid rgba(213, 149, 96, 0.5);
+            font-size: 1.3rem;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .carousel-arrow:hover {
+            background: var(--bronze);
+            color: var(--white);
+        }
+
+        .carousel-arrow-prev {
+            left: 16px;
+        }
+
+        .carousel-arrow-next {
+            right: 16px;
+        }
+
+        /* --- MAPA FULL-WIDTH --- */
+        .localizacao-map {
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            width: 100vw;
+            margin-top: 4.5rem;
+            min-height: 420px;
+            overflow: hidden;
+            border-top: 1px solid rgba(213, 149, 96, 0.3);
+            opacity: 0;
+            animation: fadeInRight 0.8s ease forwards;
         }
 
         .localizacao-map iframe {
             width: 100%;
             height: 100%;
-            min-height: 480px;
+            min-height: 420px;
             display: block;
+            filter: saturate(0.85) contrast(0.96);
+        }
+
+        .maps-open-btn {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--white);
+            color: var(--navy-dark);
+            font-family: 'Jost', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.6rem 1.1rem;
+            border-radius: 3px;
+            border: 1px solid rgba(213, 149, 96, 0.4);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .maps-open-btn:hover {
+            background: var(--bronze);
+            color: var(--white);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .localizacao-info,
+            .localizacao-carousel,
+            .localizacao-map {
+                animation: none;
+                opacity: 1;
+            }
+
+            .carousel-slide {
+                transition: none;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .localizacao-top {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .localizacao-carousel,
+            .carousel-track {
+                min-height: 340px;
+            }
+
+            .localizacao-map,
+            .localizacao-map iframe {
+                min-height: 340px;
+            }
         }
 
         /* ===== FOOTER ===== */
@@ -1575,13 +1927,40 @@
                 font-size: 1.8rem;
             }
 
-            .localizacao-container {
+            .localizacao {
+                padding: 4.5rem 1.5rem 0;
+            }
+
+            .localizacao-top {
                 grid-template-columns: 1fr;
                 gap: 2rem;
             }
 
+            .localizacao-info {
+                padding: 2rem;
+            }
+
+            .localizacao-book-btn {
+                width: 100%;
+            }
+
+            .localizacao-carousel,
+            .carousel-track {
+                min-height: 280px;
+            }
+
             .localizacao-map {
-                min-height: 300px;
+                margin-top: 3rem;
+                min-height: 260px;
+            }
+
+            .localizacao-map iframe {
+                min-height: 260px;
+            }
+
+            .maps-open-btn {
+                font-size: 0.7rem;
+                padding: 0.5rem 0.9rem;
             }
 
             .logo {
@@ -1684,8 +2063,19 @@
         <ul class="nav-menu">
             <li><a href="#home">Home</a></li>
             <li><a href="sobre.html">Sobre</a></li>
-            <li><a href="#servicos">Serviços</a></li>
-            <li><a href="#corpo-clinico">Corpo Clínico</a></li>
+            <li class="nav-dropdown">
+                <a href="javascript:void(0)" class="dropdown-toggle">Especialidades <span class="dropdown-arrow">&#9662;</span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="clinica.html">Clínica</a></li>
+                    <li><a href="cirurgica.html">Cirúrgica</a></li>
+                    <li><a href="estetica-facial.html">Estética Facial</a></li>
+                    <li><a href="estetica-corporal.html">Estética Corporal</a></li>
+                    <li><a href="tricologica.html">Tricologia</a></li>
+                    <li><a href="tecnologias.html">Tecnologias</a></li>
+                </ul>
+            </li>
+            <li><a href="corpo-clinico.html">Corpo Clínico</a></li>
+            <li><a href="tecnologias.html">Tecnologias</a></li>
             <li><a href="#contato">Contato</a></li>
         </ul>
 
@@ -1770,7 +2160,7 @@
                     <div class="service-card service-card-lg" data-bg="ESP_TRICOLOGICA.webp">
                         <div class="card-overlay"></div>
                         <div class="card-content">
-                            <h3 class="service-title">Tricológia</h3>
+                            <h3 class="service-title">Tricologia</h3>
                             <a href="tricologica.html" class="service-link">Saiba mais →</a>
                         </div>
                     </div>
@@ -1883,18 +2273,6 @@
                         <a href="medico-timotio.html" class="doctor-link">SAIBA MAIS →</a>
                     </div>
                 </div>
-
-                <!-- Card 3 -->
-                <div class="doctor-card">
-                    <div class="doctor-image-wrapper placeholder-wrapper">
-                    </div>
-                    <div class="doctor-info">
-                        <h3 class="doctor-name">[Nome do Profissional]</h3>
-                        <p class="doctor-cred">CRM/SC 00000 · RQE 00000</p>
-                        <a href="#" class="doctor-social">@instagram</a>
-                        <a href="#" class="doctor-link">SAIBA MAIS →</a>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -1917,40 +2295,95 @@
     <!-- LOCALIZAÇÃOO -->
     <section class="localizacao" id="contato">
         <div class="section-container">
-            <div class="localizacao-container">
+            <div class="section-header">
+                <span class="section-eyebrow">Onde estamos</span>
+                <h2 class="section-title">Venha nos <span class="italic-bronze">conhecer</span></h2>
+            </div>
+
+            <!-- LINHA SUPERIOR: card de info + carrossel -->
+            <div class="localizacao-top">
                 <div class="localizacao-info">
+                    <img src="LOGO.png" alt="Rizzatti Dermatologia e Saúde" class="localizacao-logo">
+
                     <div class="info-block">
                         <svg class="info-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                         <div class="info-content">
-                            <h3 class="info-title">Endereço</h3>
+                            <h4 class="info-title">Endereço</h4>
                             <p class="info-text">Rua Rubens de Arruda Ramos<br>Passeio Pedra Branca<br>Palhoça-SC</p>
                         </div>
                     </div>
 
                     <div class="info-block">
+                        <svg class="info-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></circle><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 7v5l3.5 2"></path></svg>
+                        <div class="info-content">
+                            <h4 class="info-title">Horário de atendimento</h4>
+                            <!-- TODO: cliente vai fornecer horário -->
+                            <p class="info-text">Segunda a Sexta: [preencher]<br>Sábado: [preencher]</p>
+                        </div>
+                    </div>
+
+                    <div class="localizacao-routes">
+                        <a href="https://waze.com/ul?q=Rua+Rubens+de+Arruda+Ramos+Palhoca+SC" target="_blank" class="route-link">› Traçar rota pelo Waze</a>
+                        <a href="https://www.google.com/maps?q=Rua+Rubens+de+Arruda+Ramos+Passeio+Pedra+Branca+Palhoca+SC" target="_blank" class="route-link">› Traçar rota pelo Google Maps</a>
+                    </div>
+
+                    <div class="info-block">
                         <svg class="info-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
                         <div class="info-content">
-                            <h3 class="info-title">Contato</h3>
+                            <h4 class="info-title">Contato</h4>
                             <p class="info-text">
-                                <a href="https://wa.me/5548991485818" class="info-link" target="_blank">WhatsApp: (48) 99148-5818</a><br>
-                                <a href="https://instagram.com/rizzatti.dermatologia" class="info-link" target="_blank">Instagram: @rizzatti.dermatologia</a>
+                                <a href="https://wa.me/5548991485818" class="info-link" target="_blank">
+                                    <svg class="contact-line-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                    </svg>
+                                    (48) 99148-5818
+                                </a><br>
+                                <a href="https://instagram.com/rizzatti.dermatologia" class="info-link" target="_blank">
+                                    <svg class="contact-line-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="4" y="4" width="16" height="16" rx="4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></rect>
+                                        <circle cx="12" cy="12" r="3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
+                                        <line x1="16.5" y1="7.5" x2="16.5" y2="7.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+                                    </svg>
+                                    @rizzatti.dermatologia
+                                </a>
                             </p>
                         </div>
                     </div>
+
+                    <a href="https://wa.me/5548991485818" target="_blank" class="localizacao-book-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        Agendar consulta
+                    </a>
                 </div>
 
-                <div class="localizacao-map">
-                    <iframe
-                        src="https://www.google.com/maps?q=Rua+Rubens+de+Arruda+Ramos+Passeio+Pedra+Branca+Palhoca+SC&output=embed"
-                        width="100%"
-                        height="100%"
-                        style="border:0;"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
+                <div class="localizacao-carousel">
+                    <div class="carousel-track" id="localCarouselTrack">
+                        <div class="carousel-slide active" style="background-image:url('RECEPCAO.png')"></div>
+                        <div class="carousel-slide" style="background-image:url('RECEPCAO1.png')"></div>
+                        <div class="carousel-slide" style="background-image:url('RECEPCAO2.png')"></div>
+                        <div class="carousel-slide" style="background-image:url('CONSULTORIO.png')"></div>
+                        <div class="carousel-slide" style="background-image:url('PROCEDIMENTOS.png')"></div>
+                    </div>
+                    <button class="carousel-arrow carousel-arrow-prev" id="localCarouselPrev" aria-label="Imagem anterior">‹</button>
+                    <button class="carousel-arrow carousel-arrow-next" id="localCarouselNext" aria-label="Próxima imagem">›</button>
                 </div>
             </div>
+        </div>
+
+        <!-- MAPA FULL-WIDTH -->
+        <div class="localizacao-map">
+            <iframe
+                src="https://www.google.com/maps?q=Rua+Rubens+de+Arruda+Ramos+Passeio+Pedra+Branca+Palhoca+SC&output=embed"
+                width="100%"
+                height="100%"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+            <a href="https://www.google.com/maps?q=Rua+Rubens+de+Arruda+Ramos+Passeio+Pedra+Branca+Palhoca+SC" target="_blank" class="maps-open-btn">Abrir no Maps ↗</a>
         </div>
     </section>
 
@@ -2017,9 +2450,25 @@
         const hamburger = document.getElementById('hamburger');
         const navMenu = document.querySelector('.nav-menu');
         hamburger.addEventListener('click', () => navMenu.classList.toggle('active'));
-        document.querySelectorAll('.nav-menu a').forEach(link =>
-            link.addEventListener('click', () => navMenu.classList.remove('active'))
-        );
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            if (link.classList.contains('dropdown-toggle')) return;
+            link.addEventListener('click', () => navMenu.classList.remove('active'));
+        });
+
+        // DROPDOWN "ESPECIALIDADES"
+        const navDropdown = document.querySelector('.nav-dropdown');
+        const dropdownToggle = document.querySelector('.dropdown-toggle');
+        if (navDropdown && dropdownToggle) {
+            dropdownToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                navDropdown.classList.toggle('open');
+            });
+            document.addEventListener('click', (e) => {
+                if (!navDropdown.contains(e.target)) {
+                    navDropdown.classList.remove('open');
+                }
+            });
+        }
 
         // NAVBAR SCROLL
         const nav = document.querySelector('nav');
@@ -2066,6 +2515,69 @@
 
         startTimer();
 
+        // CARROSSEL DE IMAGENS - LOCALIZAÇÃO
+        const galSlides = document.querySelectorAll('.carousel-slide');
+        const galPrevBtn = document.getElementById('localCarouselPrev');
+        const galNextBtn = document.getElementById('localCarouselNext');
+        const galTrack = document.getElementById('localCarouselTrack');
+        let galCurrent = 0;
+        let galTimer;
+
+        function goToGalSlide(index) {
+            galSlides[galCurrent].classList.remove('active');
+            galCurrent = (index + galSlides.length) % galSlides.length;
+            galSlides[galCurrent].classList.add('active');
+        }
+
+        function nextGalSlide() {
+            goToGalSlide(galCurrent + 1);
+        }
+
+        function prevGalSlide() {
+            goToGalSlide(galCurrent - 1);
+        }
+
+        function startGalTimer() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            galTimer = setInterval(nextGalSlide, 5000);
+        }
+
+        function resetGalTimer() {
+            clearInterval(galTimer);
+            startGalTimer();
+        }
+
+        if (galSlides.length) {
+            galNextBtn.addEventListener('click', () => {
+                nextGalSlide();
+                resetGalTimer();
+            });
+
+            galPrevBtn.addEventListener('click', () => {
+                prevGalSlide();
+                resetGalTimer();
+            });
+
+            let galTouchStartX = 0;
+            galTrack.addEventListener('touchstart', (e) => {
+                galTouchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            galTrack.addEventListener('touchend', (e) => {
+                const diff = e.changedTouches[0].screenX - galTouchStartX;
+                if (Math.abs(diff) > 40) {
+                    if (diff < 0) {
+                        nextGalSlide();
+                    } else {
+                        prevGalSlide();
+                    }
+                    resetGalTimer();
+                }
+            }, { passive: true });
+
+            startGalTimer();
+        }
+
         // SCROLL REVEAL
         const revealEls = document.querySelectorAll(
             '.service-card, .doctor-card, .sobre-content, .sobre-image, .localizacao-info, .localizacao-map'
@@ -2106,6 +2618,35 @@
                     window.location.href = link.href;
                 });
             }
+        });
+
+        // TRANSIÇÃO ENTRE PÁGINAS (fade-in / fade-out)
+        function markPageLoaded() {
+            document.documentElement.classList.add('loaded');
+        }
+        document.addEventListener('DOMContentLoaded', markPageLoaded);
+        window.addEventListener('load', markPageLoaded);
+        setTimeout(markPageLoaded, 1500);
+
+        document.addEventListener('click', function (e) {
+            const link = e.target.closest('a');
+            if (!link) return;
+            if (link.target === '_blank') return;
+            if (link.hasAttribute('download')) return;
+
+            const href = link.getAttribute('href') || '';
+            if (!href || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+            if (href.startsWith('#')) return;
+            if (link.hostname && link.hostname !== window.location.hostname) return;
+            if (!/\.html(#.*)?$/.test(href)) return;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            if ('startViewTransition' in document) return;
+
+            e.preventDefault();
+            document.documentElement.classList.add('fade-out');
+            setTimeout(function () {
+                window.location.href = href;
+            }, 250);
         });
     </script>
 </body>

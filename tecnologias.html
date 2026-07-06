@@ -8,15 +8,15 @@
         }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cirurgia Dermatológica em Palhoça-SC | Rizzatti Dermatologia e Saúde</title>
-    <meta name="description" content="Cirurgia dermatológica em Pedra Branca, Palhoça-SC: Mohs, remoção de lesões, cicatrizes e pequenas cirurgias com segurança e técnica precisa.">
-    <link rel="canonical" href="https://www.clinicarizzatti.com.br/cirurgica.html">
+    <title>Tecnologias em Palhoça-SC | Rizzatti Dermatologia e Saúde</title>
+    <meta name="description" content="Conheça os equipamentos de última geração da Clínica Rizzatti em Palhoça-SC: ultrassom micro e macrofocado, radiofrequência microagulhada, laser de CO₂ fracionado e mais.">
+    <link rel="canonical" href="https://www.clinicarizzatti.com.br/tecnologias.html">
     <link rel="icon" type="image/png" href="FLOR.png">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Cirurgia Dermatológica em Palhoça-SC | Rizzatti Dermatologia e Saúde">
-    <meta property="og:description" content="Cirurgia dermatológica em Pedra Branca, Palhoça-SC: Mohs, remoção de lesões, cicatrizes e pequenas cirurgias com segurança e técnica precisa.">
-    <meta property="og:image" content="https://www.clinicarizzatti.com.br/ESP_CIRURGICA.jpg">
-    <meta property="og:url" content="https://www.clinicarizzatti.com.br/cirurgica.html">
+    <meta property="og:title" content="Tecnologias em Palhoça-SC | Rizzatti Dermatologia e Saúde">
+    <meta property="og:description" content="Conheça os equipamentos de última geração da Clínica Rizzatti em Palhoça-SC: ultrassom micro e macrofocado, radiofrequência microagulhada, laser de CO₂ fracionado e mais.">
+    <meta property="og:image" content="https://www.clinicarizzatti.com.br/ESP_TRICOLOGICA.webp">
+    <meta property="og:url" content="https://www.clinicarizzatti.com.br/tecnologias.html">
     <meta property="og:locale" content="pt_BR">
     <meta name="twitter:card" content="summary_large_image">
 
@@ -451,6 +451,17 @@
             color: var(--bronze);
         }
 
+        .proc-intro-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: rgba(56,71,93,0.75);
+            margin-top: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         .proc-list {
             max-width: 900px;
             margin: 0 auto;
@@ -465,6 +476,7 @@
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.6s ease, transform 0.6s ease;
+            scroll-margin-top: 100px;
         }
 
         .proc-item.visible {
@@ -502,6 +514,45 @@
             font-size: 1.15rem;
             line-height: 1.8;
             color: rgba(56,71,93,0.75);
+        }
+
+        .proc-item-inner {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+        }
+
+        .proc-img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .proc-text {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .proc-link {
+            display: inline-block;
+            margin-top: 18px;
+            background: transparent;
+            color: var(--bronze);
+            font-family: 'Jost', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 10px 22px;
+            border: 1px solid rgba(200, 136, 108, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .proc-link:hover {
+            background: var(--bronze);
+            color: var(--white);
+            border-color: var(--bronze);
         }
 
         /* ===== PAGE CTA ===== */
@@ -723,6 +774,15 @@
                 padding: 30px 0;
             }
 
+            .proc-item-inner {
+                gap: 20px;
+            }
+
+            .proc-img {
+                width: 90px;
+                height: 90px;
+            }
+
             .page-cta {
                 padding: 60px 1.5rem;
             }
@@ -789,66 +849,93 @@
     </nav>
 
     <!-- HERO -->
-    <section class="page-hero" style="background-image: url('ESP_CIRURGICA.jpg')">
+    <section class="page-hero" style="background-image: url('ESP_TRICOLOGICA.webp')">
         <div class="page-hero-overlay"></div>
         <div class="page-hero-content">
-            <span class="page-hero-tag">Inédito em Pedra Branca</span>
-            <h1 class="page-hero-title">Dermatologia <span class="italic-bronze">Cirúrgica</span></h1>
-            <p class="page-hero-sub">Estrutura completa e cuidado especializado para procedimentos seguros e precisos.</p>
+            <span class="page-hero-tag">Equipamentos de Última Geração</span>
+            <h1 class="page-hero-title">Tecnologia <span class="italic-bronze">e Inovação</span></h1>
+            <p class="page-hero-sub">Equipamentos de última geração para tratamentos <br>personalizados, seguros e com resultados naturais.</p>
         </div>
     </section>
 
     <!-- PROCEDIMENTOS -->
     <section class="procedimentos">
-        <div class="proc-intro">
-            <span class="proc-eyebrow">Nossos procedimentos</span>
-            <h2 class="proc-title">Cuidado cirúrgico <span class="italic-bronze">especializado</span></h2>
-        </div>
-
         <div class="proc-list">
-            <div class="proc-item">
-                <h3 class="proc-name">Cirurgia Micrográfica de Mohs</h3>
-                <p class="proc-desc">A cirurgia micrográfica de Mohs é a técnica mais precisa, eficaz e com melhores benefícios estéticos para o tratamento dos tipos mais frequentes de câncer da pele não melanoma (carcinoma basocelular e epidermoide). Durante o procedimento, o tecido é removido em camadas muito finas e ultrafinas, permitindo um exame microscópico imediato de cada camada até que toda a lesão tenha sido removida.</p>
+            <div class="proc-item" id="liftera">
+                <div class="proc-item-inner">
+                    <img src="LIFTERA.png" alt="Liftera - Ultrassom Micro e Macrofocado" class="proc-img">
+                    <div class="proc-text">
+                        <h3 class="proc-name">Liftera® – Ultrassom Micro e Macrofocado</h3>
+                        <p class="proc-desc">Tecnologia de ultrassom focalizado que atua em diferentes profundidades da pele, promovendo efeito lifting, melhora da flacidez facial e corporal, definição do contorno e estímulo intenso de colágeno, sem necessidade de cirurgia.</p>
+                        <a href="https://wa.me/5548991485818?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o%20sobre%20o%20tratamento%20com%20Liftera%20%28Ultrassom%20Micro%20e%20Macrofocado%29." target="_blank" class="proc-link">Agendar avaliação →</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="proc-item">
-                <h3 class="proc-name">Cirurgia para Hidradenite Supurativa</h3>
-                <p class="proc-desc">A hidradenite supurativa é uma condição inflamatória crônica que afeta as glândulas apócrinas da pele. O tratamento cirúrgico é indicado para casos resistentes ao tratamento clínico. Nossos procedimentos cirúrgicos são especializados em remover áreas afetadas com segurança e eficácia, minimizando cicatrizes.</p>
+            <div class="proc-item" id="aura">
+                <div class="proc-item-inner">
+                    <img src="AURA.png" alt="Aura - Escaneamento Facial" class="proc-img">
+                    <div class="proc-text">
+                        <h3 class="proc-name">Aura – Escaneamento Facial</h3>
+                        <p class="proc-desc">Sistema avançado de análise facial que avalia manchas, poros, rugas, textura, vascularização e diversos parâmetros da pele, permitindo diagnóstico preciso e acompanhamento objetivo dos resultados ao longo do tratamento.</p>
+                        <a href="https://wa.me/5548991485818?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o%20com%20o%20escaneamento%20facial%20Aura." target="_blank" class="proc-link">Agendar avaliação →</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="proc-item">
-                <h3 class="proc-name">Cirurgia de Rinofima</h3>
-                <p class="proc-desc">O rinofima é uma forma avançada de rosácea que causa espessamento e desfiguração do nariz. A cirurgia dermatológica é o tratamento mais eficaz, reduzindo o volume do tecido nasal hipertrofiado e restaurando a forma natural do nariz. Oferecemos técnicas modernas para resultados estéticos superiores.</p>
+            <div class="proc-item" id="megaderm">
+                <div class="proc-item-inner">
+                    <img src="LMG.png" alt="MegaDERM - Radiofrequência Microagulhada" class="proc-img">
+                    <div class="proc-text">
+                        <h3 class="proc-name">MegaDERM – Radiofrequência Microagulhada</h3>
+                        <p class="proc-desc">Associa microagulhas à radiofrequência para estimular colágeno de forma intensa, melhorando flacidez, rugas, poros dilatados, cicatrizes de acne e a qualidade global da pele. Também é uma excelente opção para tratamentos capilares, auxiliando no estímulo do couro cabeludo, na potencialização da entrega de ativos e no manejo de diferentes tipos de alopecia.</p>
+                        <a href="https://wa.me/5548991485818?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o%20sobre%20o%20tratamento%20com%20MegaDERM%20%28Radiofrequ%C3%AAncia%20Microagulhada%29." target="_blank" class="proc-link">Agendar avaliação →</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="proc-item">
-                <h3 class="proc-name">Cirurgia para Bromidrose</h3>
-                <p class="proc-desc">A bromidrose é o odor corporal excessivo causado pela atividade das glândulas apócrinas. Quando o tratamento clínico não é eficaz, a cirurgia de remoção dessas glândulas oferece resultados duradouros. Realizamos o procedimento com técnicas minimamente invasivas.</p>
+            <div class="proc-item" id="mesojectgun">
+                <div class="proc-item-inner">
+                    <img src="MESO.png" alt="MesojectGun - Eletroporação" class="proc-img">
+                    <div class="proc-text">
+                        <h3 class="proc-name">MesojectGun – Eletroporação</h3>
+                        <p class="proc-desc">Permite a infusão de ativos na pele e no couro cabeludo sem o uso de agulhas, aumentando sua permeação de forma confortável, segura e minimamente invasiva.</p>
+                        <a href="https://wa.me/5548991485818?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o%20sobre%20o%20tratamento%20com%20MesojectGun%20%28Eletropora%C3%A7%C3%A3o%29." target="_blank" class="proc-link">Agendar avaliação →</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="proc-item">
-                <h3 class="proc-name">Cirurgia do Aparelho Ungueal</h3>
-                <p class="proc-desc">As doenças das unhas podem exigir intervenção cirúrgica, incluindo remoção de unhas (matricectomia), correção de unhas encravadas ou tratamento de tumores ungueais. Nossos cirurgiões utilizam técnicas precisas para preservar a função e estética das unhas.</p>
+            <div class="proc-item" id="etherea">
+                <div class="proc-item-inner">
+                    <img src="ETHEREA.png" alt="Plataforma Etherea MX" class="proc-img">
+                    <div class="proc-text">
+                        <h3 class="proc-name">Plataforma Etherea MX</h3>
+                        <p class="proc-desc">Plataforma multifuncional composta por diferentes lasers e luzes para tratamentos personalizados. Inclui Luz Intensa Pulsada (fotorejuvenescimento, rosácea, vasos e manchas), Laser Acroma (lesões pigmentadas e melasma em casos selecionados), Laser Dual Mode Er:YAG (resurfacing, cicatrizes e rejuvenescimento) e Laser Long Pulse (tratamento de vasos, lesões vasculares e rejuvenescimento cutâneo).</p>
+                        <a href="https://wa.me/5548991485818?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o%20sobre%20os%20tratamentos%20da%20Plataforma%20Etherea%20MX." target="_blank" class="proc-link">Agendar avaliação →</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="proc-item">
-                <h3 class="proc-name">Cirurgia para Xantelasma</h3>
-                <p class="proc-desc">O xantelasma é um depósito de lipídios na região das pálpebras. A cirurgia dermatológica remove essas lesões, restaurando a aparência natural dos olhos. Utilizamos técnicas precisas para evitar danos aos tecidos adjacentes delicados.</p>
+            <div class="proc-item" id="laser-co2">
+                <div class="proc-item-inner">
+                    <img src="HEGON.png" alt="Laser de CO₂ Fracionado" class="proc-img">
+                    <div class="proc-text">
+                        <h3 class="proc-name">Laser de CO₂ Fracionado</h3>
+                        <p class="proc-desc">Laser ablativo para rejuvenescimento profundo, tratamento de cicatrizes de acne, rugas, estrias, lesões cutâneas selecionadas e melhora significativa da textura da pele.</p>
+                        <a href="https://wa.me/5548991485818?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o%20sobre%20o%20tratamento%20com%20Laser%20de%20CO2%20Fracionado." target="_blank" class="proc-link">Agendar avaliação →</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="proc-item">
-                <h3 class="proc-name">Tratamento de Cicatrizes Queloideanas</h3>
-                <p class="proc-desc">As cicatrizes queloideanas são proliferações excessivas de tecido cicatricial que ultrapassam os limites da ferida original. Oferecemos múltiplas opções de tratamento cirúrgico, incluindo excisão, injeções intra-lesionais e laserterapia para reduzir volume e melhorar a aparência.</p>
-            </div>
-
-            <div class="proc-item">
-                <h3 class="proc-name">Correção de Cicatrizes</h3>
-                <p class="proc-desc">Cicatrizes podem ser corrigidas através de diversas técnicas cirúrgicas, como revisão de cicatrizes, enxertos de pele e rearranjo técnico. Cada caso é avaliado individualmente para determinar a melhor abordagem, buscando sempre o melhor resultado estético possível.</p>
-            </div>
-
-            <div class="proc-item">
-                <h3 class="proc-name">Pequenas Cirurgias</h3>
-                <p class="proc-desc">Realizamos diversas pequenas cirurgias dermatológicas, incluindo remoção de lesões benignas, lipomas, cistos epidérmicos e outras lesões cutâneas. Todos os procedimentos são realizados com anestesia local em ambiente seguro e estéril.</p>
+            <div class="proc-item" id="regenerativas">
+                <div class="proc-item-inner">
+                    <img src="MCT.png" alt="Terapias Regenerativas - PRP e Exossomos Autólogos" class="proc-img">
+                    <div class="proc-text">
+                        <h3 class="proc-name">Terapias Regenerativas (PRP e Exossomos Autólogos)</h3>
+                        <p class="proc-desc">Em breve, a clínica também oferecerá terapias regenerativas com plasma rico em plaquetas (PRP) autólogo e exossomos autólogos.</p>
+                        <a href="https://wa.me/5548991485818?text=Ol%C3%A1%21%20Tenho%20interesse%20nas%20terapias%20regenerativas%20com%20PRP%20e%20Exossomos%20Aut%C3%B3logos." target="_blank" class="proc-link">Tenho interesse →</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -989,5 +1076,3 @@
     </script>
 </body>
 </html>
-
-

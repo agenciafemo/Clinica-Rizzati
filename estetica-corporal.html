@@ -9,12 +9,12 @@
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estética Corporal em Palhoça-SC | Rizzatti Dermatologia e Saúde</title>
-    <meta name="description" content="Tratamentos para celulite, gordura localizada e flacidez em Palhoça-SC: fios de PDO, enzimas e preenchimento corporal com acompanhamento médico.">
+    <meta name="description" content="Tratamentos para celulite, gordura localizada e flacidez em Palhoça-SC: enzimas e preenchimento corporal com acompanhamento médico.">
     <link rel="canonical" href="https://www.clinicarizzatti.com.br/estetica-corporal.html">
     <link rel="icon" type="image/png" href="FLOR.png">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Estética Corporal em Palhoça-SC | Rizzatti Dermatologia e Saúde">
-    <meta property="og:description" content="Tratamentos para celulite, gordura localizada e flacidez em Palhoça-SC: fios de PDO, enzimas e preenchimento corporal com acompanhamento médico.">
+    <meta property="og:description" content="Tratamentos para celulite, gordura localizada e flacidez em Palhoça-SC: enzimas e preenchimento corporal com acompanhamento médico.">
     <meta property="og:image" content="https://www.clinicarizzatti.com.br/ESP_CORPORAL.png">
     <meta property="og:url" content="https://www.clinicarizzatti.com.br/estetica-corporal.html">
     <meta property="og:locale" content="pt_BR">
@@ -259,8 +259,11 @@
         @media (max-width: 768px) {
             .nav-dropdown {
                 width: 100%;
+                text-align: center;
             }
 
+            .nav-dropdown:hover .dropdown-menu,
+            .nav-dropdown.open .dropdown-menu,
             .dropdown-menu {
                 position: static;
                 transform: none;
@@ -276,13 +279,15 @@
                 transition: max-height 0.35s ease, padding 0.35s ease;
             }
 
-            .nav-dropdown.open .dropdown-menu {
+            .nav-dropdown.open .dropdown-menu,
+            .nav-dropdown.open:hover .dropdown-menu {
                 max-height: 400px;
                 padding: 8px 0;
             }
 
             .dropdown-menu a {
-                padding: 10px 16px 10px 32px;
+                padding: 10px 16px;
+                text-align: center;
             }
         }
 
@@ -352,10 +357,30 @@
 
             .hamburger {
                 display: flex;
+                margin-left: auto;
+                margin-right: 0.9rem;
+                flex-shrink: 0;
             }
 
-            .nav-divider, .nav-cta {
+            .nav-divider {
                 display: none;
+            }
+
+            .logo-img {
+                height: 30px;
+                flex-shrink: 0;
+            }
+
+            .nav-cta {
+                font-size: 10px;
+                padding: 8px 12px;
+                letter-spacing: 0.12em;
+                flex-shrink: 0;
+            }
+
+            .nav-cta svg {
+                width: 14px;
+                height: 14px;
             }
         }
 
@@ -516,11 +541,19 @@
             margin: 0 auto 50px;
         }
 
+        .tech-used-note {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: rgba(56,71,93,0.7);
+            margin-top: 20px;
+        }
+
         .tech-used-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 4px;
-            max-width: 1100px;
+            max-width: 820px;
             margin: 0 auto;
         }
 
@@ -576,6 +609,14 @@
             font-weight: 400;
             color: white;
             font-size: clamp(1.4rem, 2vw, 1.8rem);
+            margin: 0 0 8px;
+        }
+
+        .service-desc {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.85);
             margin: 0;
         }
 
@@ -674,7 +715,7 @@
 
         .footer-grid {
             display: grid;
-            grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+            grid-template-columns: 1.6fr 1fr 1.4fr;
             gap: 3rem;
             margin-bottom: 4rem;
         }
@@ -840,9 +881,9 @@
 <body>
     <!-- NAVBAR -->
     <nav>
-        <div class="logo">
+        <a href="index.html#home" class="logo">
             <img src="LOGO.png" alt="Rizzatti Dermatologia e Saúde" class="logo-img">
-        </div>
+        </a>
 
         <ul class="nav-menu">
             <li><a href="index.html#home">Home</a></li>
@@ -865,18 +906,18 @@
 
         <div class="nav-divider"></div>
 
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
         <button class="nav-cta" onclick="window.open('https://wa.me/5548991485818', '_blank')">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
             </svg>
             Agendar Consulta
         </button>
-
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
     </nav>
 
     <!-- HERO -->
@@ -889,53 +930,26 @@
         </div>
     </section>
 
-    <!-- PROCEDIMENTOS -->
-    <section class="procedimentos">
-        <div class="proc-intro">
-            <span class="proc-eyebrow">Nossos tratamentos</span>
-            <h2 class="proc-title">Cuidado que <span class="italic-bronze">valoriza</span> seu corpo</h2>
-        </div>
-
-        <div class="proc-list">
-            <div class="proc-item">
-                <h3 class="proc-name">Fios de PDO</h3>
-                <p class="proc-desc">Os fios de PDO são usados para rejuvenescer a pele, estimulando a produção de colágeno e elastina, proporcionando um efeito de lifting não cirúrgico. Quando inseridos na pele, promovem a regeneração dos tecidos. Com o tempo, os fios são gradualmente absorvidos pelo organismo, enquanto o colágeno recém-produzido ajuda a manter os efeitos de rejuvenescimento.</p>
-            </div>
-
-            <div class="proc-item">
-                <h3 class="proc-name">Enzimas esvaziadoras de gordura</h3>
-                <p class="proc-desc">As enzimas esvaziadoras de gordura são uma alternativa não cirúrgica para eliminar a gordura localizada, são injetadas na área a ser tratada, quebrando as células de gordura, que são naturalmente eliminadas pelo corpo. É uma opção eficaz para áreas como o queixo duplo, flancos e abdômen, com resultados que podem ser notados após algumas sessões.</p>
-            </div>
-
-            <div class="proc-item">
-                <h3 class="proc-name">Tratamento da celulite</h3>
-                <p class="proc-desc">O tratamento da celulite visa reduzir a aparência dos "furinhos" causados pelo acúmulo de gordura sob a pele. Os procedimentos que fazemos aqui da clínica podem ajudar a melhorar a circulação sanguínea, reduzir a retenção de líquidos e estimular a produção de colágeno, resultando em uma pele mais lisa e firme. Para obter melhores resultados, a consistência nas sessões é fundamental.</p>
-            </div>
-
-            <div class="proc-item">
-                <h3 class="proc-name">Preenchimento corporal</h3>
-                <p class="proc-desc">Rápido e minimamente invasivo, o preenchimento corporal é uma ótima escolha para quem deseja atingir uma estética corporal rejuvenescida e natural, sem a necessidade de cirurgia. Utilizando substâncias seguras, como o ácido hialurônico, esse procedimento visa corrigir imperfeições e proporcionar contornos mais suaves ao corpo.</p>
-            </div>
-        </div>
-    </section>
-
     <!-- TECNOLOGIAS QUE UTILIZAMOS -->
     <section class="tech-used">
         <div class="tech-used-intro">
-            <span class="proc-eyebrow">Tecnologia</span>
-            <h2 class="proc-title">Tecnologias que <span class="italic-bronze">utilizamos</span></h2>
+            <span class="proc-eyebrow">Nossos tratamentos</span>
+            <h2 class="proc-title">Tecnologia a <span class="italic-bronze">serviço do seu corpo</span></h2>
+            <p class="tech-used-note">Também oferecemos enzimas esvaziadoras de gordura, tratamento da celulite e preenchimento corporal para casos específicos.</p>
         </div>
         <div class="tech-used-grid">
             <a href="tecnologias.html#liftera" class="service-card" data-bg="LIFTERA.png">
                 <div class="card-overlay"></div>
                 <div class="card-content">
                     <h3 class="service-title">Liftera</h3>
+                    <p class="service-desc">Ultrassom micro e macrofocado para lifting não cirúrgico e estímulo de colágeno.</p>
                 </div>
             </a>
             <a href="tecnologias.html#megaderm" class="service-card" data-bg="LMG.png">
                 <div class="card-overlay"></div>
                 <div class="card-content">
                     <h3 class="service-title">MegaDERM</h3>
+                    <p class="service-desc">Radiofrequência microagulhada para flacidez e melhora da qualidade da pele.</p>
                 </div>
             </a>
         </div>
@@ -967,13 +981,6 @@
                     </div>
                 </div>
 
-                <div class="footer-col">
-                    <h4 class="footer-title">Corpo Clínico</h4>
-                    <div class="footer-doctor">
-                        <span class="footer-doctor-name">Dra. Karoline Rizzatti</span>
-                        <span class="footer-doctor-cred">CRM/SC 17360 · RQE 13318</span>
-                    </div>
-                </div>
 
                 <div class="footer-col">
                     <h4 class="footer-title">Contato</h4>

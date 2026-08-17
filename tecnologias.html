@@ -543,6 +543,37 @@
             color: rgba(56,71,93,0.75);
         }
 
+        .laser-options {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 22px;
+        }
+
+        .laser-option {
+            padding: 16px 18px;
+            border-left: 2px solid var(--bronze);
+            background: rgba(200,169,126,0.08);
+        }
+
+        .laser-option strong {
+            display: block;
+            margin-bottom: 5px;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--navy);
+        }
+
+        .laser-option span {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.02rem;
+            line-height: 1.5;
+            color: rgba(56,71,93,0.72);
+        }
+
         .proc-item-inner {
             display: flex;
             align-items: flex-start;
@@ -805,6 +836,10 @@
                 gap: 20px;
             }
 
+            .laser-options {
+                grid-template-columns: 1fr;
+            }
+
             .proc-img {
                 width: 90px;
                 height: 90px;
@@ -846,10 +881,10 @@
             <li class="nav-dropdown">
                 <a href="javascript:void(0)" class="dropdown-toggle">Especialidades <span class="dropdown-arrow">&#9662;</span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="clinica.html">Clínica</a></li>
-                    <li><a href="cirurgica.html">Cirúrgica</a></li>
-                    <li><a href="estetica-facial.html">Estética Facial</a></li>
-                    <li><a href="estetica-corporal.html">Estética Corporal</a></li>
+                    <li><a href="clinica.html">Dermatologia Clínica</a></li>
+                    <li><a href="cirurgica.html">Dermatologia Cirúrgica</a></li>
+                    <li><a href="estetica-facial.html">Dermatologia Estética</a></li>
+                    <li><a href="estetica-corporal.html">Dermatologia Corporal</a></li>
                     <li><a href="tricologica.html">Tricologia</a></li>
                     <li><a href="tecnologias.html">Tecnologias</a></li>
                 </ul>
@@ -937,7 +972,25 @@
                     <img src="ETHEREA.png" alt="Plataforma Etherea MX" class="proc-img">
                     <div class="proc-text">
                         <h3 class="proc-name">Plataforma Etherea MX</h3>
-                        <p class="proc-desc">Plataforma multifuncional composta por diferentes lasers e luzes para tratamentos personalizados. Inclui Luz Intensa Pulsada (fotorejuvenescimento, rosácea, vasos e manchas), Laser Acroma (lesões pigmentadas e melasma em casos selecionados), Laser Dual Mode Er:YAG (resurfacing, cicatrizes e rejuvenescimento) e Laser Long Pulse (tratamento de vasos, lesões vasculares e rejuvenescimento cutâneo).</p>
+                        <p class="proc-desc">Plataforma multifuncional que reúne diferentes lasers e fontes de luz, permitindo tratamentos personalizados conforme a indicação dermatológica.</p>
+                        <div class="laser-options" aria-label="Tecnologias da plataforma Etherea MX">
+                            <div class="laser-option">
+                                <strong>Luz Intensa Pulsada</strong>
+                                <span>Fotorejuvenescimento e tratamento de rosácea, vasos e manchas.</span>
+                            </div>
+                            <div class="laser-option">
+                                <strong>Laser Acroma</strong>
+                                <span>Lesões pigmentadas e melasma em casos selecionados.</span>
+                            </div>
+                            <div class="laser-option">
+                                <strong>Dual Mode Er:YAG</strong>
+                                <span>Resurfacing, cicatrizes e rejuvenescimento da pele.</span>
+                            </div>
+                            <div class="laser-option">
+                                <strong>Laser Long Pulse</strong>
+                                <span>Tratamento de vasos, lesões vasculares e rejuvenescimento cutâneo.</span>
+                            </div>
+                        </div>
                         <a href="https://wa.me/5548991485818?text=Ol%C3%A1%21%20Gostaria%20de%20saber%20mais%20sobre%20os%20tratamentos%20da%20Plataforma%20Etherea%20MX." target="_blank" class="proc-link">Saiba mais →</a>
                     </div>
                 </div>

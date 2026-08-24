@@ -95,11 +95,16 @@
         .article-meta { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; font-family: 'Jost', sans-serif; font-size: 12px; letter-spacing: 0.05em; color: rgba(56,71,93,0.65); }
         .article-meta .sep { opacity: 0.4; }
 
-        .article-cover { max-width: 900px; margin: -30px auto 0; padding: 0 6vw; }
-        .article-cover img { width: 100%; max-height: 480px; object-fit: cover; display: block; }
+        /* ===== LAYOUT: CONTEÚDO + SIDEBAR ===== */
+        .article-layout { max-width: 1220px; margin: 0 auto; padding: 54px 6vw 30px; display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 64px; align-items: start; }
+        .article-main { min-width: 0; }
 
-        .article-body { max-width: 780px; margin: 0 auto; padding: 60px 6vw 20px; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; line-height: 1.85; color: rgba(56,71,93,0.85); }
-        .article-body h2 { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 1.8rem; color: var(--navy-dark); margin: 40px 0 18px; }
+        .article-cover { margin: 0 0 6px; }
+        .article-cover img { width: 100%; max-height: 460px; object-fit: cover; display: block; border-radius: 6px; box-shadow: 0 24px 50px rgba(56,71,93,0.14); }
+
+        .article-body { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; line-height: 1.85; color: rgba(56,71,93,0.85); padding-top: 40px; }
+        .article-body h2 { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 1.8rem; color: var(--navy-dark); margin: 40px 0 18px; position: relative; padding-left: 22px; }
+        .article-body h2::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 3px; background: var(--bronze); }
         .article-body h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 1.4rem; color: var(--navy-dark); margin: 32px 0 14px; }
         .article-body p { margin-bottom: 20px; }
         .article-body ul, .article-body ol { margin: 0 0 20px 1.4rem; }
@@ -107,12 +112,38 @@
         .article-body strong { color: var(--navy-dark); }
         .article-body a { color: var(--bronze); text-decoration: underline; text-underline-offset: 3px; }
 
-        .author-box { max-width: 780px; margin: 40px auto 0; padding: 30px 6vw; }
-        .author-card { display: flex; align-items: center; gap: 18px; background: var(--gray-light); padding: 24px 28px; border-left: 3px solid var(--bronze); }
+        .author-box { margin-top: 44px; }
+        .author-card { display: flex; align-items: center; gap: 18px; background: var(--gray-light); padding: 24px 28px; border-left: 3px solid var(--bronze); border-radius: 0 4px 4px 0; }
+        .author-avatar { width: 46px; height: 46px; border-radius: 50%; background: var(--navy); color: var(--white); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'Jost', sans-serif; font-size: 0.95rem; font-weight: 500; letter-spacing: 0.02em; }
         .author-card-name { font-family: 'Jost', sans-serif; font-size: 1rem; font-weight: 500; color: var(--navy-dark); }
         .author-card-cred { font-family: 'Jost', sans-serif; font-size: 0.8rem; color: rgba(56,71,93,0.6); letter-spacing: 0.04em; }
 
+        /* ===== SIDEBAR: CONTINUE LENDO ===== */
+        .article-sidebar { position: sticky; top: 104px; display: flex; flex-direction: column; gap: 30px; }
+        .sidebar-block-title { font-family: 'Jost', sans-serif; font-size: 11.5px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--bronze); padding-bottom: 14px; border-bottom: 2px solid rgba(200,136,108,0.22); }
+        .sidebar-posts { display: flex; flex-direction: column; gap: 20px; }
+        .sidebar-post-card { display: flex; gap: 14px; text-decoration: none; }
+        .sidebar-post-img { width: 78px; height: 78px; flex-shrink: 0; object-fit: cover; border-radius: 5px; background: var(--gray-light); }
+        .sidebar-post-info { display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+        .sidebar-post-cat { font-family: 'Jost', sans-serif; font-size: 9.5px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--bronze); margin-bottom: 5px; }
+        .sidebar-post-title { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 500; line-height: 1.3; color: var(--navy-dark); transition: color 0.25s ease; }
+        .sidebar-post-card:hover .sidebar-post-title { color: var(--bronze); }
+        .sidebar-empty { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; color: rgba(56,71,93,0.5); }
+
+        .sidebar-cta-box { background: var(--gray-light); border-left: 3px solid var(--navy); padding: 26px 24px; border-radius: 0 4px 4px 0; }
+        .sidebar-cta-box p { font-family: 'Cormorant Garamond', serif; font-size: 1.08rem; color: var(--navy-dark); margin-bottom: 16px; line-height: 1.5; }
+        .sidebar-cta-btn { display: inline-block; width: 100%; text-align: center; background: var(--navy-dark); color: var(--white); font-family: 'Jost', sans-serif; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 13px 18px; text-decoration: none; transition: background 0.3s ease; }
+        .sidebar-cta-btn:hover { background: #38434d; }
+
         .article-loading, .article-error { max-width: 780px; margin: 100px auto; padding: 0 6vw; text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: rgba(56,71,93,0.6); }
+
+        @media (max-width: 992px) {
+            .article-layout { grid-template-columns: 1fr; gap: 40px; padding: 40px 1.5rem 10px; }
+            .article-sidebar { position: static; order: 2; padding-top: 30px; border-top: 1px solid rgba(117,136,153,0.15); }
+            .sidebar-posts { flex-direction: row; overflow-x: auto; gap: 16px; padding-bottom: 8px; }
+            .sidebar-post-card { flex-direction: column; min-width: 150px; flex-shrink: 0; }
+            .sidebar-post-img { width: 100%; height: 100px; }
+        }
 
         .page-cta { background: var(--azure); text-align: center; padding: 80px 2rem; margin-top: 60px; }
         .page-cta-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; color: var(--navy); margin-bottom: 12px; }
@@ -149,9 +180,7 @@
         @media (max-width: 768px) {
             body { padding-top: 80px; }
             .article-hero { padding: 50px 1.5rem 40px; }
-            .article-cover { padding: 0 1.5rem; }
-            .article-body { padding: 50px 1.5rem 10px; font-size: 1.1rem; }
-            .author-box { padding: 20px 1.5rem; }
+            .article-body { font-size: 1.1rem; padding-top: 30px; }
             .page-cta { padding: 60px 1.5rem; }
             .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
             .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
@@ -319,6 +348,53 @@
             document.getElementById('articleJsonLd').textContent = JSON.stringify(jsonLd);
         }
 
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str || '';
+            return div.innerHTML;
+        }
+
+        function initials(name) {
+            if (!name) return 'RZ';
+            return name.replace(/^(Dra?\.)\s*/i, '').split(' ').filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+        }
+
+        function sidebarCardHtml(post) {
+            const img = post.cover_image_url || 'CLINICA.jpg';
+            return `
+                <a class="sidebar-post-card" href="post.html?slug=${encodeURIComponent(post.slug)}">
+                    <img class="sidebar-post-img" src="${escapeHtml(img)}" alt="${escapeHtml(post.title)}" loading="lazy">
+                    <div class="sidebar-post-info">
+                        <span class="sidebar-post-cat">${escapeHtml(post.category || 'Blog')}</span>
+                        <span class="sidebar-post-title">${escapeHtml(post.title)}</span>
+                    </div>
+                </a>
+            `;
+        }
+
+        async function loadSidebar(currentSlug) {
+            const target = document.getElementById('sidebarPosts');
+            if (!target) return;
+            try {
+                const { data, error } = await supabase
+                    .from('blog_posts')
+                    .select('slug,title,category,cover_image_url,published_at')
+                    .eq('status', 'published')
+                    .neq('slug', currentSlug)
+                    .order('published_at', { ascending: false })
+                    .limit(5);
+
+                if (error || !data || data.length === 0) {
+                    target.innerHTML = '<div class="sidebar-empty">Novos artigos em breve.</div>';
+                    return;
+                }
+                target.innerHTML = data.map(sidebarCardHtml).join('');
+            } catch (err) {
+                console.error(err);
+                target.innerHTML = '<div class="sidebar-empty">Não foi possível carregar outros artigos.</div>';
+            }
+        }
+
         function render(post) {
             setMeta(post);
             const cred = DOCTOR_CREDENTIALS[post.author] || '';
@@ -341,17 +417,38 @@
                         </div>
                     </div>
                 </section>
-                ${coverHtml}
-                <article class="article-body">${post.body_html}</article>
-                <div class="author-box">
-                    <div class="author-card">
-                        <div>
-                            <div class="author-card-name">${post.author || 'Equipe Rizzatti'}</div>
-                            ${cred ? `<div class="author-card-cred">${cred}</div>` : ''}
+
+                <div class="article-layout">
+                    <div class="article-main">
+                        ${coverHtml}
+                        <article class="article-body">${post.body_html}</article>
+                        <div class="author-box">
+                            <div class="author-card">
+                                <div class="author-avatar">${initials(post.author)}</div>
+                                <div>
+                                    <div class="author-card-name">${post.author || 'Equipe Rizzatti'}</div>
+                                    ${cred ? `<div class="author-card-cred">${cred}</div>` : ''}
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <aside class="article-sidebar">
+                        <div>
+                            <div class="sidebar-block-title">Continue lendo</div>
+                            <div class="sidebar-posts" id="sidebarPosts">
+                                <div class="sidebar-empty">Carregando...</div>
+                            </div>
+                        </div>
+                        <div class="sidebar-cta-box">
+                            <p>Quer uma avaliação personalizada com nossa equipe?</p>
+                            <a class="sidebar-cta-btn" href="https://wa.me/5548991485818" target="_blank">Agendar via WhatsApp</a>
+                        </div>
+                    </aside>
                 </div>
             `;
+
+            loadSidebar(post.slug);
         }
 
         async function loadPost() {

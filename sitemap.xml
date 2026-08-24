@@ -37,11 +37,27 @@
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>https://www.clinicarizzatti.com.br/blog.html</loc>
+        <priority>0.9</priority>
+    </url>
+    <url>
         <loc>https://www.clinicarizzatti.com.br/medico-karoline.html</loc>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://www.clinicarizzatti.com.br/medico-timotio.html</loc>
         <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://www.clinicarizzatti.com.br/post.html?slug=cancer-de-pele-fotoprotecao-palhoca-florianopolis</loc>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://www.clinicarizzatti.com.br/post.html?slug=ultrassom-microfocado-liftera-lifting-facial-sem-cirurgia</loc>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://www.clinicarizzatti.com.br/post.html?slug=queda-de-cabelo-quando-procurar-tricologista-tratamentos</loc>
+        <priority>0.7</priority>
     </url>
 </urlset>

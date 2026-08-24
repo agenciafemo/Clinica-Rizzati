@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin do Blog | Rizzatti Dermatologia e Saúde</title>
+    <link rel="icon" type="image/png" sizes="any" href="FLOR.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #758899; --navy-dark: #45525e; --bronze: #c8886c; --azure: #d7bea8;
+            --white: #FFFFFF; --gray-light: #f3eee7; --danger: #b8574a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Jost', sans-serif; background: var(--gray-light); color: var(--navy-dark); min-height: 100vh; }
+        a { color: inherit; }
+
+        /* TOPBAR */
+        .topbar { background: var(--navy-dark); color: var(--white); padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; }
+        .topbar-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; letter-spacing: 0.02em; }
+        .topbar-title span { color: var(--bronze); font-style: italic; }
+        .topbar-actions { display: flex; align-items: center; gap: 16px; font-size: 0.85rem; }
+        .topbar-actions a { text-decoration: none; opacity: 0.85; }
+        .topbar-actions a:hover { opacity: 1; }
+        .btn-logout { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: var(--white); padding: 8px 16px; font-family: 'Jost', sans-serif; font-size: 0.8rem; letter-spacing: 0.05em; cursor: pointer; border-radius: 3px; }
+        .btn-logout:hover { background: rgba(255,255,255,0.12); }
+
+        /* LOGIN SCREEN */
+        .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .login-card { background: var(--white); padding: 48px 40px; width: 100%; max-width: 380px; border-radius: 6px; box-shadow: 0 30px 70px rgba(45,58,74,0.15); text-align: center; }
+        .login-logo { height: 40px; margin-bottom: 24px; }
+        .login-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--navy-dark); margin-bottom: 6px; }
+        .login-sub { font-size: 0.85rem; color: rgba(69,82,94,0.6); margin-bottom: 30px; }
+        .field { text-align: left; margin-bottom: 18px; }
+        .field label { display: block; font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(69,82,94,0.7); margin-bottom: 6px; }
+        .field input, .field textarea, .field select {
+            width: 100%; padding: 12px 14px; border: 1px solid rgba(117,136,153,0.3); border-radius: 3px;
+            font-family: 'Jost', sans-serif; font-size: 0.95rem; color: var(--navy-dark); background: var(--white);
+        }
+        .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: var(--bronze); }
+        .btn-primary {
+            width: 100%; background: var(--navy-dark); color: var(--white); border: none; padding: 13px; border-radius: 3px;
+            font-family: 'Jost', sans-serif; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.25s ease;
+        }
+        .btn-primary:hover { background: #38434d; }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+        .form-msg { font-size: 0.82rem; margin-top: 14px; min-height: 18px; }
+        .form-msg.error { color: var(--danger); }
+        .form-msg.ok { color: #3f8256; }
+
+        /* DASHBOARD */
+        .dash { display: none; }
+        .dash-inner { max-width: 1100px; margin: 0 auto; padding: 36px 24px 80px; }
+        .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 14px; }
+        .dash-header h1 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--navy-dark); }
+        .btn-new { background: var(--bronze); color: var(--white); border: none; padding: 12px 22px; border-radius: 3px; font-family: 'Jost', sans-serif; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; }
+        .btn-new:hover { background: #b87a5f; }
+
+        .posts-table { background: var(--white); border-radius: 6px; overflow: hidden; box-shadow: 0 10px 30px rgba(45,58,74,0.06); }
+        .posts-row { display: grid; grid-template-columns: 1fr 140px 110px 160px; gap: 16px; padding: 16px 22px; align-items: center; border-bottom: 1px solid rgba(117,136,153,0.1); }
+        .posts-row.head { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(69,82,94,0.55); background: rgba(117,136,153,0.05); }
+        .posts-row:last-child { border-bottom: none; }
+        .post-title-cell { font-size: 0.95rem; color: var(--navy-dark); }
+        .post-title-cell small { display: block; font-size: 0.78rem; color: rgba(69,82,94,0.5); margin-top: 2px; }
+        .status-pill { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; }
+        .status-pill.published { background: rgba(63,130,86,0.12); color: #3f8256; }
+        .status-pill.draft { background: rgba(200,136,108,0.15); color: var(--bronze); }
+        .row-actions { display: flex; gap: 10px; font-size: 0.82rem; }
+        .row-actions button { background: none; border: none; cursor: pointer; font-family: 'Jost', sans-serif; color: var(--navy); text-decoration: underline; padding: 0; }
+        .row-actions button.danger { color: var(--danger); }
+        .empty-state { padding: 60px 20px; text-align: center; color: rgba(69,82,94,0.55); }
+
+        /* MODAL EDITOR */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(30,38,46,0.55); z-index: 2000; align-items: flex-start; justify-content: center; padding: 40px 16px; overflow-y: auto; }
+        .modal-overlay.open { display: flex; }
+        .modal-card { background: var(--white); width: 100%; max-width: 780px; border-radius: 8px; padding: 34px 36px 30px; box-shadow: 0 40px 90px rgba(0,0,0,0.3); }
+        .modal-card h2 { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: var(--navy-dark); margin-bottom: 22px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .field textarea { resize: vertical; min-height: 90px; font-family: 'Jost', sans-serif; }
+        .field textarea.body-field { min-height: 320px; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.5; }
+        .hint { font-size: 0.75rem; color: rgba(69,82,94,0.5); margin-top: 4px; }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 22px; }
+        .btn-secondary { background: transparent; border: 1px solid rgba(117,136,153,0.35); color: var(--navy-dark); padding: 12px 22px; border-radius: 3px; font-family: 'Jost', sans-serif; font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; }
+        .btn-secondary:hover { background: rgba(117,136,153,0.08); }
+        .modal-actions .btn-primary { width: auto; padding: 12px 26px; }
+
+        @media (max-width: 700px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .posts-row { grid-template-columns: 1fr; gap: 6px; }
+            .posts-row.head { display: none; }
+            .row-actions { margin-top: 6px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOGIN -->
+    <div class="login-wrap" id="loginWrap">
+        <div class="login-card">
+            <img src="LOGO.png" alt="Rizzatti" class="login-logo">
+            <div class="login-title">Painel do Blog</div>
+            <div class="login-sub">Acesso restrito à equipe da clínica</div>
+            <form id="loginForm">
+                <div class="field">
+                    <label for="loginEmail">E-mail</label>
+                    <input type="email" id="loginEmail" required autocomplete="username">
+                </div>
+                <div class="field">
+                    <label for="loginPassword">Senha</label>
+                    <input type="password" id="loginPassword" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn-primary" id="loginBtn">Entrar</button>
+                <div class="form-msg error" id="loginMsg"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="dash" id="dash">
+        <div class="topbar">
+            <div class="topbar-title">Rizzatti <span>Blog Admin</span></div>
+            <div class="topbar-actions">
+                <a href="blog.html" target="_blank">Ver blog ↗</a>
+                <button class="btn-logout" id="logoutBtn">Sair</button>
+            </div>
+        </div>
+
+        <div class="dash-inner">
+            <div class="dash-header">
+                <h1>Artigos</h1>
+                <button class="btn-new" id="newPostBtn">+ Novo artigo</button>
+            </div>
+
+            <div class="posts-table">
+                <div class="posts-row head">
+                    <div>Título</div>
+                    <div>Categoria</div>
+                    <div>Status</div>
+                    <div>Ações</div>
+                </div>
+                <div id="postsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: EDITOR DE POST -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-card">
+            <h2 id="modalTitle">Novo artigo</h2>
+            <form id="postForm">
+                <input type="hidden" id="postId">
+                <div class="field">
+                    <label for="fTitle">Título</label>
+                    <input type="text" id="fTitle" required>
+                </div>
+                <div class="grid-2">
+                    <div class="field">
+                        <label for="fSlug">Slug (URL)</label>
+                        <input type="text" id="fSlug" required pattern="[a-z0-9-]+">
+                        <div class="hint">Gerado automaticamente a partir do título, pode editar.</div>
+                    </div>
+                    <div class="field">
+                        <label for="fCategory">Categoria</label>
+                        <input type="text" id="fCategory" placeholder="Ex: Dermatologia Clínica">
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="field">
+                        <label for="fAuthor">Autor</label>
+                        <select id="fAuthor">
+                            <option value="Dra. Karoline Rizzatti">Dra. Karoline Rizzatti</option>
+                            <option value="Dr. Timotio Dorn">Dr. Timotio Dorn</option>
+                            <option value="Equipe Rizzatti">Equipe Rizzatti</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="fReadTime">Tempo de leitura (min)</label>
+                        <input type="number" id="fReadTime" min="1" value="5">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="fCover">Imagem de capa (nome do arquivo ou URL)</label>
+                    <input type="text" id="fCover" placeholder="Ex: ESP_CLINICA.jpg ou https://...">
+                </div>
+                <div class="field">
+                    <label for="fExcerpt">Resumo (aparece na listagem do blog)</label>
+                    <textarea id="fExcerpt" maxlength="220"></textarea>
+                </div>
+                <div class="field">
+                    <label for="fMeta">Meta description (SEO, até 155 caracteres)</label>
+                    <textarea id="fMeta" maxlength="160"></textarea>
+                </div>
+                <div class="field">
+                    <label for="fBody">Conteúdo do artigo (HTML: use &lt;h2&gt;, &lt;p&gt;, &lt;ul&gt;&lt;li&gt;, &lt;strong&gt;)</label>
+                    <textarea id="fBody" class="body-field" required></textarea>
+                </div>
+                <div class="field">
+                    <label for="fStatus">Status</label>
+                    <select id="fStatus">
+                        <option value="draft">Rascunho</option>
+                        <option value="published">Publicado</option>
+                    </select>
+                </div>
+                <div class="form-msg error" id="postMsg"></div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="cancelBtn">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="saveBtn">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="blog-config.js"></script>
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+        const supabase = createClient(window.BLOG_SUPABASE_URL, window.BLOG_SUPABASE_ANON_KEY);
+
+        const loginWrap = document.getElementById('loginWrap');
+        const dash = document.getElementById('dash');
+        const loginForm = document.getElementById('loginForm');
+        const loginMsg = document.getElementById('loginMsg');
+        const loginBtn = document.getElementById('loginBtn');
+        const postsList = document.getElementById('postsList');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalTitle = document.getElementById('modalTitle');
+        const postForm = document.getElementById('postForm');
+        const postMsg = document.getElementById('postMsg');
+        const saveBtn = document.getElementById('saveBtn');
+
+        function slugify(str) {
+            return str.toString().normalize('NFD').replace(/[̀-ͯ]/g, '')
+                .toLowerCase().trim()
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-')
+                .replace(/^-|-$/g, '');
+        }
+
+        // ---------- AUTH ----------
+        async function checkSession() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                showDash();
+            } else {
+                showLogin();
+            }
+        }
+
+        function showLogin() {
+            loginWrap.style.display = 'flex';
+            dash.style.display = 'none';
+        }
+
+        function showDash() {
+            loginWrap.style.display = 'none';
+            dash.style.display = 'block';
+            loadPosts();
+        }
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            loginMsg.textContent = '';
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Entrando...';
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            const { error } = await supabase.auth.signInWithPassword({ email, password });
+            loginBtn.disabled = false;
+            loginBtn.textContent = 'Entrar';
+
+            if (error) {
+                loginMsg.textContent = 'E-mail ou senha inválidos.';
+                return;
+            }
+            showDash();
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await supabase.auth.signOut();
+            showLogin();
+        });
+
+        // ---------- LISTAGEM ----------
+        async function loadPosts() {
+            postsList.innerHTML = '<div class="empty-state">Carregando...</div>';
+            const { data, error } = await supabase
+                .from('blog_posts')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                postsList.innerHTML = `<div class="empty-state">Erro ao carregar posts: ${error.message}</div>`;
+                return;
+            }
+
+            if (!data || data.length === 0) {
+                postsList.innerHTML = '<div class="empty-state">Nenhum artigo ainda. Clique em "+ Novo artigo" para começar.</div>';
+                return;
+            }
+
+            postsList.innerHTML = data.map(rowHtml).join('');
+
+            data.forEach((post) => {
+                document.getElementById(`edit-${post.id}`).addEventListener('click', () => openModal(post));
+                document.getElementById(`del-${post.id}`).addEventListener('click', () => deletePost(post));
+            });
+        }
+
+        function rowHtml(post) {
+            return `
+                <div class="posts-row">
+                    <div class="post-title-cell">${post.title}<small>/${post.slug}</small></div>
+                    <div>${post.category || '—'}</div>
+                    <div><span class="status-pill ${post.status}">${post.status === 'published' ? 'Publicado' : 'Rascunho'}</span></div>
+                    <div class="row-actions">
+                        <button id="edit-${post.id}">Editar</button>
+                        <button class="danger" id="del-${post.id}">Excluir</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function deletePost(post) {
+            if (!confirm(`Excluir o artigo "${post.title}"? Essa ação não pode ser desfeita.`)) return;
+            const { error } = await supabase.from('blog_posts').delete().eq('id', post.id);
+            if (error) {
+                alert('Erro ao excluir: ' + error.message);
+                return;
+            }
+            loadPosts();
+        }
+
+        // ---------- MODAL / FORM ----------
+        const fTitle = document.getElementById('fTitle');
+        const fSlug = document.getElementById('fSlug');
+        let slugTouched = false;
+
+        fTitle.addEventListener('input', () => {
+            if (!slugTouched) fSlug.value = slugify(fTitle.value);
+        });
+        fSlug.addEventListener('input', () => { slugTouched = true; });
+
+        document.getElementById('newPostBtn').addEventListener('click', () => openModal(null));
+        document.getElementById('cancelBtn').addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+
+        function openModal(post) {
+            postMsg.textContent = '';
+            slugTouched = !!post;
+            modalTitle.textContent = post ? 'Editar artigo' : 'Novo artigo';
+            document.getElementById('postId').value = post ? post.id : '';
+            fTitle.value = post ? post.title : '';
+            fSlug.value = post ? post.slug : '';
+            document.getElementById('fCategory').value = post ? (post.category || '') : '';
+            document.getElementById('fAuthor').value = post ? (post.author || 'Dra. Karoline Rizzatti') : 'Dra. Karoline Rizzatti';
+            document.getElementById('fReadTime').value = post ? (post.read_time_minutes || 5) : 5;
+            document.getElementById('fCover').value = post ? (post.cover_image_url || '') : '';
+            document.getElementById('fExcerpt').value = post ? (post.excerpt || '') : '';
+            document.getElementById('fMeta').value = post ? (post.meta_description || '') : '';
+            document.getElementById('fBody').value = post ? (post.body_html || '') : '';
+            document.getElementById('fStatus').value = post ? post.status : 'draft';
+            modalOverlay.classList.add('open');
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('open');
+        }
+
+        postForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            postMsg.textContent = '';
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Salvando...';
+
+            const id = document.getElementById('postId').value;
+            const status = document.getElementById('fStatus').value;
+
+            const payload = {
+                title: fTitle.value.trim(),
+                slug: slugify(fSlug.value),
+                category: document.getElementById('fCategory').value.trim(),
+                author: document.getElementById('fAuthor').value,
+                read_time_minutes: parseInt(document.getElementById('fReadTime').value, 10) || 5,
+                cover_image_url: document.getElementById('fCover').value.trim(),
+                excerpt: document.getElementById('fExcerpt').value.trim(),
+                meta_description: document.getElementById('fMeta').value.trim(),
+                body_html: document.getElementById('fBody').value,
+                status
+            };
+
+            let error;
+            if (id) {
+                ({ error } = await supabase.from('blog_posts').update(payload).eq('id', id));
+            } else {
+                if (status === 'published') payload.published_at = new Date().toISOString();
+                ({ error } = await supabase.from('blog_posts').insert(payload));
+            }
+
+            // Garante published_at quando um rascunho é publicado depois
+            if (!error && id && status === 'published') {
+                const { data: current } = await supabase.from('blog_posts').select('published_at').eq('id', id).single();
+                if (current && !current.published_at) {
+                    await supabase.from('blog_posts').update({ published_at: new Date().toISOString() }).eq('id', id);
+                }
+            }
+
+            saveBtn.disabled = false;
+            saveBtn.textContent = 'Salvar';
+
+            if (error) {
+                postMsg.textContent = 'Erro ao salvar: ' + error.message;
+                return;
+            }
+
+            closeModal();
+            loadPosts();
+        });
+
+        checkSession();
+    </script>
+</body>
+</html>

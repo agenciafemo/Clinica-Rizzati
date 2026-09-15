@@ -8,8 +8,8 @@
         }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rizzatti Dermatologia e Saúde | Clínica em Palhoça-SC</title>
-    <meta name="description" content="Clínica de dermatologia em Palhoça-SC (Pedra Branca), com Dra. Karoline Rizzatti e Dr. Timotio Dorn. Dermatologia clínica, cirúrgica, estética e tricologia. Agende sua consulta.">
+    <title>Dermatologista em Palhoça (Pedra Branca) | Clínica Rizzatti</title>
+    <meta name="description" content="Clínica de dermatologia na Pedra Branca, Palhoça-SC, com Dra. Karoline Rizzatti e Dr. Timotio Dorn: dermatologia clínica, cirúrgica, estética e tricologia.">
     <link rel="canonical" href="https://www.clinicarizzatti.com.br/">
     <link rel="icon" type="image/png" sizes="any" href="https://www.clinicarizzatti.com.br/FLOR.png">
     <link rel="shortcut icon" href="https://www.clinicarizzatti.com.br/favicon.ico">
@@ -17,11 +17,13 @@
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Rizzatti Dermatologia e Saúde | Clínica em Palhoça-SC">
+    <meta property="og:title" content="Dermatologista em Palhoça (Pedra Branca) | Clínica Rizzatti">
     <meta property="og:description" content="Dermatologia clínica, cirúrgica, estética e tricologia em Palhoça-SC. Agende sua consulta com a Dra. Karoline Rizzatti e o Dr. Timotio Dorn.">
     <meta property="og:image" content="https://www.clinicarizzatti.com.br/LOGO.png">
     <meta property="og:url" content="https://www.clinicarizzatti.com.br/">
     <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="Rizzatti Dermatologia e Saúde">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
     <meta name="twitter:card" content="summary_large_image">
 
     <!-- Google Fonts -->
@@ -2092,37 +2094,98 @@
     <!-- Dados estruturados: Clínica -->
     <script type="application/ld+json">
     {
-        "@context": "https://schema.org",
-        "@type": "MedicalClinic",
-        "name": "Rizzatti Dermatologia e Saúde",
-        "image": "https://www.clinicarizzatti.com.br/LOGO.png",
-        "url": "https://www.clinicarizzatti.com.br/",
-        "telephone": "+5548991485818",
-        "priceRange": "$$",
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Rua Rubens de Arruda Ramos, Passeio Pedra Branca",
-            "addressLocality": "Palhoça",
-            "addressRegion": "SC",
-            "addressCountry": "BR"
-        },
-        "medicalSpecialty": ["Dermatology", "Dermatologic Surgery"],
-        "sameAs": [
-            "https://instagram.com/clinica.rizzatti"
-        ],
-        "physician": [
-            {
-                "@type": "Physician",
-                "name": "Dra. Karoline Rizzatti",
-                "url": "https://www.clinicarizzatti.com.br/medico-karoline.html"
-            },
-            {
-                "@type": "Physician",
-                "name": "Dr. Timotio Dorn",
-                "url": "https://www.clinicarizzatti.com.br/medico-timotio.html"
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "WebSite",
+            "@id": "https://www.clinicarizzatti.com.br/#website",
+            "url": "https://www.clinicarizzatti.com.br/",
+            "name": "Rizzatti Dermatologia e Saúde",
+            "inLanguage": "pt-BR",
+            "publisher": {
+                "@id": "https://www.clinicarizzatti.com.br/#clinic"
             }
-        ]
-    }
+        },
+        {
+            "@type": "MedicalClinic",
+            "@id": "https://www.clinicarizzatti.com.br/#clinic",
+            "name": "Rizzatti Dermatologia e Saúde",
+            "alternateName": "Clínica Rizzatti",
+            "url": "https://www.clinicarizzatti.com.br/",
+            "logo": "https://www.clinicarizzatti.com.br/LOGO.png",
+            "image": "https://www.clinicarizzatti.com.br/RECEPCAO.jpg",
+            "description": "Clínica de dermatologia na Pedra Branca, Palhoça-SC, com Dra. Karoline Rizzatti e Dr. Timotio Dorn: dermatologia clínica, cirúrgica, estética e tricologia.",
+            "telephone": "+5548991485818",
+            "priceRange": "$$",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Rua Rubens de Arruda Ramos, Passeio Pedra Branca",
+                "addressLocality": "Palhoça",
+                "addressRegion": "SC",
+                "addressCountry": "BR"
+            },
+            "areaServed": [
+                {
+                    "@type": "City",
+                    "name": "Palhoça"
+                },
+                {
+                    "@type": "City",
+                    "name": "São José"
+                },
+                {
+                    "@type": "City",
+                    "name": "Florianópolis"
+                }
+            ],
+            "medicalSpecialty": "https://schema.org/Dermatology",
+            "availableService": [
+                {
+                    "@type": "MedicalTherapy",
+                    "name": "Dermatologia clínica",
+                    "url": "https://www.clinicarizzatti.com.br/clinica.html"
+                },
+                {
+                    "@type": "MedicalProcedure",
+                    "name": "Dermatologia cirúrgica e cirurgia micrográfica de Mohs",
+                    "url": "https://www.clinicarizzatti.com.br/cirurgica.html"
+                },
+                {
+                    "@type": "MedicalTherapy",
+                    "name": "Dermatologia estética",
+                    "url": "https://www.clinicarizzatti.com.br/estetica-facial.html"
+                },
+                {
+                    "@type": "MedicalTherapy",
+                    "name": "Dermatologia corporal",
+                    "url": "https://www.clinicarizzatti.com.br/estetica-corporal.html"
+                },
+                {
+                    "@type": "MedicalTherapy",
+                    "name": "Tricologia e tratamento de queda de cabelo",
+                    "url": "https://www.clinicarizzatti.com.br/tricologica.html"
+                }
+            ],
+            "sameAs": [
+                "https://instagram.com/clinica.rizzatti"
+            ],
+            "physician": [
+                {
+                    "@type": "Physician",
+                    "@id": "https://www.clinicarizzatti.com.br/medico-karoline.html#physician",
+                    "name": "Dra. Karoline Rizzatti",
+                    "url": "https://www.clinicarizzatti.com.br/medico-karoline.html"
+                },
+                {
+                    "@type": "Physician",
+                    "@id": "https://www.clinicarizzatti.com.br/medico-timotio.html#physician",
+                    "name": "Dr. Timotio Dorn",
+                    "url": "https://www.clinicarizzatti.com.br/medico-timotio.html"
+                }
+            ]
+        }
+    ]
+}
     </script>
 </head>
 <body>
@@ -2148,7 +2211,7 @@
             </li>
             <li><a href="corpo-clinico.html">Corpo Clínico</a></li>
             <li><a href="tecnologias.html">Tecnologias</a></li>
-            <li><a href="blog.html">Blog</a></li>
+            <li><a href="/blog">Blog</a></li>
             <li><a href="#contato">Contato</a></li>
         </ul>
 
@@ -2477,7 +2540,7 @@
                         <a href="#home">Home</a>
                         <a href="sobre.html">Sobre a clínica</a>
                         <a href="#servicos">Especialidades</a>
-                        <a href="blog.html">Blog</a>
+                        <a href="/blog">Blog</a>
                         <a href="#contato">Localização</a>
                     </div>
                 </div>

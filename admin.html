@@ -12,11 +12,14 @@
     <style>
         :root {
             --navy: #758899; --navy-dark: #45525e; --bronze: #c8886c; --azure: #d7bea8;
-            --white: #FFFFFF; --gray-light: #f3eee7; --danger: #b8574a;
+            --white: #FFFFFF; --gray-light: #f3eee7; --danger: #b8574a; --ok: #3f8256; --warn: #b8862f;
+            --line: rgba(117,136,153,0.2);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        [hidden] { display: none !important; }
         body { font-family: 'Jost', sans-serif; background: var(--gray-light); color: var(--navy-dark); min-height: 100vh; }
         a { color: inherit; }
+        button { font-family: 'Jost', sans-serif; }
 
         /* TOPBAR */
         .topbar { background: var(--navy-dark); color: var(--white); padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; }
@@ -25,73 +28,128 @@
         .topbar-actions { display: flex; align-items: center; gap: 16px; font-size: 0.85rem; }
         .topbar-actions a { text-decoration: none; opacity: 0.85; }
         .topbar-actions a:hover { opacity: 1; }
-        .btn-logout { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: var(--white); padding: 8px 16px; font-family: 'Jost', sans-serif; font-size: 0.8rem; letter-spacing: 0.05em; cursor: pointer; border-radius: 3px; }
+        .btn-logout { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: var(--white); padding: 8px 16px; font-size: 0.8rem; letter-spacing: 0.05em; cursor: pointer; border-radius: 3px; }
         .btn-logout:hover { background: rgba(255,255,255,0.12); }
 
-        /* LOGIN SCREEN */
+        /* LOGIN */
         .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .login-card { background: var(--white); padding: 48px 40px; width: 100%; max-width: 380px; border-radius: 6px; box-shadow: 0 30px 70px rgba(45,58,74,0.15); text-align: center; }
         .login-logo { height: 40px; margin-bottom: 24px; }
         .login-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--navy-dark); margin-bottom: 6px; }
         .login-sub { font-size: 0.85rem; color: rgba(69,82,94,0.6); margin-bottom: 30px; }
+        .password-wrap { position: relative; }
+        .password-wrap input { padding-right: 72px !important; }
+        .password-toggle { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--navy); font-size: 0.75rem; letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; padding: 6px 8px; }
+
         .field { text-align: left; margin-bottom: 18px; }
-        .field label { display: block; font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(69,82,94,0.7); margin-bottom: 6px; }
+        .field label { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(69,82,94,0.72); margin-bottom: 6px; }
         .field input, .field textarea, .field select {
-            width: 100%; padding: 12px 14px; border: 1px solid rgba(117,136,153,0.3); border-radius: 3px;
+            width: 100%; padding: 11px 13px; border: 1px solid rgba(117,136,153,0.3); border-radius: 3px;
             font-family: 'Jost', sans-serif; font-size: 0.95rem; color: var(--navy-dark); background: var(--white);
         }
-        .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: var(--bronze); }
-        .btn-primary {
-            width: 100%; background: var(--navy-dark); color: var(--white); border: none; padding: 13px; border-radius: 3px;
-            font-family: 'Jost', sans-serif; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.25s ease;
-        }
+        .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: var(--bronze); box-shadow: 0 0 0 3px rgba(200,136,108,0.12); }
+        .field textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+        .field textarea.body-field { min-height: 380px; font-family: 'Courier New', monospace; font-size: 0.85rem; }
+        .hint { font-size: 0.75rem; color: rgba(69,82,94,0.55); margin-top: 5px; line-height: 1.45; }
+        .counter { font-size: 0.72rem; text-transform: none; letter-spacing: 0; font-variant-numeric: tabular-nums; color: rgba(69,82,94,0.55); }
+        .counter.ok { color: var(--ok); } .counter.warn { color: var(--warn); } .counter.bad { color: var(--danger); }
+
+        .btn-primary { width: 100%; background: var(--navy-dark); color: var(--white); border: none; padding: 13px; border-radius: 3px; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.25s ease; }
         .btn-primary:hover { background: #38434d; }
         .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-secondary { background: transparent; border: 1px solid rgba(117,136,153,0.35); color: var(--navy-dark); padding: 11px 20px; border-radius: 3px; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; }
+        .btn-secondary:hover { background: rgba(117,136,153,0.08); }
+        .btn-link { background: none; border: none; color: var(--bronze); font-size: 0.82rem; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; padding: 0; }
         .form-msg { font-size: 0.82rem; margin-top: 14px; min-height: 18px; }
         .form-msg.error { color: var(--danger); }
-        .form-msg.ok { color: #3f8256; }
 
         /* DASHBOARD */
-        .dash { display: none; }
         .dash-inner { max-width: 1100px; margin: 0 auto; padding: 36px 24px 80px; }
         .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 14px; }
         .dash-header h1 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--navy-dark); }
-        .btn-new { background: var(--bronze); color: var(--white); border: none; padding: 12px 22px; border-radius: 3px; font-family: 'Jost', sans-serif; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; }
+        .btn-new { background: var(--bronze); color: var(--white); border: none; padding: 12px 22px; border-radius: 3px; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; }
         .btn-new:hover { background: #b87a5f; }
-
         .posts-table { background: var(--white); border-radius: 6px; overflow: hidden; box-shadow: 0 10px 30px rgba(45,58,74,0.06); }
-        .posts-row { display: grid; grid-template-columns: 1fr 140px 110px 160px; gap: 16px; padding: 16px 22px; align-items: center; border-bottom: 1px solid rgba(117,136,153,0.1); }
+        .posts-row { display: grid; grid-template-columns: 1fr 150px 90px 110px 170px; gap: 16px; padding: 16px 22px; align-items: center; border-bottom: 1px solid rgba(117,136,153,0.1); }
         .posts-row.head { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(69,82,94,0.55); background: rgba(117,136,153,0.05); }
         .posts-row:last-child { border-bottom: none; }
-        .post-title-cell { font-size: 0.95rem; color: var(--navy-dark); }
-        .post-title-cell small { display: block; font-size: 0.78rem; color: rgba(69,82,94,0.5); margin-top: 2px; }
+        .post-title-cell { font-size: 0.95rem; color: var(--navy-dark); min-width: 0; }
+        .post-title-cell small { display: block; font-size: 0.78rem; color: rgba(69,82,94,0.5); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .status-pill { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; }
-        .status-pill.published { background: rgba(63,130,86,0.12); color: #3f8256; }
+        .status-pill.published { background: rgba(63,130,86,0.12); color: var(--ok); }
         .status-pill.draft { background: rgba(200,136,108,0.15); color: var(--bronze); }
-        .row-actions { display: flex; gap: 10px; font-size: 0.82rem; }
-        .row-actions button { background: none; border: none; cursor: pointer; font-family: 'Jost', sans-serif; color: var(--navy); text-decoration: underline; padding: 0; }
+        .score-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+        .score-pill::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+        .score-pill.ok { color: var(--ok); } .score-pill.warn { color: var(--warn); } .score-pill.bad { color: var(--danger); }
+        .row-actions { display: flex; gap: 12px; font-size: 0.82rem; }
+        .row-actions button, .row-actions a { background: none; border: none; cursor: pointer; color: var(--navy); text-decoration: underline; padding: 0; font-size: 0.82rem; }
         .row-actions button.danger { color: var(--danger); }
         .empty-state { padding: 60px 20px; text-align: center; color: rgba(69,82,94,0.55); }
 
-        /* MODAL EDITOR */
-        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(30,38,46,0.55); z-index: 2000; align-items: flex-start; justify-content: center; padding: 40px 16px; overflow-y: auto; }
+        /* EDITOR */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(30,38,46,0.55); z-index: 2000; align-items: flex-start; justify-content: center; padding: 32px 16px; overflow-y: auto; }
         .modal-overlay.open { display: flex; }
-        .modal-card { background: var(--white); width: 100%; max-width: 780px; border-radius: 8px; padding: 34px 36px 30px; box-shadow: 0 40px 90px rgba(0,0,0,0.3); }
-        .modal-card h2 { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: var(--navy-dark); margin-bottom: 22px; }
+        .modal-card { background: var(--white); width: 100%; max-width: 1180px; border-radius: 8px; box-shadow: 0 40px 90px rgba(0,0,0,0.3); }
+        .modal-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 32px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--white); z-index: 5; border-radius: 8px 8px 0 0; }
+        .modal-head h2 { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: var(--navy-dark); }
+        .modal-head-actions { display: flex; gap: 10px; align-items: center; }
+        .modal-head-actions .btn-primary { width: auto; padding: 11px 26px; }
+        .editor-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 0; }
+        .editor-main { padding: 26px 32px 32px; min-width: 0; }
+        .editor-side { border-left: 1px solid var(--line); background: #faf8f5; padding: 26px 24px; }
+        .editor-side-inner { position: sticky; top: 90px; }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .field textarea { resize: vertical; min-height: 90px; font-family: 'Jost', sans-serif; }
-        .field textarea.body-field { min-height: 320px; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.5; }
-        .hint { font-size: 0.75rem; color: rgba(69,82,94,0.5); margin-top: 4px; }
-        .modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 22px; }
-        .btn-secondary { background: transparent; border: 1px solid rgba(117,136,153,0.35); color: var(--navy-dark); padding: 12px 22px; border-radius: 3px; font-family: 'Jost', sans-serif; font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; }
-        .btn-secondary:hover { background: rgba(117,136,153,0.08); }
-        .modal-actions .btn-primary { width: auto; padding: 12px 26px; }
+        fieldset { border: none; margin-bottom: 28px; }
+        legend { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--bronze); padding-bottom: 10px; margin-bottom: 16px; border-bottom: 1px solid var(--line); width: 100%; }
+        legend small { font-weight: 400; letter-spacing: 0.02em; text-transform: none; color: rgba(69,82,94,0.55); margin-left: 6px; }
 
+        .body-tabs { display: flex; gap: 4px; margin-bottom: 8px; }
+        .body-tabs button { background: none; border: 1px solid transparent; border-radius: 3px; padding: 5px 12px; font-size: 0.78rem; color: var(--navy); cursor: pointer; }
+        .body-tabs button[aria-selected="true"] { border-color: var(--line); background: var(--gray-light); color: var(--navy-dark); }
+        .body-preview { border: 1px solid rgba(117,136,153,0.3); border-radius: 3px; padding: 20px 24px; min-height: 380px; max-height: 620px; overflow-y: auto; font-family: Georgia, serif; font-size: 1.05rem; line-height: 1.7; color: #4a5763; }
+        .body-preview h2 { font-size: 1.45rem; margin: 1.2em 0 0.4em; color: var(--navy-dark); }
+        .body-preview h3 { font-size: 1.2rem; margin: 1em 0 0.3em; color: var(--navy-dark); }
+        .body-preview p, .body-preview ul, .body-preview ol { margin-bottom: 0.9em; }
+        .body-preview ul, .body-preview ol { padding-left: 1.4em; }
+
+        .serp { background: var(--white); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; margin-top: 4px; font-family: Arial, sans-serif; }
+        .serp-url { font-size: 12px; color: #4d5156; margin-bottom: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .serp-title { font-size: 18px; line-height: 1.3; color: #1a0dab; margin-bottom: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .serp-desc { font-size: 13px; line-height: 1.5; color: #4d5156; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+        .faq-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
+        .faq-row { border: 1px solid var(--line); border-radius: 4px; padding: 12px; background: #fcfbf9; position: relative; }
+        .faq-row .field { margin-bottom: 10px; }
+        .faq-row .field:last-of-type { margin-bottom: 0; }
+        .faq-remove { position: absolute; top: 8px; right: 10px; background: none; border: none; color: var(--danger); font-size: 0.75rem; cursor: pointer; text-decoration: underline; }
+
+        /* ANÁLISE SEO */
+        .score-box { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+        .score-ring { width: 66px; height: 66px; border-radius: 50%; display: grid; place-items: center; font-size: 1.15rem; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--navy-dark); background: conic-gradient(var(--score-color, var(--danger)) calc(var(--score, 0) * 1%), rgba(117,136,153,0.15) 0); position: relative; flex-shrink: 0; }
+        .score-ring::before { content: ''; position: absolute; inset: 6px; background: #faf8f5; border-radius: 50%; }
+        .score-ring span { position: relative; }
+        .score-label { font-size: 0.95rem; font-weight: 500; }
+        .score-sub { font-size: 0.78rem; color: rgba(69,82,94,0.6); }
+        .checks-group { margin-bottom: 18px; }
+        .checks-group h3 { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(69,82,94,0.6); margin-bottom: 8px; }
+        .checks { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+        .checks li { display: grid; grid-template-columns: 10px 1fr; gap: 10px; font-size: 0.8rem; line-height: 1.4; color: var(--navy-dark); }
+        .checks li::before { content: ''; width: 9px; height: 9px; border-radius: 50%; margin-top: 4px; background: var(--danger); }
+        .checks li.ok::before { background: var(--ok); }
+        .checks li.warn::before { background: var(--warn); }
+        .checks li small { display: block; color: rgba(69,82,94,0.55); font-size: 0.74rem; }
+
+        @media (max-width: 980px) {
+            .editor-grid { grid-template-columns: 1fr; }
+            .editor-side { border-left: none; border-top: 1px solid var(--line); }
+            .editor-side-inner { position: static; }
+        }
         @media (max-width: 700px) {
             .grid-2 { grid-template-columns: 1fr; }
             .posts-row { grid-template-columns: 1fr; gap: 6px; }
             .posts-row.head { display: none; }
-            .row-actions { margin-top: 6px; }
+            .modal-head { flex-direction: column; align-items: stretch; padding: 18px 20px; }
+            .editor-main { padding: 20px; }
         }
     </style>
 </head>
@@ -105,25 +163,24 @@
             <div class="login-sub">Acesso restrito à equipe da clínica</div>
             <form id="loginForm">
                 <div class="field">
-                    <label for="loginEmail">E-mail</label>
-                    <input type="email" id="loginEmail" required autocomplete="username">
-                </div>
-                <div class="field">
                     <label for="loginPassword">Senha</label>
-                    <input type="password" id="loginPassword" required autocomplete="current-password">
+                    <div class="password-wrap">
+                        <input type="password" id="loginPassword" required autocomplete="current-password" autofocus>
+                        <button type="button" class="password-toggle" id="passwordToggle" aria-label="Mostrar senha">Mostrar</button>
+                    </div>
                 </div>
                 <button type="submit" class="btn-primary" id="loginBtn">Entrar</button>
-                <div class="form-msg error" id="loginMsg"></div>
+                <div class="form-msg error" id="loginMsg" role="alert"></div>
             </form>
         </div>
     </div>
 
     <!-- DASHBOARD -->
-    <div class="dash" id="dash">
+    <div id="dash" hidden>
         <div class="topbar">
             <div class="topbar-title">Rizzatti <span>Blog Admin</span></div>
             <div class="topbar-actions">
-                <a href="blog.html" target="_blank">Ver blog ↗</a>
+                <a href="/blog" target="_blank" rel="noopener">Ver blog ↗</a>
                 <button class="btn-logout" id="logoutBtn">Sair</button>
             </div>
         </div>
@@ -133,287 +190,567 @@
                 <h1>Artigos</h1>
                 <button class="btn-new" id="newPostBtn">+ Novo artigo</button>
             </div>
-
             <div class="posts-table">
                 <div class="posts-row head">
-                    <div>Título</div>
-                    <div>Categoria</div>
-                    <div>Status</div>
-                    <div>Ações</div>
+                    <div>Título</div><div>Categoria</div><div>SEO</div><div>Status</div><div>Ações</div>
                 </div>
                 <div id="postsList"></div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL: EDITOR DE POST -->
+    <!-- EDITOR -->
     <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-card">
-            <h2 id="modalTitle">Novo artigo</h2>
-            <form id="postForm">
-                <input type="hidden" id="postId">
-                <div class="field">
-                    <label for="fTitle">Título</label>
-                    <input type="text" id="fTitle" required>
-                </div>
-                <div class="grid-2">
-                    <div class="field">
-                        <label for="fSlug">Slug (URL)</label>
-                        <input type="text" id="fSlug" required pattern="[a-z0-9-]+">
-                        <div class="hint">Gerado automaticamente a partir do título, pode editar.</div>
-                    </div>
-                    <div class="field">
-                        <label for="fCategory">Categoria</label>
-                        <input type="text" id="fCategory" placeholder="Ex: Dermatologia Clínica">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <form id="postForm" novalidate>
+                <div class="modal-head">
+                    <h2 id="modalTitle">Novo artigo</h2>
+                    <div class="modal-head-actions">
+                        <div class="form-msg error" id="postMsg" role="alert" style="margin:0"></div>
+                        <button type="button" class="btn-secondary" id="cancelBtn">Cancelar</button>
+                        <button type="submit" class="btn-primary" id="saveBtn">Salvar</button>
                     </div>
                 </div>
-                <div class="grid-2">
-                    <div class="field">
-                        <label for="fAuthor">Autor</label>
-                        <select id="fAuthor">
-                            <option value="Dra. Karoline Rizzatti">Dra. Karoline Rizzatti</option>
-                            <option value="Dr. Timotio Dorn">Dr. Timotio Dorn</option>
-                            <option value="Equipe Rizzatti">Equipe Rizzatti</option>
-                        </select>
+
+                <div class="editor-grid">
+                    <div class="editor-main">
+                        <input type="hidden" id="postId">
+
+                        <fieldset>
+                            <legend>Conteúdo</legend>
+                            <div class="field">
+                                <label for="fTitle">Título do artigo (H1) <span class="counter" id="cTitle"></span></label>
+                                <input type="text" id="fTitle" required>
+                            </div>
+                            <div class="grid-2">
+                                <div class="field">
+                                    <label for="fSlug">Slug (URL)</label>
+                                    <input type="text" id="fSlug" required pattern="[a-z0-9]+(-[a-z0-9]+)*">
+                                    <div class="hint">clinicarizzatti.com.br/blog/<strong id="slugPreview">...</strong></div>
+                                </div>
+                                <div class="field">
+                                    <label for="fCategory">Categoria</label>
+                                    <input type="text" id="fCategory" list="categoryList" placeholder="Ex: Dermatologia Clínica">
+                                    <datalist id="categoryList"></datalist>
+                                </div>
+                            </div>
+                            <div class="grid-2">
+                                <div class="field">
+                                    <label for="fAuthor">Autor</label>
+                                    <select id="fAuthor">
+                                        <option value="Dra. Karoline Rizzatti">Dra. Karoline Rizzatti</option>
+                                        <option value="Dr. Timotio Dorn">Dr. Timotio Dorn</option>
+                                        <option value="Equipe Rizzatti">Equipe Rizzatti</option>
+                                    </select>
+                                </div>
+                                <div class="field">
+                                    <label for="fReviewed">Revisão médica</label>
+                                    <select id="fReviewed">
+                                        <option value="">Sem revisor separado</option>
+                                        <option value="Dra. Karoline Rizzatti">Dra. Karoline Rizzatti</option>
+                                        <option value="Dr. Timotio Dorn">Dr. Timotio Dorn</option>
+                                    </select>
+                                    <div class="hint">Obrigatório quando o autor é "Equipe Rizzatti".</div>
+                                </div>
+                            </div>
+                            <div class="grid-2">
+                                <div class="field">
+                                    <label for="fCover">Imagem de capa</label>
+                                    <input type="text" id="fCover" placeholder="Ex: CLINICA.jpg ou https://...">
+                                    <div class="hint">Nome de um arquivo do site ou URL completa. Ideal: horizontal, 1400px.</div>
+                                </div>
+                                <div class="field">
+                                    <label for="fCoverAlt">Texto alternativo da capa</label>
+                                    <input type="text" id="fCoverAlt" maxlength="160" placeholder="Descreva a imagem">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="fExcerpt">Subtítulo / resumo da listagem <span class="counter" id="cExcerpt"></span></label>
+                                <textarea id="fExcerpt" maxlength="240" rows="2"></textarea>
+                                <div class="hint">Aparece abaixo do título e nos cards do blog.</div>
+                            </div>
+                            <div class="field">
+                                <label for="fBody">Conteúdo do artigo <span class="counter" id="cBody"></span></label>
+                                <div class="body-tabs" role="tablist">
+                                    <button type="button" role="tab" aria-selected="true" id="tabHtml">HTML</button>
+                                    <button type="button" role="tab" aria-selected="false" id="tabPreview">Pré-visualizar</button>
+                                </div>
+                                <textarea id="fBody" class="body-field" required></textarea>
+                                <div class="body-preview" id="bodyPreview" hidden></div>
+                                <div class="hint">Use &lt;h2&gt; para seções, &lt;h3&gt; para subseções, &lt;p&gt;, &lt;ul&gt;&lt;li&gt;, &lt;strong&gt; e &lt;a href="/clinica.html"&gt; para links internos. Não use &lt;h1&gt; — o título já é o H1.</div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>SEO <small>como o artigo aparece no Google</small></legend>
+                            <div class="grid-2">
+                                <div class="field">
+                                    <label for="fFocus">Palavra-chave principal</label>
+                                    <input type="text" id="fFocus" placeholder="Ex: queda de cabelo">
+                                    <div class="hint">O termo que um paciente digitaria no Google.</div>
+                                </div>
+                                <div class="field">
+                                    <label for="fKeywords">Palavras-chave secundárias</label>
+                                    <input type="text" id="fKeywords" placeholder="Ex: tricologista, alopecia, PRP capilar">
+                                    <div class="hint">Separe por vírgulas. Viram "Assuntos" no artigo.</div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="fSeoTitle">Título SEO (opcional) <span class="counter" id="cSeoTitle"></span></label>
+                                <input type="text" id="fSeoTitle" maxlength="70" placeholder="Deixe vazio para usar o título do artigo">
+                            </div>
+                            <div class="field">
+                                <label for="fMeta">Meta description <span class="counter" id="cMeta"></span></label>
+                                <textarea id="fMeta" maxlength="170" rows="2"></textarea>
+                            </div>
+                            <div class="field">
+                                <label>Prévia no Google</label>
+                                <div class="serp" aria-live="polite">
+                                    <div class="serp-url" id="serpUrl"></div>
+                                    <div class="serp-title" id="serpTitle"></div>
+                                    <div class="serp-desc" id="serpDesc"></div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Respostas para IA <small>ChatGPT, Gemini, Perplexity, Google AI</small></legend>
+                            <div class="field">
+                                <label for="fSummary">Em resumo <span class="counter" id="cSummary"></span></label>
+                                <textarea id="fSummary" rows="3" placeholder="Responda a pergunta principal do artigo em 40 a 60 palavras, de forma direta e completa."></textarea>
+                                <div class="hint">Aparece em destaque no início do artigo. É o trecho que assistentes de IA costumam citar.</div>
+                            </div>
+                            <div class="field">
+                                <label>Perguntas frequentes <span class="counter" id="cFaq"></span></label>
+                                <div class="faq-list" id="faqList"></div>
+                                <button type="button" class="btn-link" id="addFaq">+ Adicionar pergunta</button>
+                                <div class="hint">Use perguntas reais de pacientes. Respostas objetivas, de 2 a 4 frases.</div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Publicação</legend>
+                            <div class="grid-2">
+                                <div class="field">
+                                    <label for="fStatus">Status</label>
+                                    <select id="fStatus">
+                                        <option value="draft">Rascunho</option>
+                                        <option value="published">Publicado</option>
+                                    </select>
+                                </div>
+                                <div class="field">
+                                    <label for="fReadTime">Tempo de leitura (min)</label>
+                                    <input type="number" id="fReadTime" min="1" value="5">
+                                    <div class="hint">Calculado automaticamente pelo conteúdo.</div>
+                                </div>
+                            </div>
+                        </fieldset>
                     </div>
-                    <div class="field">
-                        <label for="fReadTime">Tempo de leitura (min)</label>
-                        <input type="number" id="fReadTime" min="1" value="5">
-                    </div>
-                </div>
-                <div class="field">
-                    <label for="fCover">Imagem de capa (nome do arquivo ou URL)</label>
-                    <input type="text" id="fCover" placeholder="Ex: ESP_CLINICA.jpg ou https://...">
-                </div>
-                <div class="field">
-                    <label for="fExcerpt">Resumo (aparece na listagem do blog)</label>
-                    <textarea id="fExcerpt" maxlength="220"></textarea>
-                </div>
-                <div class="field">
-                    <label for="fMeta">Meta description (SEO, até 155 caracteres)</label>
-                    <textarea id="fMeta" maxlength="160"></textarea>
-                </div>
-                <div class="field">
-                    <label for="fBody">Conteúdo do artigo (HTML: use &lt;h2&gt;, &lt;p&gt;, &lt;ul&gt;&lt;li&gt;, &lt;strong&gt;)</label>
-                    <textarea id="fBody" class="body-field" required></textarea>
-                </div>
-                <div class="field">
-                    <label for="fStatus">Status</label>
-                    <select id="fStatus">
-                        <option value="draft">Rascunho</option>
-                        <option value="published">Publicado</option>
-                    </select>
-                </div>
-                <div class="form-msg error" id="postMsg"></div>
-                <div class="modal-actions">
-                    <button type="button" class="btn-secondary" id="cancelBtn">Cancelar</button>
-                    <button type="submit" class="btn-primary" id="saveBtn">Salvar</button>
+
+                    <aside class="editor-side" aria-label="Análise SEO">
+                        <div class="editor-side-inner">
+                            <div class="score-box">
+                                <div class="score-ring" id="scoreRing"><span id="scoreValue">0</span></div>
+                                <div>
+                                    <div class="score-label" id="scoreLabel">Análise SEO</div>
+                                    <div class="score-sub">Atualiza enquanto você escreve</div>
+                                </div>
+                            </div>
+                            <div id="checks"></div>
+                        </div>
+                    </aside>
                 </div>
             </form>
         </div>
     </div>
 
-    <script src="blog-config.js"></script>
+    <template id="faqTemplate">
+        <div class="faq-row">
+            <button type="button" class="faq-remove">Remover</button>
+            <div class="field">
+                <label>Pergunta</label>
+                <input type="text" class="faq-q" maxlength="200">
+            </div>
+            <div class="field">
+                <label>Resposta</label>
+                <textarea class="faq-a" rows="3"></textarea>
+            </div>
+        </div>
+    </template>
+
     <script type="module">
         import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+        import { SUPABASE_URL, SUPABASE_ANON_KEY, ADMIN_EMAIL } from './blog-config.mjs';
 
-        const supabase = createClient(window.BLOG_SUPABASE_URL, window.BLOG_SUPABASE_ANON_KEY);
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const $ = (id) => document.getElementById(id);
 
-        const loginWrap = document.getElementById('loginWrap');
-        const dash = document.getElementById('dash');
-        const loginForm = document.getElementById('loginForm');
-        const loginMsg = document.getElementById('loginMsg');
-        const loginBtn = document.getElementById('loginBtn');
-        const postsList = document.getElementById('postsList');
-        const modalOverlay = document.getElementById('modalOverlay');
-        const modalTitle = document.getElementById('modalTitle');
-        const postForm = document.getElementById('postForm');
-        const postMsg = document.getElementById('postMsg');
-        const saveBtn = document.getElementById('saveBtn');
+        const DEFAULT_CATEGORIES = ['Dermatologia Clínica', 'Dermatologia Cirúrgica', 'Estética', 'Dermatologia Corporal', 'Tricologia', 'Tecnologias'];
+        const DOCTORS = ['Dra. Karoline Rizzatti', 'Dr. Timotio Dorn'];
+        const LOCAL_TERMS = ['palhoca', 'pedra branca', 'florianopolis', 'sao jose', 'grande florianopolis', 'santa catarina'];
+
+        let allPosts = [];
+
+        const escapeHtml = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        const normalize = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+        const stripTags = (html) => String(html || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+        const countWords = (text) => (text ? text.split(/\s+/).filter(Boolean).length : 0);
 
         function slugify(str) {
-            return str.toString().normalize('NFD').replace(/[̀-ͯ]/g, '')
-                .toLowerCase().trim()
-                .replace(/[^a-z0-9\s-]/g, '')
-                .replace(/\s+/g, '-')
-                .replace(/-+/g, '-')
-                .replace(/^-|-$/g, '');
+            return normalize(str).replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
         }
 
-        // ---------- AUTH ----------
+        // ---------- LOGIN ----------
         async function checkSession() {
             const { data: { session } } = await supabase.auth.getSession();
-            if (session) {
-                showDash();
-            } else {
-                showLogin();
-            }
+            session ? showDash() : showLogin();
         }
+        function showLogin() { $('loginWrap').hidden = false; $('dash').hidden = true; $('loginPassword').focus(); }
+        function showDash() { $('loginWrap').hidden = true; $('dash').hidden = false; loadPosts(); }
 
-        function showLogin() {
-            loginWrap.style.display = 'flex';
-            dash.style.display = 'none';
-        }
+        $('passwordToggle').addEventListener('click', () => {
+            const input = $('loginPassword');
+            const show = input.type === 'password';
+            input.type = show ? 'text' : 'password';
+            $('passwordToggle').textContent = show ? 'Ocultar' : 'Mostrar';
+            $('passwordToggle').setAttribute('aria-label', show ? 'Ocultar senha' : 'Mostrar senha');
+        });
 
-        function showDash() {
-            loginWrap.style.display = 'none';
-            dash.style.display = 'block';
-            loadPosts();
-        }
-
-        loginForm.addEventListener('submit', async (e) => {
+        $('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            loginMsg.textContent = '';
-            loginBtn.disabled = true;
-            loginBtn.textContent = 'Entrando...';
-            const email = document.getElementById('loginEmail').value.trim();
-            const password = document.getElementById('loginPassword').value;
+            const btn = $('loginBtn');
+            $('loginMsg').textContent = '';
+            btn.disabled = true;
+            btn.textContent = 'Entrando...';
 
-            const { error } = await supabase.auth.signInWithPassword({ email, password });
-            loginBtn.disabled = false;
-            loginBtn.textContent = 'Entrar';
+            const { error } = await supabase.auth.signInWithPassword({ email: ADMIN_EMAIL, password: $('loginPassword').value });
 
+            btn.disabled = false;
+            btn.textContent = 'Entrar';
             if (error) {
-                loginMsg.textContent = 'E-mail ou senha inválidos.';
+                $('loginMsg').textContent = error.status === 429
+                    ? 'Muitas tentativas. Aguarde alguns minutos e tente de novo.'
+                    : 'Senha incorreta.';
+                $('loginPassword').select();
                 return;
             }
+            $('loginPassword').value = '';
             showDash();
         });
 
-        document.getElementById('logoutBtn').addEventListener('click', async () => {
+        $('logoutBtn').addEventListener('click', async () => {
             await supabase.auth.signOut();
             showLogin();
         });
 
         // ---------- LISTAGEM ----------
         async function loadPosts() {
-            postsList.innerHTML = '<div class="empty-state">Carregando...</div>';
-            const { data, error } = await supabase
-                .from('blog_posts')
-                .select('*')
-                .order('created_at', { ascending: false });
+            const list = $('postsList');
+            list.innerHTML = '<div class="empty-state">Carregando...</div>';
+            const { data, error } = await supabase.from('blog_posts').select('*').order('created_at', { ascending: false });
 
             if (error) {
-                postsList.innerHTML = `<div class="empty-state">Erro ao carregar posts: ${error.message}</div>`;
+                list.innerHTML = `<div class="empty-state">Erro ao carregar artigos: ${escapeHtml(error.message)}</div>`;
+                return;
+            }
+            allPosts = data || [];
+            refreshCategoryList();
+
+            if (!allPosts.length) {
+                list.innerHTML = '<div class="empty-state">Nenhum artigo ainda. Clique em "+ Novo artigo" para começar.</div>';
                 return;
             }
 
-            if (!data || data.length === 0) {
-                postsList.innerHTML = '<div class="empty-state">Nenhum artigo ainda. Clique em "+ Novo artigo" para começar.</div>';
-                return;
-            }
-
-            postsList.innerHTML = data.map(rowHtml).join('');
-
-            data.forEach((post) => {
-                document.getElementById(`edit-${post.id}`).addEventListener('click', () => openModal(post));
-                document.getElementById(`del-${post.id}`).addEventListener('click', () => deletePost(post));
-            });
-        }
-
-        function rowHtml(post) {
-            return `
+            list.innerHTML = allPosts.map((post) => {
+                const { score } = analyze(postToForm(post));
+                const level = score >= 80 ? 'ok' : score >= 50 ? 'warn' : 'bad';
+                return `
                 <div class="posts-row">
-                    <div class="post-title-cell">${post.title}<small>/${post.slug}</small></div>
-                    <div>${post.category || '—'}</div>
+                    <div class="post-title-cell">${escapeHtml(post.title)}<small>/blog/${escapeHtml(post.slug)}</small></div>
+                    <div>${escapeHtml(post.category || '—')}</div>
+                    <div><span class="score-pill ${level}">${score}</span></div>
                     <div><span class="status-pill ${post.status}">${post.status === 'published' ? 'Publicado' : 'Rascunho'}</span></div>
                     <div class="row-actions">
-                        <button id="edit-${post.id}">Editar</button>
-                        <button class="danger" id="del-${post.id}">Excluir</button>
+                        <button type="button" data-edit="${post.id}">Editar</button>
+                        ${post.status === 'published' ? `<a href="/blog/${encodeURIComponent(post.slug)}" target="_blank" rel="noopener">Ver</a>` : ''}
+                        <button type="button" class="danger" data-del="${post.id}">Excluir</button>
                     </div>
-                </div>
-            `;
+                </div>`;
+            }).join('');
+        }
+
+        $('postsList').addEventListener('click', (e) => {
+            const edit = e.target.closest('[data-edit]');
+            const del = e.target.closest('[data-del]');
+            if (edit) openModal(allPosts.find((p) => p.id === edit.dataset.edit));
+            if (del) deletePost(allPosts.find((p) => p.id === del.dataset.del));
+        });
+
+        function refreshCategoryList() {
+            const cats = [...new Set([...DEFAULT_CATEGORIES, ...allPosts.map((p) => p.category).filter(Boolean)])];
+            $('categoryList').innerHTML = cats.map((c) => `<option value="${escapeHtml(c)}">`).join('');
         }
 
         async function deletePost(post) {
-            if (!confirm(`Excluir o artigo "${post.title}"? Essa ação não pode ser desfeita.`)) return;
+            if (!post || !confirm(`Excluir o artigo "${post.title}"? Essa ação não pode ser desfeita.`)) return;
             const { error } = await supabase.from('blog_posts').delete().eq('id', post.id);
-            if (error) {
-                alert('Erro ao excluir: ' + error.message);
-                return;
-            }
+            if (error) { alert('Erro ao excluir: ' + error.message); return; }
             loadPosts();
         }
 
-        // ---------- MODAL / FORM ----------
-        const fTitle = document.getElementById('fTitle');
-        const fSlug = document.getElementById('fSlug');
+        // ---------- FAQ ----------
+        function addFaqRow(item = { question: '', answer: '' }) {
+            const node = $('faqTemplate').content.firstElementChild.cloneNode(true);
+            node.querySelector('.faq-q').value = item.question;
+            node.querySelector('.faq-a').value = item.answer;
+            node.querySelector('.faq-remove').addEventListener('click', () => { node.remove(); update(); });
+            $('faqList').appendChild(node);
+        }
+        function readFaq() {
+            return [...$('faqList').querySelectorAll('.faq-row')]
+                .map((row) => ({ question: row.querySelector('.faq-q').value.trim(), answer: row.querySelector('.faq-a').value.trim() }))
+                .filter((i) => i.question && i.answer);
+        }
+        $('addFaq').addEventListener('click', () => { addFaqRow(); $('faqList').lastElementChild.querySelector('.faq-q').focus(); });
+
+        // ---------- EDITOR ----------
         let slugTouched = false;
+        let readTimeTouched = false;
 
-        fTitle.addEventListener('input', () => {
-            if (!slugTouched) fSlug.value = slugify(fTitle.value);
+        $('fTitle').addEventListener('input', () => { if (!slugTouched) $('fSlug').value = slugify($('fTitle').value); });
+        $('fSlug').addEventListener('input', () => { slugTouched = true; });
+        $('fSlug').addEventListener('blur', () => { $('fSlug').value = slugify($('fSlug').value); update(); });
+        $('fReadTime').addEventListener('input', () => { readTimeTouched = true; });
+        $('fBody').addEventListener('input', () => {
+            if (!readTimeTouched) $('fReadTime').value = Math.max(1, Math.ceil(countWords(stripTags($('fBody').value)) / 200));
         });
-        fSlug.addEventListener('input', () => { slugTouched = true; });
 
-        document.getElementById('newPostBtn').addEventListener('click', () => openModal(null));
-        document.getElementById('cancelBtn').addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+        $('tabHtml').addEventListener('click', () => setTab(false));
+        $('tabPreview').addEventListener('click', () => setTab(true));
+        function setTab(preview) {
+            $('tabHtml').setAttribute('aria-selected', String(!preview));
+            $('tabPreview').setAttribute('aria-selected', String(preview));
+            $('fBody').hidden = preview;
+            $('bodyPreview').hidden = !preview;
+            if (preview) $('bodyPreview').innerHTML = $('fBody').value;
+        }
+
+        $('postForm').addEventListener('input', update);
+        $('postForm').addEventListener('change', update);
+        $('newPostBtn').addEventListener('click', () => openModal(null));
+        $('cancelBtn').addEventListener('click', closeModal);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && $('modalOverlay').classList.contains('open')) closeModal(); });
+
+        function postToForm(post) {
+            let faq = post?.faq;
+            if (typeof faq === 'string') { try { faq = JSON.parse(faq); } catch { faq = []; } }
+            return {
+                title: post?.title || '', slug: post?.slug || '', category: post?.category || '',
+                author: post?.author || DOCTORS[0], reviewedBy: post?.reviewed_by || '',
+                cover: post?.cover_image_url || '', coverAlt: post?.cover_image_alt || '',
+                excerpt: post?.excerpt || '', body: post?.body_html || '',
+                focus: post?.focus_keyword || '', keywords: post?.keywords || '',
+                seoTitle: post?.seo_title || '', meta: post?.meta_description || '',
+                summary: post?.summary || '', faq: Array.isArray(faq) ? faq : [],
+            };
+        }
+
+        function readForm() {
+            return {
+                title: $('fTitle').value.trim(), slug: slugify($('fSlug').value), category: $('fCategory').value.trim(),
+                author: $('fAuthor').value, reviewedBy: $('fReviewed').value,
+                cover: $('fCover').value.trim(), coverAlt: $('fCoverAlt').value.trim(),
+                excerpt: $('fExcerpt').value.trim(), body: $('fBody').value,
+                focus: $('fFocus').value.trim(), keywords: $('fKeywords').value.trim(),
+                seoTitle: $('fSeoTitle').value.trim(), meta: $('fMeta').value.trim(),
+                summary: $('fSummary').value.trim(), faq: readFaq(),
+            };
+        }
 
         function openModal(post) {
-            postMsg.textContent = '';
+            const f = postToForm(post);
+            $('postMsg').textContent = '';
             slugTouched = !!post;
-            modalTitle.textContent = post ? 'Editar artigo' : 'Novo artigo';
-            document.getElementById('postId').value = post ? post.id : '';
-            fTitle.value = post ? post.title : '';
-            fSlug.value = post ? post.slug : '';
-            document.getElementById('fCategory').value = post ? (post.category || '') : '';
-            document.getElementById('fAuthor').value = post ? (post.author || 'Dra. Karoline Rizzatti') : 'Dra. Karoline Rizzatti';
-            document.getElementById('fReadTime').value = post ? (post.read_time_minutes || 5) : 5;
-            document.getElementById('fCover').value = post ? (post.cover_image_url || '') : '';
-            document.getElementById('fExcerpt').value = post ? (post.excerpt || '') : '';
-            document.getElementById('fMeta').value = post ? (post.meta_description || '') : '';
-            document.getElementById('fBody').value = post ? (post.body_html || '') : '';
-            document.getElementById('fStatus').value = post ? post.status : 'draft';
-            modalOverlay.classList.add('open');
+            readTimeTouched = !!post;
+            $('modalTitle').textContent = post ? 'Editar artigo' : 'Novo artigo';
+            $('postId').value = post?.id || '';
+            $('fTitle').value = f.title;
+            $('fSlug').value = f.slug;
+            $('fCategory').value = f.category;
+            $('fAuthor').value = f.author;
+            $('fReviewed').value = f.reviewedBy;
+            $('fCover').value = f.cover;
+            $('fCoverAlt').value = f.coverAlt;
+            $('fExcerpt').value = f.excerpt;
+            $('fBody').value = f.body;
+            $('fFocus').value = f.focus;
+            $('fKeywords').value = f.keywords;
+            $('fSeoTitle').value = f.seoTitle;
+            $('fMeta').value = f.meta;
+            $('fSummary').value = f.summary;
+            $('fReadTime').value = post?.read_time_minutes || 5;
+            $('fStatus').value = post?.status || 'draft';
+            $('faqList').innerHTML = '';
+            f.faq.forEach(addFaqRow);
+            setTab(false);
+            $('modalOverlay').classList.add('open');
+            $('modalOverlay').scrollTop = 0;
+            update();
+            $('fTitle').focus();
         }
 
-        function closeModal() {
-            modalOverlay.classList.remove('open');
+        function closeModal() { $('modalOverlay').classList.remove('open'); }
+
+        // ---------- ANÁLISE SEO / GEO ----------
+        function effectiveTitle(f) {
+            if (f.seoTitle) return f.seoTitle;
+            const branded = `${f.title} | Clínica Rizzatti`;
+            return branded.length <= 65 ? branded : f.title;
         }
 
-        postForm.addEventListener('submit', async (e) => {
+        function includesKeyword(text, keyword) {
+            const k = normalize(keyword);
+            return !!k && normalize(text).includes(k);
+        }
+
+        function check(level, label, detail = '') { return { level, label, detail }; }
+        const range = (value, okMin, okMax, warnMin, warnMax) =>
+            value >= okMin && value <= okMax ? 'ok' : value >= warnMin && value <= warnMax ? 'warn' : 'bad';
+
+        function analyze(f) {
+            const text = stripTags(f.body);
+            const words = countWords(text);
+            const firstParagraph = stripTags((f.body.match(/<p[^>]*>([\s\S]*?)<\/p>/i) || [])[1] || text.slice(0, 400));
+            const h2s = [...f.body.matchAll(/<h2[^>]*>([\s\S]*?)<\/h2>/gi)].map((m) => stripTags(m[1]));
+            const hasH1 = /<h1[\s>]/i.test(f.body);
+            const internalLinks = (f.body.match(/<a\s[^>]*href=["'](\/|https?:\/\/(www\.)?clinicarizzatti\.com\.br|[\w-]+\.html)/gi) || []).length;
+            const title = effectiveTitle(f);
+            const summaryWords = countWords(f.summary);
+            const slugWords = slugify(f.focus).split('-').filter((w) => w.length > 2);
+            const occurrences = f.focus ? (normalize(text).match(new RegExp(normalize(f.focus).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length : 0;
+            const density = words ? (occurrences * countWords(f.focus) / words) * 100 : 0;
+            const isDoctor = DOCTORS.includes(f.author) || DOCTORS.includes(f.reviewedBy);
+            const hasLocal = LOCAL_TERMS.some((t) => normalize(`${f.title} ${text}`).includes(t));
+
+            const keyword = f.focus
+                ? [
+                    check(includesKeyword(f.title, f.focus) ? 'ok' : 'bad', 'Palavra-chave no título'),
+                    check(includesKeyword(f.meta, f.focus) ? 'ok' : 'bad', 'Palavra-chave na meta description'),
+                    check(slugWords.length && slugWords.every((w) => f.slug.includes(w)) ? 'ok' : 'warn', 'Palavra-chave na URL'),
+                    check(includesKeyword(firstParagraph, f.focus) ? 'ok' : 'warn', 'Palavra-chave no primeiro parágrafo'),
+                    check(h2s.some((h) => includesKeyword(h, f.focus)) ? 'ok' : 'warn', 'Palavra-chave em algum subtítulo H2'),
+                    check(density > 3 ? 'bad' : occurrences >= 2 ? 'ok' : 'warn', 'Uso natural da palavra-chave', `${occurrences} ocorrência(s) · ${density.toFixed(1)}%${density > 3 ? ' — excesso' : ''}`),
+                ]
+                : [check('bad', 'Defina a palavra-chave principal', 'Sem ela não dá para avaliar título, URL e conteúdo.')];
+
+            const seo = [
+                check(range(title.length, 30, 60, 20, 65), 'Tamanho do título no Google', `${title.length} caracteres (ideal 30–60)`),
+                check(range(f.meta.length, 120, 160, 70, 170), 'Tamanho da meta description', `${f.meta.length} caracteres (ideal 120–160)`),
+                check(range(words, 600, 100000, 300, 599), 'Profundidade do conteúdo', `${words} palavras (ideal 600+)`),
+                check(hasH1 ? 'bad' : h2s.length >= 2 ? 'ok' : h2s.length === 1 ? 'warn' : 'bad', 'Estrutura de subtítulos', hasH1 ? 'Remova o <h1> do conteúdo' : `${h2s.length} subtítulo(s) H2`),
+                check(internalLinks >= 1 ? 'ok' : 'warn', 'Link interno para o site', `${internalLinks} link(s) para páginas da clínica`),
+                check(f.cover ? (f.coverAlt ? 'ok' : 'warn') : 'bad', 'Imagem de capa com texto alternativo'),
+            ];
+
+            const geo = [
+                check(range(summaryWords, 40, 60, 25, 80), 'Resposta direta "Em resumo"', `${summaryWords} palavras (ideal 40–60)`),
+                check(f.faq.length >= 3 ? 'ok' : f.faq.length >= 1 ? 'warn' : 'bad', 'Perguntas frequentes', `${f.faq.length} pergunta(s) (ideal 3+)`),
+                check(isDoctor ? 'ok' : 'bad', 'Autoria ou revisão médica', isDoctor ? 'Credenciais aparecem no artigo' : 'Escolha um revisor médico'),
+                check(hasLocal ? 'ok' : 'warn', 'Referência local', 'Palhoça, Pedra Branca, Florianópolis ou São José'),
+            ];
+
+            const all = [...keyword, ...seo, ...geo];
+            const points = all.reduce((sum, c) => sum + (c.level === 'ok' ? 1 : c.level === 'warn' ? 0.5 : 0), 0);
+            return { score: Math.round((points / all.length) * 100), groups: { 'Palavra-chave': keyword, 'SEO': seo, 'Respostas para IA': geo } };
+        }
+
+        function setCounter(id, value, level) {
+            const el = $(id);
+            el.textContent = value;
+            el.className = `counter ${level || ''}`;
+        }
+
+        function update() {
+            const f = readForm();
+            const title = effectiveTitle(f);
+            const words = countWords(stripTags(f.body));
+            const summaryWords = countWords(f.summary);
+
+            setCounter('cTitle', `${f.title.length} caracteres`);
+            setCounter('cSeoTitle', `${title.length}/60`, range(title.length, 30, 60, 20, 65));
+            setCounter('cMeta', `${f.meta.length}/160`, range(f.meta.length, 120, 160, 70, 170));
+            setCounter('cExcerpt', `${f.excerpt.length}/240`);
+            setCounter('cBody', `${words} palavras`, range(words, 600, 100000, 300, 599));
+            setCounter('cSummary', `${summaryWords} palavras`, range(summaryWords, 40, 60, 25, 80));
+            setCounter('cFaq', `${f.faq.length}`, f.faq.length >= 3 ? 'ok' : f.faq.length ? 'warn' : '');
+
+            $('slugPreview').textContent = f.slug || '...';
+            $('serpUrl').textContent = `clinicarizzatti.com.br › blog › ${f.slug || '...'}`;
+            $('serpTitle').textContent = title || 'Título do artigo';
+            $('serpDesc').textContent = f.meta || f.excerpt || 'Escreva a meta description para controlar este texto.';
+
+            const { score, groups } = analyze(f);
+            const color = score >= 80 ? 'var(--ok)' : score >= 50 ? 'var(--warn)' : 'var(--danger)';
+            $('scoreRing').style.setProperty('--score', score);
+            $('scoreRing').style.setProperty('--score-color', color);
+            $('scoreValue').textContent = score;
+            $('scoreLabel').textContent = score >= 80 ? 'Ótimo para publicar' : score >= 50 ? 'Bom, dá para melhorar' : 'Precisa de ajustes';
+            $('checks').innerHTML = Object.entries(groups).map(([name, items]) => `
+                <div class="checks-group">
+                    <h3>${name}</h3>
+                    <ul class="checks">${items.map((c) => `<li class="${c.level}"><span>${escapeHtml(c.label)}${c.detail ? `<small>${escapeHtml(c.detail)}</small>` : ''}</span></li>`).join('')}</ul>
+                </div>`).join('');
+        }
+
+        // ---------- SALVAR ----------
+        $('postForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            postMsg.textContent = '';
+            const msg = $('postMsg');
+            const f = readForm();
+            msg.textContent = '';
+
+            if (!f.title || !f.slug || !stripTags(f.body)) {
+                msg.textContent = 'Preencha título, slug e conteúdo.';
+                return;
+            }
+            if (f.author === 'Equipe Rizzatti' && !f.reviewedBy && $('fStatus').value === 'published') {
+                msg.textContent = 'Artigos da equipe precisam de revisão médica para publicar.';
+                return;
+            }
+
+            const saveBtn = $('saveBtn');
             saveBtn.disabled = true;
             saveBtn.textContent = 'Salvando...';
 
-            const id = document.getElementById('postId').value;
-            const status = document.getElementById('fStatus').value;
-
+            const id = $('postId').value;
+            const status = $('fStatus').value;
+            const current = allPosts.find((p) => p.id === id);
             const payload = {
-                title: fTitle.value.trim(),
-                slug: slugify(fSlug.value),
-                category: document.getElementById('fCategory').value.trim(),
-                author: document.getElementById('fAuthor').value,
-                read_time_minutes: parseInt(document.getElementById('fReadTime').value, 10) || 5,
-                cover_image_url: document.getElementById('fCover').value.trim(),
-                excerpt: document.getElementById('fExcerpt').value.trim(),
-                meta_description: document.getElementById('fMeta').value.trim(),
-                body_html: document.getElementById('fBody').value,
-                status
+                title: f.title, slug: f.slug, category: f.category || null, author: f.author,
+                reviewed_by: f.reviewedBy || null,
+                cover_image_url: f.cover || null, cover_image_alt: f.coverAlt || null,
+                excerpt: f.excerpt || null, body_html: f.body,
+                focus_keyword: f.focus || null, keywords: f.keywords || null,
+                seo_title: f.seoTitle || null, meta_description: f.meta || null,
+                summary: f.summary || null, faq: f.faq,
+                read_time_minutes: parseInt($('fReadTime').value, 10) || 5,
+                status,
             };
+            if (status === 'published' && !current?.published_at) payload.published_at = new Date().toISOString();
 
-            let error;
-            if (id) {
-                ({ error } = await supabase.from('blog_posts').update(payload).eq('id', id));
-            } else {
-                if (status === 'published') payload.published_at = new Date().toISOString();
-                ({ error } = await supabase.from('blog_posts').insert(payload));
-            }
-
-            // Garante published_at quando um rascunho é publicado depois
-            if (!error && id && status === 'published') {
-                const { data: current } = await supabase.from('blog_posts').select('published_at').eq('id', id).single();
-                if (current && !current.published_at) {
-                    await supabase.from('blog_posts').update({ published_at: new Date().toISOString() }).eq('id', id);
-                }
-            }
+            const { error } = id
+                ? await supabase.from('blog_posts').update(payload).eq('id', id)
+                : await supabase.from('blog_posts').insert(payload);
 
             saveBtn.disabled = false;
             saveBtn.textContent = 'Salvar';
 
             if (error) {
-                postMsg.textContent = 'Erro ao salvar: ' + error.message;
+                msg.textContent = /column/i.test(error.message)
+                    ? 'O banco ainda não tem os campos de SEO. Rode o script sql/blog_schema.sql no Supabase.'
+                    : error.code === '23505'
+                        ? 'Já existe um artigo com esse slug. Escolha outro.'
+                        : 'Erro ao salvar: ' + error.message;
                 return;
             }
 

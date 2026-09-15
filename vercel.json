@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/post.html",
+      "has": [{ "type": "query", "key": "slug", "value": "(?<slug>[a-z0-9-]+)" }],
+      "destination": "/blog/:slug",
+      "statusCode": 301
+    },
+    { "source": "/post.html", "destination": "/blog", "statusCode": 301 },
+    { "source": "/blog.html", "destination": "/blog", "statusCode": 301 }
+  ],
+  "rewrites": [
+    { "source": "/blog", "destination": "/api/blog" },
+    { "source": "/blog/:slug", "destination": "/api/post?slug=:slug" },
+    { "source": "/sitemap.xml", "destination": "/api/sitemap" },
+    { "source": "/llms.txt", "destination": "/api/llms" }
+  ],
+  "headers": [
+    {
+      "source": "/blog-config.mjs",
+      "headers": [{ "key": "Content-Type", "value": "text/javascript; charset=utf-8" }]
+    },
+    {
+      "source": "/admin.html",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Referrer-Policy", "value": "same-origin" }
+      ]
+    }
+  ]
+}

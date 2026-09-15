@@ -106,14 +106,40 @@
         legend { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--bronze); padding-bottom: 10px; margin-bottom: 16px; border-bottom: 1px solid var(--line); width: 100%; }
         legend small { font-weight: 400; letter-spacing: 0.02em; text-transform: none; color: rgba(69,82,94,0.55); margin-left: 6px; }
 
-        .body-tabs { display: flex; gap: 4px; margin-bottom: 8px; }
-        .body-tabs button { background: none; border: 1px solid transparent; border-radius: 3px; padding: 5px 12px; font-size: 0.78rem; color: var(--navy); cursor: pointer; }
-        .body-tabs button[aria-selected="true"] { border-color: var(--line); background: var(--gray-light); color: var(--navy-dark); }
-        .body-preview { border: 1px solid rgba(117,136,153,0.3); border-radius: 3px; padding: 20px 24px; min-height: 380px; max-height: 620px; overflow-y: auto; font-family: Georgia, serif; font-size: 1.05rem; line-height: 1.7; color: #4a5763; }
-        .body-preview h2 { font-size: 1.45rem; margin: 1.2em 0 0.4em; color: var(--navy-dark); }
-        .body-preview h3 { font-size: 1.2rem; margin: 1em 0 0.3em; color: var(--navy-dark); }
-        .body-preview p, .body-preview ul, .body-preview ol { margin-bottom: 0.9em; }
-        .body-preview ul, .body-preview ol { padding-left: 1.4em; }
+        /* EDITOR VISUAL DO CONTEÚDO */
+        .rte { position: relative; border: 1px solid rgba(117,136,153,0.3); border-radius: 4px; background: var(--white); }
+        .rte:focus-within { border-color: var(--bronze); box-shadow: 0 0 0 3px rgba(200,136,108,0.12); }
+        .rte-toolbar { position: sticky; top: 84px; z-index: 4; display: flex; flex-wrap: wrap; align-items: center; gap: 2px; padding: 7px 8px; background: #faf8f5; border-bottom: 1px solid var(--line); border-radius: 4px 4px 0 0; }
+        .rte-toolbar button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 34px; height: 34px; padding: 0 10px; border: 1px solid transparent; border-radius: 3px; background: transparent; color: var(--navy-dark); font-size: 0.84rem; cursor: pointer; white-space: nowrap; }
+        .rte-toolbar button:hover:not(:disabled) { background: var(--white); border-color: var(--line); }
+        .rte-toolbar button[aria-pressed="true"] { background: var(--navy-dark); border-color: var(--navy-dark); color: var(--white); }
+        .rte-toolbar button:disabled { opacity: 0.35; cursor: default; }
+        .rte-toolbar svg { width: 16px; height: 16px; flex-shrink: 0; }
+        .rte-toolbar .b { font-weight: 700; font-family: Georgia, serif; font-size: 1rem; }
+        .rte-toolbar .i { font-style: italic; font-family: Georgia, serif; font-size: 1rem; }
+        .rte-sep { width: 1px; height: 22px; background: var(--line); margin: 0 5px; }
+        .rte-spacer { flex: 1; }
+        .rte-area { position: relative; min-height: 420px; max-height: 70vh; overflow-y: auto; padding: 22px 26px; font-family: Georgia, 'Times New Roman', serif; font-size: 1.08rem; line-height: 1.75; color: #3f4a54; outline: none; }
+        .rte-area.is-empty::before { content: attr(data-placeholder); position: absolute; top: 22px; left: 26px; right: 26px; color: rgba(69,82,94,0.45); pointer-events: none; }
+        .rte-area > :first-child { margin-top: 0; }
+        .rte-area h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.5rem; font-weight: 400; line-height: 1.3; color: var(--navy-dark); margin: 1.3em 0 0.45em; }
+        .rte-area h3 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.2rem; font-weight: 400; color: var(--navy-dark); margin: 1.1em 0 0.35em; }
+        .rte-area p { margin: 0 0 0.9em; }
+        .rte-area ul, .rte-area ol { margin: 0 0 0.9em; padding-left: 1.5em; }
+        .rte-area li { margin-bottom: 0.35em; }
+        .rte-area blockquote { border-left: 3px solid var(--azure); padding-left: 16px; font-style: italic; margin: 0 0 0.9em; }
+        .rte-area a { color: #9a5d43; text-decoration: underline; text-underline-offset: 3px; }
+        .rte-area img { max-width: 100%; height: auto; }
+        .rte textarea.body-field { display: block; border: none; border-radius: 0 0 4px 4px; min-height: 420px; box-shadow: none; }
+        .rte-link { position: absolute; top: 56px; right: 10px; z-index: 6; width: min(380px, calc(100% - 20px)); background: var(--white); border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 18px 40px rgba(45,58,74,0.18); padding: 14px 16px; }
+        .rte-link label { display: block; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(69,82,94,0.72); margin-bottom: 6px; }
+        .rte-link input { width: 100%; padding: 10px 12px; border: 1px solid rgba(117,136,153,0.3); border-radius: 3px; font: inherit; font-size: 0.92rem; color: var(--navy-dark); }
+        .rte-link input:focus { outline: none; border-color: var(--bronze); }
+        .rte-link-msg { font-size: 0.78rem; color: var(--danger); min-height: 1em; margin-top: 6px; }
+        .rte-link-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px; }
+        .rte-link-actions button { padding: 8px 14px; border-radius: 3px; font-size: 0.8rem; cursor: pointer; border: 1px solid rgba(117,136,153,0.35); background: transparent; color: var(--navy-dark); }
+        .rte-link-actions button.apply { background: var(--navy-dark); border-color: var(--navy-dark); color: var(--white); }
+        .rte-link-actions button:disabled { opacity: 0.4; cursor: default; }
 
         .serp { background: var(--white); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; margin-top: 4px; font-family: Arial, sans-serif; }
         .serp-url { font-size: 12px; color: #4d5156; margin-bottom: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -273,14 +299,43 @@
                                 <div class="hint">Aparece abaixo do título e nos cards do blog.</div>
                             </div>
                             <div class="field">
-                                <label for="fBody">Conteúdo do artigo <span class="counter" id="cBody"></span></label>
-                                <div class="body-tabs" role="tablist">
-                                    <button type="button" role="tab" aria-selected="true" id="tabHtml">HTML</button>
-                                    <button type="button" role="tab" aria-selected="false" id="tabPreview">Pré-visualizar</button>
+                                <label id="bodyLabel">Conteúdo do artigo <span class="counter" id="cBody"></span></label>
+                                <div class="rte" id="rte">
+                                    <div class="rte-toolbar" id="rteToolbar" role="toolbar" aria-label="Formatação do texto">
+                                        <button type="button" data-cmd="h2" aria-pressed="false" title="Título de seção — divide o artigo em partes">Título</button>
+                                        <button type="button" data-cmd="h3" aria-pressed="false" title="Subtítulo dentro de uma seção">Subtítulo</button>
+                                        <button type="button" data-cmd="p" title="Voltar para texto normal">Parágrafo</button>
+                                        <span class="rte-sep" aria-hidden="true"></span>
+                                        <button type="button" data-cmd="bold" aria-pressed="false" title="Negrito (Ctrl+B)" aria-label="Negrito"><span class="b">N</span></button>
+                                        <button type="button" data-cmd="italic" aria-pressed="false" title="Itálico (Ctrl+I)" aria-label="Itálico"><span class="i">I</span></button>
+                                        <span class="rte-sep" aria-hidden="true"></span>
+                                        <button type="button" data-cmd="ul" aria-pressed="false" title="Lista com marcadores"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="4.5" cy="6" r="1" fill="currentColor"/><circle cx="4.5" cy="12" r="1" fill="currentColor"/><circle cx="4.5" cy="18" r="1" fill="currentColor"/><path d="M9 6h11M9 12h11M9 18h11"/></svg>Lista</button>
+                                        <button type="button" data-cmd="ol" aria-pressed="false" title="Lista numerada"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 6h10M10 12h10M10 18h10M4 5l1.5-1V9M3.5 14.5c.4-.8 2.6-.9 2.6.5 0 1-2.6 2-2.6 3h2.8"/></svg>Numerada</button>
+                                        <button type="button" data-cmd="quote" aria-pressed="false" title="Citação ou destaque"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.5 7C5 7 3.5 9 3.5 11.5S5 16 7 16c-.2 1.5-1.2 2.6-2.5 3.2l.6 1C8.7 19 10.5 16.3 10.5 12.5 10.5 9 9.3 7 7.5 7zm10 0C15 7 13.5 9 13.5 11.5S15 16 17 16c-.2 1.5-1.2 2.6-2.5 3.2l.6 1c3.6-1.2 5.4-3.9 5.4-7.7C20.5 9 19.3 7 17.5 7z"/></svg>Citação</button>
+                                        <span class="rte-sep" aria-hidden="true"></span>
+                                        <button type="button" data-cmd="link" title="Transformar o texto selecionado em link (Ctrl+K)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 13a5 5 0 007.5.5l3-3a5 5 0 00-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 00-7.5-.5l-3 3a5 5 0 007 7l1.7-1.7"/></svg>Link</button>
+                                        <button type="button" data-cmd="unlink" title="Remover o link do texto selecionado">Tirar link</button>
+                                        <span class="rte-sep" aria-hidden="true"></span>
+                                        <button type="button" data-cmd="undo" title="Desfazer (Ctrl+Z)" aria-label="Desfazer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 010 11H11"/></svg></button>
+                                        <button type="button" data-cmd="redo" title="Refazer (Ctrl+Y)" aria-label="Refazer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14l5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 000 11H13"/></svg></button>
+                                        <span class="rte-spacer"></span>
+                                        <button type="button" data-cmd="clear" title="Tirar negrito, itálico e links do trecho selecionado">Limpar formatação</button>
+                                        <button type="button" data-cmd="html" aria-pressed="false" title="Ver e editar o código HTML (avançado)">Código HTML</button>
+                                    </div>
+                                    <div class="rte-area" id="rteArea" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="bodyLabel" data-placeholder="Comece a escrever o artigo aqui. Use o botão Título para dividir o texto em seções."></div>
+                                    <textarea id="fBody" class="body-field" aria-labelledby="bodyLabel" spellcheck="false" hidden></textarea>
+                                    <div class="rte-link" id="rteLink" role="dialog" aria-label="Inserir link" hidden>
+                                        <label for="rteLinkUrl">Endereço do link</label>
+                                        <input type="text" id="rteLinkUrl" list="rtePages" placeholder="Escolha uma página ou cole https://..." autocomplete="off">
+                                        <datalist id="rtePages"></datalist>
+                                        <div class="rte-link-msg" id="rteLinkMsg" role="alert"></div>
+                                        <div class="rte-link-actions">
+                                            <button type="button" id="rteLinkCancel">Cancelar</button>
+                                            <button type="button" class="apply" id="rteLinkApply">Aplicar link</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <textarea id="fBody" class="body-field" required></textarea>
-                                <div class="body-preview" id="bodyPreview" hidden></div>
-                                <div class="hint">Use &lt;h2&gt; para seções, &lt;h3&gt; para subseções, &lt;p&gt;, &lt;ul&gt;&lt;li&gt;, &lt;strong&gt; e &lt;a href="/clinica.html"&gt; para links internos. Não use &lt;h1&gt; — o título já é o H1.</div>
+                                <div class="hint">Escreva como no Word. Use <strong>Título</strong> para dividir o artigo em seções e <strong>Link</strong> para indicar páginas da clínica. Pode colar do Word ou do Google Docs: a formatação é ajustada sozinha.</div>
                             </div>
                         </fieldset>
 
@@ -560,19 +615,316 @@
         $('fSlug').addEventListener('input', () => { slugTouched = true; });
         $('fSlug').addEventListener('blur', () => { $('fSlug').value = slugify($('fSlug').value); update(); });
         $('fReadTime').addEventListener('input', () => { readTimeTouched = true; });
-        $('fBody').addEventListener('input', () => {
-            if (!readTimeTouched) $('fReadTime').value = Math.max(1, Math.ceil(countWords(stripTags($('fBody').value)) / 200));
+        // ---------- EDITOR VISUAL DO CONTEÚDO ----------
+        // A área editável é o que a equipe usa; #fBody guarda o HTML limpo que é salvo e analisado.
+        const area = $('rteArea');
+        const bodyField = $('fBody');
+        const toolbar = $('rteToolbar');
+        let htmlMode = false;
+        let lastRange = null;
+        let linkRange = null;
+
+        const TAG_MAP = { P: 'p', DIV: 'p', H1: 'h2', H2: 'h2', H3: 'h3', H4: 'h3', H5: 'h3', H6: 'h3', UL: 'ul', OL: 'ol', LI: 'li', BLOCKQUOTE: 'blockquote', STRONG: 'strong', B: 'strong', EM: 'em', I: 'em', A: 'a', BR: 'br', IMG: 'img', TABLE: 'table', THEAD: 'thead', TBODY: 'tbody', TR: 'tr', TH: 'th', TD: 'td' };
+        const BLOCK_SOURCE = new Set(['P', 'DIV', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'UL', 'OL', 'LI', 'BLOCKQUOTE', 'TABLE', 'SECTION', 'ARTICLE', 'HEADER', 'FOOTER', 'PRE']);
+        const DROP = new Set(['SCRIPT', 'STYLE', 'META', 'LINK', 'TITLE', 'IFRAME', 'OBJECT', 'EMBED', 'NOSCRIPT', 'SVG', 'BUTTON', 'INPUT', 'SELECT', 'TEXTAREA', 'FORM']);
+        const TOP_BLOCKS = new Set(['P', 'H2', 'H3', 'UL', 'OL', 'BLOCKQUOTE', 'TABLE']);
+        const KEEP_EMPTY = new Set(['BR', 'IMG', 'TABLE', 'THEAD', 'TBODY', 'TR', 'TD', 'TH']);
+        const STRUCTURAL = new Set(['UL', 'OL', 'TABLE', 'THEAD', 'TBODY', 'TR']);
+
+        const SITE_LINKS = [
+            ['/clinica.html', 'Dermatologia Clínica'], ['/cirurgica.html', 'Dermatologia Cirúrgica'],
+            ['/estetica-facial.html', 'Dermatologia Estética'], ['/estetica-corporal.html', 'Dermatologia Corporal'],
+            ['/tricologica.html', 'Tricologia'], ['/tecnologias.html', 'Tecnologias'], ['/corpo-clinico.html', 'Corpo clínico'],
+            ['/medico-karoline.html', 'Dra. Karoline Rizzatti'], ['/medico-timotio.html', 'Dr. Timotio Dorn'],
+            ['https://wa.me/5548991485818', 'WhatsApp da clínica (agendamento)'],
+        ];
+
+        function safeHref(value) {
+            const v = String(value || '').trim();
+            return /^(https?:\/\/|\/|#|mailto:|tel:)/i.test(v) ? v : '';
+        }
+
+        // Copia só as marcações permitidas. Converte negrito/itálico do Google Docs e do Word,
+        // descarta estilos, scripts e atributos.
+        function cleanInto(source, target) {
+            source.childNodes.forEach((node) => {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    // Quebras de linha entre itens de lista e células não são conteúdo.
+                    if (STRUCTURAL.has(target.nodeName) && !node.textContent.trim()) return;
+                    target.appendChild(document.createTextNode(node.textContent.replace(/ /g, ' ')));
+                    return;
+                }
+                if (node.nodeType !== Node.ELEMENT_NODE || DROP.has(node.tagName)) return;
+
+                const style = (node.getAttribute('style') || '').toLowerCase();
+                let tag = TAG_MAP[node.tagName] || null;
+                if (tag === 'strong' && /font-weight\s*:\s*(normal|[1-5]00)\b/.test(style)) tag = null;
+                if (tag === 'p' && (target.nodeName === 'LI' || [...node.children].some((c) => BLOCK_SOURCE.has(c.tagName)))) tag = null;
+
+                if (!tag) {
+                    let wrapper = target;
+                    if (/font-weight\s*:\s*(bold|[6-9]00)\b/.test(style) && !target.closest?.('strong')) {
+                        wrapper = wrapper.appendChild(document.createElement('strong'));
+                    }
+                    if (/font-style\s*:\s*italic/.test(style)) {
+                        wrapper = wrapper.appendChild(document.createElement('em'));
+                    }
+                    cleanInto(node, wrapper);
+                    return;
+                }
+
+                const el = document.createElement(tag);
+                if (tag === 'a') {
+                    const href = safeHref(node.getAttribute('href'));
+                    if (!href) { cleanInto(node, target); return; }
+                    el.setAttribute('href', href);
+                    if (/^https?:\/\//i.test(href) && !/^https?:\/\/(www\.)?clinicarizzatti\.com\.br/i.test(href)) {
+                        el.setAttribute('target', '_blank');
+                        el.setAttribute('rel', 'noopener');
+                    }
+                }
+                if (tag === 'img') {
+                    const src = node.getAttribute('src') || '';
+                    if (!/^(https?:\/\/|\/)/i.test(src)) return;
+                    el.setAttribute('src', src);
+                    el.setAttribute('alt', node.getAttribute('alt') || '');
+                }
+                if (tag !== 'br' && tag !== 'img') cleanInto(node, el);
+                target.appendChild(el);
+            });
+        }
+
+        function sanitizeHtml(html) {
+            const doc = new DOMParser().parseFromString(`<body>${html || ''}</body>`, 'text/html');
+            const cleaned = document.createElement('div');
+            cleanInto(doc.body, cleaned);
+
+            const result = document.createElement('div');
+            let paragraph = null;
+            [...cleaned.childNodes].forEach((node) => {
+                if (node.nodeType === Node.ELEMENT_NODE && TOP_BLOCKS.has(node.nodeName)) {
+                    paragraph = null;
+                    result.appendChild(node);
+                    return;
+                }
+                if (node.nodeName === 'BR') { paragraph = null; return; }
+                if (node.nodeType === Node.TEXT_NODE && !node.textContent.trim() && !paragraph) return;
+                if (!paragraph) paragraph = result.appendChild(document.createElement('p'));
+                paragraph.appendChild(node);
+            });
+
+            [...result.querySelectorAll('*')].reverse().forEach((el) => {
+                if (KEEP_EMPTY.has(el.nodeName)) return;
+                const last = el.lastChild;
+                if (last && last.nodeName === 'BR' && el.childNodes.length > 1) last.remove();
+                if (!el.textContent.trim() && !el.querySelector('img')) el.remove();
+            });
+
+            return [...result.children].map((el) => el.outerHTML).join('\n');
+        }
+
+        function refreshEmptyState() {
+            area.classList.toggle('is-empty', !area.textContent.trim() && !area.querySelector('img'));
+        }
+
+        function recalcReadTime() {
+            if (!readTimeTouched) $('fReadTime').value = Math.max(1, Math.ceil(countWords(stripTags(bodyField.value)) / 200));
+        }
+
+        function syncFromArea() {
+            bodyField.value = sanitizeHtml(area.innerHTML);
+            refreshEmptyState();
+            recalcReadTime();
+        }
+
+        function setBody(html) {
+            const clean = sanitizeHtml(html);
+            bodyField.value = clean;
+            area.innerHTML = clean || '<p><br></p>';
+            lastRange = null;
+            refreshEmptyState();
+        }
+
+        function selectionInArea() {
+            const sel = window.getSelection();
+            return sel.rangeCount > 0 && area.contains(sel.getRangeAt(0).commonAncestorContainer);
+        }
+
+        function restoreSelection() {
+            area.focus();
+            const sel = window.getSelection();
+            if (lastRange && area.contains(lastRange.commonAncestorContainer)) {
+                sel.removeAllRanges();
+                sel.addRange(lastRange);
+            } else if (!selectionInArea()) {
+                const range = document.createRange();
+                range.selectNodeContents(area);
+                range.collapse(false);
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+        }
+
+        function currentBlock() {
+            const sel = window.getSelection();
+            if (!sel.rangeCount) return null;
+            let node = sel.getRangeAt(0).startContainer;
+            while (node && node !== area) {
+                if (node.nodeType === Node.ELEMENT_NODE && /^(P|H2|H3|BLOCKQUOTE)$/.test(node.nodeName)) return node.nodeName.toLowerCase();
+                node = node.parentNode;
+            }
+            return null;
+        }
+
+        const toggleBlock = (tag) => document.execCommand('formatBlock', false, currentBlock() === tag ? '<p>' : `<${tag}>`);
+        const COMMANDS = {
+            h2: () => toggleBlock('h2'),
+            h3: () => toggleBlock('h3'),
+            p: () => document.execCommand('formatBlock', false, '<p>'),
+            bold: () => document.execCommand('bold'),
+            italic: () => document.execCommand('italic'),
+            ul: () => document.execCommand('insertUnorderedList'),
+            ol: () => document.execCommand('insertOrderedList'),
+            quote: () => toggleBlock('blockquote'),
+            unlink: () => document.execCommand('unlink'),
+            undo: () => document.execCommand('undo'),
+            redo: () => document.execCommand('redo'),
+            clear: () => { document.execCommand('removeFormat'); document.execCommand('unlink'); },
+        };
+
+        function refreshToolbar() {
+            const block = currentBlock();
+            const inArea = selectionInArea();
+            toolbar.querySelectorAll('button[aria-pressed]').forEach((btn) => {
+                const cmd = btn.dataset.cmd;
+                let on = false;
+                if (cmd === 'html') on = htmlMode;
+                else if (inArea && !htmlMode) {
+                    if (cmd === 'h2' || cmd === 'h3') on = block === cmd;
+                    else if (cmd === 'quote') on = block === 'blockquote';
+                    else if (cmd === 'bold' || cmd === 'italic') on = document.queryCommandState(cmd);
+                    else if (cmd === 'ul') on = document.queryCommandState('insertUnorderedList');
+                    else if (cmd === 'ol') on = document.queryCommandState('insertOrderedList');
+                }
+                btn.setAttribute('aria-pressed', String(on));
+            });
+        }
+
+        function runCommand(cmd) {
+            if (cmd === 'html') { setHtmlMode(!htmlMode); return; }
+            if (htmlMode) return;
+            restoreSelection();
+            if (cmd === 'link') { openLinkBox(); return; }
+            COMMANDS[cmd]();
+            syncFromArea();
+            update();
+            refreshToolbar();
+        }
+
+        function setHtmlMode(on) {
+            closeLinkBox(false);
+            if (on) bodyField.value = sanitizeHtml(area.innerHTML);
+            else setBody(bodyField.value);
+            htmlMode = on;
+            area.hidden = on;
+            bodyField.hidden = !on;
+            toolbar.querySelectorAll('button[data-cmd]').forEach((btn) => { btn.disabled = on && btn.dataset.cmd !== 'html'; });
+            refreshToolbar();
+            update();
+            (on ? bodyField : area).focus();
+        }
+
+        // Link: oferece as páginas da clínica e os artigos publicados.
+        function openLinkBox() {
+            const sel = window.getSelection();
+            const range = sel.rangeCount ? sel.getRangeAt(0) : null;
+            const startEl = range && (range.startContainer.nodeType === Node.ELEMENT_NODE ? range.startContainer : range.startContainer.parentElement);
+            const anchor = startEl && startEl.closest('a');
+            if (anchor && area.contains(anchor)) {
+                const r = document.createRange();
+                r.selectNodeContents(anchor);
+                sel.removeAllRanges();
+                sel.addRange(r);
+            }
+            linkRange = sel.rangeCount ? sel.getRangeAt(0).cloneRange() : null;
+            const hasText = linkRange && !linkRange.collapsed;
+
+            const posts = allPosts
+                .filter((p) => postState(p) === 'published' && p.id !== $('postId').value)
+                .map((p) => [`/blog/${p.slug}`, `Artigo: ${p.title}`]);
+            $('rtePages').innerHTML = [...SITE_LINKS, ...posts]
+                .map(([value, label]) => `<option value="${escapeHtml(value)}" label="${escapeHtml(label)}"></option>`).join('');
+
+            $('rteLinkUrl').value = anchor && area.contains(anchor) ? anchor.getAttribute('href') : '';
+            $('rteLinkMsg').textContent = hasText ? '' : 'Primeiro selecione, no texto, a palavra ou frase que vai virar link.';
+            $('rteLinkApply').disabled = !hasText;
+            $('rteLink').hidden = false;
+            $('rteLinkUrl').focus();
+        }
+
+        function closeLinkBox(restore = true) {
+            if ($('rteLink').hidden) return;
+            $('rteLink').hidden = true;
+            if (restore && linkRange) {
+                area.focus();
+                const sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(linkRange);
+            }
+        }
+
+        function applyLink() {
+            const href = safeHref($('rteLinkUrl').value);
+            if (!href) {
+                $('rteLinkMsg').textContent = 'Use um endereço que comece com / (página da clínica) ou https://';
+                return;
+            }
+            closeLinkBox();
+            document.execCommand('createLink', false, href);
+            syncFromArea();
+            update();
+        }
+
+        toolbar.addEventListener('mousedown', (e) => { if (e.target.closest('button')) e.preventDefault(); });
+        toolbar.addEventListener('click', (e) => {
+            const btn = e.target.closest('button[data-cmd]');
+            if (btn && !btn.disabled) runCommand(btn.dataset.cmd);
+        });
+        $('rteLinkApply').addEventListener('click', applyLink);
+        $('rteLinkCancel').addEventListener('click', () => closeLinkBox());
+        $('rteLinkUrl').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') { e.preventDefault(); if (!$('rteLinkApply').disabled) applyLink(); }
+            if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); closeLinkBox(); }
         });
 
-        $('tabHtml').addEventListener('click', () => setTab(false));
-        $('tabPreview').addEventListener('click', () => setTab(true));
-        function setTab(preview) {
-            $('tabHtml').setAttribute('aria-selected', String(!preview));
-            $('tabPreview').setAttribute('aria-selected', String(preview));
-            $('fBody').hidden = preview;
-            $('bodyPreview').hidden = !preview;
-            if (preview) $('bodyPreview').innerHTML = $('fBody').value;
-        }
+        area.addEventListener('input', syncFromArea);
+        area.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); runCommand('link'); }
+        });
+        area.addEventListener('paste', (e) => {
+            e.preventDefault();
+            const html = e.clipboardData.getData('text/html');
+            const text = e.clipboardData.getData('text/plain');
+            if (!html) {
+                if (!/\n/.test(text.trim())) { document.execCommand('insertText', false, text); return; }
+                const paragraphs = text.split(/\r?\n\s*\r?\n/).map((p) => p.trim()).filter(Boolean);
+                document.execCommand('insertHTML', false, paragraphs.map((p) => `<p>${escapeHtml(p).replace(/\r?\n/g, '<br>')}</p>`).join(''));
+                return;
+            }
+            let clean = sanitizeHtml(html);
+            const single = clean.match(/^<p>([\s\S]*)<\/p>$/);
+            if (single && !/<\/?p>/.test(single[1])) clean = single[1];
+            document.execCommand('insertHTML', false, clean);
+        });
+        area.addEventListener('drop', (e) => { if (e.dataTransfer?.files?.length) e.preventDefault(); });
+        bodyField.addEventListener('input', recalcReadTime);
+
+        document.addEventListener('selectionchange', () => {
+            if (!selectionInArea()) return;
+            lastRange = window.getSelection().getRangeAt(0).cloneRange();
+            refreshToolbar();
+        });
+        try { document.execCommand('defaultParagraphSeparator', false, 'p'); } catch { /* navegadores antigos */ }
 
         $('postForm').addEventListener('input', update);
         $('postForm').addEventListener('change', update);
@@ -621,7 +973,8 @@
             $('fCover').value = f.cover;
             $('fCoverAlt').value = f.coverAlt;
             $('fExcerpt').value = f.excerpt;
-            $('fBody').value = f.body;
+            if (htmlMode) setHtmlMode(false);
+            setBody(f.body);
             $('fFocus').value = f.focus;
             $('fKeywords').value = f.keywords;
             $('fSeoTitle').value = f.seoTitle;
@@ -632,7 +985,8 @@
             $('fPublishAt').value = toLocalInput(postState(post) === 'scheduled' ? post.published_at : tomorrowAtNine());
             $('faqList').innerHTML = '';
             f.faq.forEach(addFaqRow);
-            setTab(false);
+            closeLinkBox(false);
+            refreshToolbar();
             $('modalOverlay').classList.add('open');
             $('modalOverlay').scrollTop = 0;
             update();
@@ -788,7 +1142,7 @@
                 title: f.title, slug: f.slug, category: f.category || null, author: f.author,
                 reviewed_by: f.reviewedBy || null,
                 cover_image_url: f.cover || null, cover_image_alt: f.coverAlt || null,
-                excerpt: f.excerpt || null, body_html: f.body,
+                excerpt: f.excerpt || null, body_html: sanitizeHtml(f.body),
                 focus_keyword: f.focus || null, keywords: f.keywords || null,
                 seo_title: f.seoTitle || null, meta_description: f.meta || null,
                 summary: f.summary || null, faq: f.faq,

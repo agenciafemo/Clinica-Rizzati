@@ -4,7 +4,7 @@
 // A publishable key é pública por design — a segurança dos dados fica nas políticas RLS.
 
 export const SUPABASE_URL = "https://oynfynrnmjzgzgwpyiin.supabase.co";
-export const SUPABASE_ANON_KEY = "COLE_AQUI_A_PUBLISHABLE_KEY";
+export const SUPABASE_ANON_KEY = "sb_publishable_yWsqFaO4Sfmf5Bzdf44aQw_88qB7uBV";
 
 // Usuário do painel. O login pede só a senha; este e-mail é enviado junto ao Supabase.
 // Crie-o em Authentication > Users > Add user, com "Auto Confirm User" marcado.

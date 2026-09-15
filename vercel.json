@@ -5,7 +5,8 @@
       "source": "/post.html",
       "has": [{ "type": "query", "key": "slug", "value": "(?<slug>[a-z0-9-]+)" }],
       "destination": "/blog/:slug",
-      "statusCode": 301
+      "statusCode": 301,
+      "preserveQueryParams": false
     },
     { "source": "/post.html", "destination": "/blog", "statusCode": 301 },
     { "source": "/blog.html", "destination": "/blog", "statusCode": 301 }

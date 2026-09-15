@@ -71,11 +71,12 @@ create trigger blog_posts_set_updated_at
 alter table public.blog_posts enable row level security;
 
 drop policy if exists "Público pode ler posts publicados" on public.blog_posts;
+-- Post agendado = status 'published' com published_at no futuro: só fica visível quando a data chega.
 create policy "Público pode ler posts publicados"
     on public.blog_posts
     for select
     to anon, authenticated
-    using (status = 'published');
+    using (status = 'published' and published_at is not null and published_at <= now());
 
 drop policy if exists "Admin pode ler todos os posts" on public.blog_posts;
 create policy "Admin pode ler todos os posts"

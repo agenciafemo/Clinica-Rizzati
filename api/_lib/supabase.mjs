@@ -25,19 +25,24 @@ async function query(path) {
     return res.json();
 }
 
+// Post agendado = status "published" com published_at no futuro. Só aparece quando a data chega.
+function liveFilter() {
+    return `status=eq.published&published_at=lte.${new Date().toISOString()}`;
+}
+
 // select=* mantém compatibilidade com bancos que ainda não receberam as colunas novas de SEO.
 export function listPublishedPosts({ limit = 100 } = {}) {
-    return query(`blog_posts?select=*&status=eq.published&order=published_at.desc.nullslast&limit=${limit}`);
+    return query(`blog_posts?select=*&${liveFilter()}&order=published_at.desc&limit=${limit}`);
 }
 
 // Só colunas que existem desde a primeira versão do schema: seguro antes e depois da migração de SEO.
 export function listPostSummaries({ limit = 30 } = {}) {
-    return query(`blog_posts?select=slug,title,category,cover_image_url,published_at,updated_at&status=eq.published&order=published_at.desc.nullslast&limit=${limit}`);
+    return query(`blog_posts?select=slug,title,category,cover_image_url,published_at,updated_at&${liveFilter()}&order=published_at.desc&limit=${limit}`);
 }
 
 export async function getPublishedPost(slug) {
     const rows = await query(
-        `blog_posts?select=*&status=eq.published&slug=eq.${encodeURIComponent(slug)}&limit=1`
+        `blog_posts?select=*&${liveFilter()}&slug=eq.${encodeURIComponent(slug)}&limit=1`
     );
     return rows[0] || null;
 }

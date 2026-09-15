@@ -34,7 +34,7 @@
         /* LOGIN */
         .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .login-card { background: var(--white); padding: 48px 40px; width: 100%; max-width: 380px; border-radius: 6px; box-shadow: 0 30px 70px rgba(45,58,74,0.15); text-align: center; }
-        .login-logo { height: 40px; margin-bottom: 24px; }
+        .login-logo { height: 40px; margin-bottom: 24px; filter: brightness(0); opacity: 0.72; }
         .login-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--navy-dark); margin-bottom: 6px; }
         .login-sub { font-size: 0.85rem; color: rgba(69,82,94,0.6); margin-bottom: 30px; }
         .password-wrap { position: relative; }
@@ -78,6 +78,9 @@
         .status-pill { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; }
         .status-pill.published { background: rgba(63,130,86,0.12); color: var(--ok); }
         .status-pill.draft { background: rgba(200,136,108,0.15); color: var(--bronze); }
+        .status-pill.scheduled { background: rgba(117,136,153,0.16); color: var(--navy-dark); }
+        .status-date { display: block; font-size: 0.72rem; color: rgba(69,82,94,0.6); margin-top: 4px; }
+        .schedule-box { background: var(--gray-light); border-left: 3px solid var(--bronze); border-radius: 0 4px 4px 0; padding: 14px 16px 2px; }
         .score-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; font-variant-numeric: tabular-nums; }
         .score-pill::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
         .score-pill.ok { color: var(--ok); } .score-pill.warn { color: var(--warn); } .score-pill.bad { color: var(--danger); }
@@ -334,14 +337,23 @@
                                 <div class="field">
                                     <label for="fStatus">Status</label>
                                     <select id="fStatus">
-                                        <option value="draft">Rascunho</option>
-                                        <option value="published">Publicado</option>
+                                        <option value="draft">Rascunho (não aparece no blog)</option>
+                                        <option value="published">Publicar agora</option>
+                                        <option value="scheduled">Agendar publicação</option>
                                     </select>
+                                    <div class="hint" id="publishedInfo"></div>
                                 </div>
                                 <div class="field">
                                     <label for="fReadTime">Tempo de leitura (min)</label>
                                     <input type="number" id="fReadTime" min="1" value="5">
                                     <div class="hint">Calculado automaticamente pelo conteúdo.</div>
+                                </div>
+                            </div>
+                            <div class="schedule-box" id="scheduleBox" hidden>
+                                <div class="field">
+                                    <label for="fPublishAt">Data e hora da publicação</label>
+                                    <input type="datetime-local" id="fPublishAt">
+                                    <div class="hint">No horário do seu computador (Brasília). O artigo entra no blog sozinho nesse horário — pode levar até 1 minuto para aparecer.</div>
                                 </div>
                             </div>
                         </fieldset>
@@ -395,6 +407,33 @@
         const normalize = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
         const stripTags = (html) => String(html || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
         const countWords = (text) => (text ? text.split(/\s+/).filter(Boolean).length : 0);
+        const formatDateTime = (iso) => new Date(iso).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+        // Agendado = status "published" com published_at no futuro.
+        function postState(post) {
+            if (post?.status !== 'published') return 'draft';
+            return post.published_at && new Date(post.published_at) > new Date() ? 'scheduled' : 'published';
+        }
+
+        function statusPill(post) {
+            const state = postState(post);
+            const label = { draft: 'Rascunho', published: 'Publicado', scheduled: 'Agendado' }[state];
+            const date = state === 'scheduled' ? `<span class="status-date">${formatDateTime(post.published_at)}</span>` : '';
+            return `<span class="status-pill ${state}">${label}</span>${date}`;
+        }
+
+        function toLocalInput(value) {
+            const d = new Date(value);
+            const pad = (n) => String(n).padStart(2, '0');
+            return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+        }
+
+        function tomorrowAtNine() {
+            const d = new Date();
+            d.setDate(d.getDate() + 1);
+            d.setHours(9, 0, 0, 0);
+            return d;
+        }
 
         function slugify(str) {
             return normalize(str).replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
@@ -469,10 +508,10 @@
                     <div class="post-title-cell">${escapeHtml(post.title)}<small>/blog/${escapeHtml(post.slug)}</small></div>
                     <div>${escapeHtml(post.category || '—')}</div>
                     <div><span class="score-pill ${level}">${score}</span></div>
-                    <div><span class="status-pill ${post.status}">${post.status === 'published' ? 'Publicado' : 'Rascunho'}</span></div>
+                    <div>${statusPill(post)}</div>
                     <div class="row-actions">
                         <button type="button" data-edit="${post.id}">Editar</button>
-                        ${post.status === 'published' ? `<a href="/blog/${encodeURIComponent(post.slug)}" target="_blank" rel="noopener">Ver</a>` : ''}
+                        ${postState(post) === 'published' ? `<a href="/blog/${encodeURIComponent(post.slug)}" target="_blank" rel="noopener">Ver</a>` : ''}
                         <button type="button" class="danger" data-del="${post.id}">Excluir</button>
                     </div>
                 </div>`;
@@ -589,7 +628,8 @@
             $('fMeta').value = f.meta;
             $('fSummary').value = f.summary;
             $('fReadTime').value = post?.read_time_minutes || 5;
-            $('fStatus').value = post?.status || 'draft';
+            $('fStatus').value = postState(post);
+            $('fPublishAt').value = toLocalInput(postState(post) === 'scheduled' ? post.published_at : tomorrowAtNine());
             $('faqList').innerHTML = '';
             f.faq.forEach(addFaqRow);
             setTab(false);
@@ -672,6 +712,16 @@
 
         function update() {
             const f = readForm();
+            const state = $('fStatus').value;
+            const current = allPosts.find((p) => p.id === $('postId').value);
+            $('scheduleBox').hidden = state !== 'scheduled';
+            $('fPublishAt').min = toLocalInput(Date.now());
+            $('saveBtn').textContent = state === 'scheduled' ? 'Agendar' : state === 'published' ? 'Publicar' : 'Salvar rascunho';
+            const live = current && postState(current) === 'published';
+            $('publishedInfo').textContent = !live ? ''
+                : state === 'published' ? `No ar desde ${formatDateTime(current.published_at)}`
+                : state === 'scheduled' ? 'Ao agendar, o artigo sai do ar até a nova data.'
+                : 'Como rascunho, o artigo sai do ar.';
             const title = effectiveTitle(f);
             const words = countWords(stripTags(f.body));
             const summaryWords = countWords(f.summary);
@@ -713,7 +763,16 @@
                 msg.textContent = 'Preencha título, slug e conteúdo.';
                 return;
             }
-            if (f.author === 'Equipe Rizzatti' && !f.reviewedBy && $('fStatus').value === 'published') {
+            const state = $('fStatus').value;
+            let scheduledAt = null;
+            if (state === 'scheduled') {
+                scheduledAt = $('fPublishAt').value ? new Date($('fPublishAt').value) : null;
+                if (!scheduledAt || Number.isNaN(scheduledAt.getTime()) || scheduledAt.getTime() < Date.now() + 60000) {
+                    msg.textContent = 'Escolha uma data e hora no futuro para agendar.';
+                    return;
+                }
+            }
+            if (f.author === 'Equipe Rizzatti' && !f.reviewedBy && state !== 'draft') {
                 msg.textContent = 'Artigos da equipe precisam de revisão médica para publicar.';
                 return;
             }
@@ -723,8 +782,8 @@
             saveBtn.textContent = 'Salvando...';
 
             const id = $('postId').value;
-            const status = $('fStatus').value;
             const current = allPosts.find((p) => p.id === id);
+            const alreadyLive = current && postState(current) === 'published';
             const payload = {
                 title: f.title, slug: f.slug, category: f.category || null, author: f.author,
                 reviewed_by: f.reviewedBy || null,
@@ -734,16 +793,19 @@
                 seo_title: f.seoTitle || null, meta_description: f.meta || null,
                 summary: f.summary || null, faq: f.faq,
                 read_time_minutes: parseInt($('fReadTime').value, 10) || 5,
-                status,
+                status: state === 'draft' ? 'draft' : 'published',
+                // Já no ar mantém a data original; rascunho de um agendamento volta a não ter data.
+                published_at: state === 'scheduled'
+                    ? scheduledAt.toISOString()
+                    : alreadyLive ? current.published_at : state === 'published' ? new Date().toISOString() : null,
             };
-            if (status === 'published' && !current?.published_at) payload.published_at = new Date().toISOString();
 
             const { error } = id
                 ? await supabase.from('blog_posts').update(payload).eq('id', id)
                 : await supabase.from('blog_posts').insert(payload);
 
             saveBtn.disabled = false;
-            saveBtn.textContent = 'Salvar';
+            update();
 
             if (error) {
                 msg.textContent = /column/i.test(error.message)

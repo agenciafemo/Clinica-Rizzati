@@ -141,6 +141,23 @@
         .rte-link-actions button.apply { background: var(--navy-dark); border-color: var(--navy-dark); color: var(--white); }
         .rte-link-actions button:disabled { opacity: 0.4; cursor: default; }
 
+        /* ENVIO DE IMAGENS */
+        .upload-row { display: flex; gap: 8px; align-items: center; }
+        .upload-row input[type="text"] { flex: 1; min-width: 0; }
+        .btn-upload { white-space: nowrap; padding: 10px 14px; border: 1px solid rgba(117,136,153,0.35); border-radius: 3px; background: var(--white); color: var(--navy-dark); font-size: 0.82rem; cursor: pointer; }
+        .btn-upload:hover:not(:disabled) { border-color: var(--bronze); color: var(--bronze); }
+        .btn-upload:disabled { opacity: 0.5; cursor: default; }
+        .cover-preview { margin-top: 8px; }
+        .cover-preview img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 4px; border: 1px solid var(--line); display: block; background: var(--gray-light); }
+        .rte-alt { position: absolute; top: 56px; left: 10px; z-index: 6; width: min(420px, calc(100% - 20px)); background: var(--white); border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 18px 40px rgba(45,58,74,0.18); padding: 14px 16px; }
+        .rte-alt label { display: block; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(69,82,94,0.72); margin-bottom: 6px; }
+        .rte-alt input { width: 100%; padding: 10px 12px; border: 1px solid rgba(117,136,153,0.3); border-radius: 3px; font: inherit; font-size: 0.92rem; color: var(--navy-dark); }
+        .rte-alt input:focus { outline: none; border-color: var(--bronze); }
+        .rte-alt .hint { margin-top: 6px; }
+        .rte-alt-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px; }
+        .rte-alt-actions button { padding: 8px 14px; border-radius: 3px; font-size: 0.8rem; cursor: pointer; border: 1px solid rgba(117,136,153,0.35); background: transparent; color: var(--navy-dark); }
+        .rte-alt-actions button.apply { background: var(--navy-dark); border-color: var(--navy-dark); color: var(--white); }
+
         .serp { background: var(--white); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; margin-top: 4px; font-family: Arial, sans-serif; }
         .serp-url { font-size: 12px; color: #4d5156; margin-bottom: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .serp-title { font-size: 18px; line-height: 1.3; color: #1a0dab; margin-bottom: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -285,8 +302,13 @@
                             <div class="grid-2">
                                 <div class="field">
                                     <label for="fCover">Imagem de capa</label>
-                                    <input type="text" id="fCover" placeholder="Ex: CLINICA.jpg ou https://...">
-                                    <div class="hint">Nome de um arquivo do site ou URL completa. Ideal: horizontal, 1400px.</div>
+                                    <div class="upload-row">
+                                        <input type="text" id="fCover" placeholder="Envie uma imagem ou cole um endereço">
+                                        <button type="button" class="btn-upload" id="coverUploadBtn">Enviar imagem</button>
+                                        <input type="file" id="coverFile" accept="image/jpeg,image/png,image/webp,image/gif" hidden>
+                                    </div>
+                                    <div class="cover-preview" id="coverPreview" hidden><img id="coverPreviewImg" src="" alt=""></div>
+                                    <div class="hint">Envie uma foto do computador ou use um arquivo do site (ex: CLINICA.jpg). Prefira imagem horizontal.</div>
                                 </div>
                                 <div class="field">
                                     <label for="fCoverAlt">Texto alternativo da capa</label>
@@ -313,6 +335,7 @@
                                         <button type="button" data-cmd="ol" aria-pressed="false" title="Lista numerada"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 6h10M10 12h10M10 18h10M4 5l1.5-1V9M3.5 14.5c.4-.8 2.6-.9 2.6.5 0 1-2.6 2-2.6 3h2.8"/></svg>Numerada</button>
                                         <button type="button" data-cmd="quote" aria-pressed="false" title="Citação ou destaque"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.5 7C5 7 3.5 9 3.5 11.5S5 16 7 16c-.2 1.5-1.2 2.6-2.5 3.2l.6 1C8.7 19 10.5 16.3 10.5 12.5 10.5 9 9.3 7 7.5 7zm10 0C15 7 13.5 9 13.5 11.5S15 16 17 16c-.2 1.5-1.2 2.6-2.5 3.2l.6 1c3.6-1.2 5.4-3.9 5.4-7.7C20.5 9 19.3 7 17.5 7z"/></svg>Citação</button>
                                         <span class="rte-sep" aria-hidden="true"></span>
+                                        <button type="button" data-cmd="image" title="Inserir uma imagem no meio do texto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 16l-5-5-4.5 5-2-2L3 18"/></svg>Imagem</button>
                                         <button type="button" data-cmd="link" title="Transformar o texto selecionado em link (Ctrl+K)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 13a5 5 0 007.5.5l3-3a5 5 0 00-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 00-7.5-.5l-3 3a5 5 0 007 7l1.7-1.7"/></svg>Link</button>
                                         <button type="button" data-cmd="unlink" title="Remover o link do texto selecionado">Tirar link</button>
                                         <span class="rte-sep" aria-hidden="true"></span>
@@ -324,6 +347,16 @@
                                     </div>
                                     <div class="rte-area" id="rteArea" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="bodyLabel" data-placeholder="Comece a escrever o artigo aqui. Use o botão Título para dividir o texto em seções."></div>
                                     <textarea id="fBody" class="body-field" aria-labelledby="bodyLabel" spellcheck="false" hidden></textarea>
+                                    <input type="file" id="bodyImageFile" accept="image/jpeg,image/png,image/webp,image/gif" hidden>
+                                    <div class="rte-alt" id="rteAlt" role="dialog" aria-label="Texto alternativo da imagem" hidden>
+                                        <label for="rteAltInput">Texto alternativo da imagem</label>
+                                        <input type="text" id="rteAltInput" maxlength="160" placeholder="Descreva a imagem em uma frase">
+                                        <div class="hint">Ajuda o Google e quem usa leitor de tela. Deixe vazio só se a imagem for decorativa.</div>
+                                        <div class="rte-alt-actions">
+                                            <button type="button" id="rteAltSkip">Deixar vazio</button>
+                                            <button type="button" class="apply" id="rteAltApply">Salvar descrição</button>
+                                        </div>
+                                    </div>
                                     <div class="rte-link" id="rteLink" role="dialog" aria-label="Inserir link" hidden>
                                         <label for="rteLinkUrl">Endereço do link</label>
                                         <input type="text" id="rteLinkUrl" list="rtePages" placeholder="Escolha uma página ou cole https://..." autocomplete="off">
@@ -560,7 +593,7 @@
                 const level = score >= 80 ? 'ok' : score >= 50 ? 'warn' : 'bad';
                 return `
                 <div class="posts-row">
-                    <div class="post-title-cell">${escapeHtml(post.title)}<small>/blog/${escapeHtml(post.slug)}</small></div>
+                    <div class="post-title-cell">${escapeHtml(post.title)}<small>${escapeHtml(post.author || 'Sem autor')} · /blog/${escapeHtml(post.slug)}</small></div>
                     <div>${escapeHtml(post.category || '—')}</div>
                     <div><span class="score-pill ${level}">${score}</span></div>
                     <div>${statusPill(post)}</div>
@@ -815,6 +848,7 @@
             if (htmlMode) return;
             restoreSelection();
             if (cmd === 'link') { openLinkBox(); return; }
+            if (cmd === 'image') { $('bodyImageFile').click(); return; }
             COMMANDS[cmd]();
             syncFromArea();
             update();
@@ -833,6 +867,121 @@
             update();
             (on ? bodyField : area).focus();
         }
+
+        // ---------- ENVIO DE IMAGENS (Supabase Storage) ----------
+        const IMAGE_BUCKET = 'blog';
+        const MAX_IMAGE_WIDTH = 1600;
+
+        function storageMessage(error) {
+            const msg = String(error?.message || error);
+            if (/bucket not found/i.test(msg)) return 'O espaço de imagens ainda não existe no Supabase. Rode o script sql/storage_imagens.sql.';
+            if (/row-level security|not authorized|unauthorized|permission|violates/i.test(msg)) return 'Sem permissão para enviar imagens. Rode sql/storage_imagens.sql e entre no painel de novo.';
+            if (/maximum allowed size|payload too large|413/i.test(msg)) return 'A imagem ficou grande demais para o envio. Use uma foto menor.';
+            if (/already exists|duplicate/i.test(msg)) return 'Já existe uma imagem com esse nome. Tente enviar de novo.';
+            return `Erro ao enviar a imagem: ${msg}`;
+        }
+
+        // Reduz a imagem no navegador antes de enviar: evita fotos de vários MB no site.
+        async function prepareImage(file) {
+            if (file.type === 'image/gif') return { blob: file, ext: 'gif' };
+            const bitmap = await createImageBitmap(file);
+            const scale = Math.min(1, MAX_IMAGE_WIDTH / bitmap.width);
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.round(bitmap.width * scale);
+            canvas.height = Math.round(bitmap.height * scale);
+            canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+            if (bitmap.close) bitmap.close();
+            const webp = await new Promise((resolve) => canvas.toBlob(resolve, 'image/webp', 0.85));
+            if (webp) return { blob: webp, ext: 'webp' };
+            const jpeg = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.85));
+            return { blob: jpeg, ext: 'jpg' };
+        }
+
+        async function uploadImage(file) {
+            if (!/^image\//.test(file.type)) throw new Error('Escolha um arquivo de imagem (JPG, PNG, WebP ou GIF).');
+            if (file.size > 15 * 1024 * 1024) throw new Error('A imagem tem mais de 15 MB. Reduza antes de enviar.');
+            const { blob, ext } = await prepareImage(file);
+            const base = slugify($('fSlug').value || $('fTitle').value || 'imagem').slice(0, 60) || 'imagem';
+            const name = `${base}-${Date.now().toString(36)}.${ext}`;
+            const { error } = await supabase.storage.from(IMAGE_BUCKET)
+                .upload(name, blob, { contentType: blob.type, cacheControl: '31536000' });
+            if (error) throw new Error(storageMessage(error));
+            return supabase.storage.from(IMAGE_BUCKET).getPublicUrl(name).data.publicUrl;
+        }
+
+        async function whileUploading(btn, fn) {
+            const label = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Enviando...';
+            $('postMsg').textContent = '';
+            try {
+                await fn();
+            } catch (err) {
+                $('postMsg').textContent = err.message;
+            } finally {
+                btn.disabled = false;
+                btn.textContent = label;
+            }
+        }
+
+        function refreshCoverPreview() {
+            const value = $('fCover').value.trim();
+            $('coverPreview').hidden = !value;
+            if (value) $('coverPreviewImg').src = /^https?:\/\//i.test(value) ? value : `/${value.replace(/^\/+/, '')}`;
+        }
+
+        $('coverUploadBtn').addEventListener('click', () => $('coverFile').click());
+        $('coverFile').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            e.target.value = '';
+            if (!file) return;
+            whileUploading($('coverUploadBtn'), async () => {
+                $('fCover').value = await uploadImage(file);
+                refreshCoverPreview();
+                update();
+                if (!$('fCoverAlt').value.trim()) $('fCoverAlt').focus();
+            });
+        });
+        $('fCover').addEventListener('input', refreshCoverPreview);
+
+        $('bodyImageFile').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            e.target.value = '';
+            if (!file) return;
+            whileUploading(toolbar.querySelector('[data-cmd="image"]'), async () => {
+                const url = await uploadImage(file);
+                restoreSelection();
+                document.execCommand('insertHTML', false, `<p><img src="${escapeHtml(url)}" alt="" data-new="1"></p><p><br></p>`);
+                syncFromArea();
+                update();
+                openAltBox();
+            });
+        });
+
+        function openAltBox() {
+            if (!area.querySelector('img[data-new]')) return;
+            $('rteAltInput').value = '';
+            $('rteAlt').hidden = false;
+            $('rteAltInput').focus();
+        }
+
+        function closeAltBox(alt) {
+            const img = area.querySelector('img[data-new]');
+            if (img) {
+                img.setAttribute('alt', alt);
+                img.removeAttribute('data-new');
+            }
+            $('rteAlt').hidden = true;
+            syncFromArea();
+            update();
+        }
+
+        $('rteAltApply').addEventListener('click', () => closeAltBox($('rteAltInput').value.trim()));
+        $('rteAltSkip').addEventListener('click', () => closeAltBox(''));
+        $('rteAltInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') { e.preventDefault(); closeAltBox($('rteAltInput').value.trim()); }
+            if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); closeAltBox(''); }
+        });
 
         // Link: oferece as páginas da clínica e os artigos publicados.
         function openLinkBox() {
@@ -986,6 +1135,8 @@
             $('faqList').innerHTML = '';
             f.faq.forEach(addFaqRow);
             closeLinkBox(false);
+            $('rteAlt').hidden = true;
+            refreshCoverPreview();
             refreshToolbar();
             $('modalOverlay').classList.add('open');
             $('modalOverlay').scrollTop = 0;

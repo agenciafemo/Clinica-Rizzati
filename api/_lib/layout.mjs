@@ -236,7 +236,7 @@ function renderFooter() {
                     </div>
                     <div class="contact-item">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                        <a href="${WHATSAPP_URL}" target="_blank" rel="noopener">(48) 99148-5818</a>
+                        <a href="${WHATSAPP_URL}" target="_blank" rel="noopener">(48) 99173-5899</a>
                     </div>
                     <div class="contact-item">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4" stroke-width="1.5"></rect><circle cx="12" cy="12" r="3" stroke-width="1.5"></circle><line x1="16.5" y1="7.5" x2="16.5" y2="7.5" stroke-width="2" stroke-linecap="round"></line></svg>

@@ -18,7 +18,7 @@ export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 export const CLINIC = {
     name: 'Rizzatti Dermatologia e Saúde',
     shortName: 'Clínica Rizzatti',
-    telephone: '+5548991485818',
+    telephone: '+5548991735899',
     logo: `${SITE_URL}/LOGO.png`,
     instagram: 'https://instagram.com/clinica.rizzatti',
     address: {

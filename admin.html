@@ -871,12 +871,18 @@
         // ---------- ENVIO DE IMAGENS (Supabase Storage) ----------
         const IMAGE_BUCKET = 'blog';
         const MAX_IMAGE_WIDTH = 1600;
+        const MAX_UPLOAD_MB = 25;
+
+        // "2,4 MB" — mostra o peso real do arquivo nos avisos, em vez de só o limite.
+        function pesoEmMB(bytes) {
+            return (bytes / 1048576).toFixed(1).replace('.', ',');
+        }
 
         function storageMessage(error) {
             const msg = String(error?.message || error);
             if (/bucket not found/i.test(msg)) return 'O espaço de imagens ainda não existe no Supabase. Rode o script sql/storage_imagens.sql.';
             if (/row-level security|not authorized|unauthorized|permission|violates/i.test(msg)) return 'Sem permissão para enviar imagens. Rode sql/storage_imagens.sql e entre no painel de novo.';
-            if (/maximum allowed size|payload too large|413/i.test(msg)) return 'A imagem ficou grande demais para o envio. Use uma foto menor.';
+            if (/maximum allowed size|payload too large|413/i.test(msg)) return `A imagem passou do limite de ${MAX_UPLOAD_MB} MB do Supabase. Salve a foto em um tamanho menor — ou como JPG, se for PNG — e envie de novo.`;
             if (/already exists|duplicate/i.test(msg)) return 'Já existe uma imagem com esse nome. Tente enviar de novo.';
             return `Erro ao enviar a imagem: ${msg}`;
         }
@@ -899,7 +905,9 @@
 
         async function uploadImage(file) {
             if (!/^image\//.test(file.type)) throw new Error('Escolha um arquivo de imagem (JPG, PNG, WebP ou GIF).');
-            if (file.size > 15 * 1024 * 1024) throw new Error('A imagem tem mais de 15 MB. Reduza antes de enviar.');
+            if (file.size > MAX_UPLOAD_MB * 1048576) {
+                throw new Error(`Esta imagem pesa ${pesoEmMB(file.size)} MB e o limite é ${MAX_UPLOAD_MB} MB. Salve a foto em um tamanho menor — ou como JPG, se for PNG — e envie de novo.`);
+            }
             const { blob, ext } = await prepareImage(file);
             const base = slugify($('fSlug').value || $('fTitle').value || 'imagem').slice(0, 60) || 'imagem';
             const name = `${base}-${Date.now().toString(36)}.${ext}`;

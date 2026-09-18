@@ -11,6 +11,7 @@
     { "source": "/blog.html", "destination": "/blog", "statusCode": 301 }
   ],
   "rewrites": [
+    { "source": "/links", "destination": "/links.html" },
     { "source": "/blog", "destination": "/api/blog" },
     { "source": "/blog/:slug", "destination": "/api/post?slug=:slug" },
     { "source": "/sitemap.xml", "destination": "/api/sitemap" },

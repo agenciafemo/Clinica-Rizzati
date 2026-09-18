@@ -8,10 +8,10 @@
 -- =====================================================================
 
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
-values ('blog', 'blog', true, 10485760, array['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
+values ('blog', 'blog', true, 26214400, array['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
 on conflict (id) do update set
     public = true,
-    file_size_limit = 10485760,
+    file_size_limit = 26214400,
     allowed_mime_types = excluded.allowed_mime_types;
 
 drop policy if exists "Imagens do blog são públicas" on storage.objects;

@@ -29,7 +29,7 @@ export default {
 > Clínica de dermatologia em ${a.addressLocality}-${a.addressRegion}, no Passeio Pedra Branca. Atende dermatologia clínica, dermatologia cirúrgica (incluindo cirurgia micrográfica de Mohs), dermatologia estética, dermatologia corporal e tricologia, com os dermatologistas Dra. Karoline Rizzatti e Dr. Timotio Dorn.
 
 - Endereço: ${a.streetAddress}, ${a.addressLocality}-${a.addressRegion}, Brasil
-- Agendamento: WhatsApp (48) 99148-5818 — ${WHATSAPP_URL}
+- Agendamento: WhatsApp (48) 99173-5899 — ${WHATSAPP_URL}
 - Instagram: ${CLINIC.instagram}
 - O conteúdo do blog é informativo e não substitui consulta médica.
 

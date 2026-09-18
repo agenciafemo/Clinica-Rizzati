@@ -10,4 +10,4 @@ export const SUPABASE_ANON_KEY = "sb_publishable_yWsqFaO4Sfmf5Bzdf44aQw_88qB7uBV
 // Crie-o em Authentication > Users > Add user, com "Auto Confirm User" marcado.
 export const ADMIN_EMAIL = "blog@clinicarizzatti.com.br";
 
-export const WHATSAPP_NUMBER = "5548991485818";
+export const WHATSAPP_NUMBER = "5548991735899";

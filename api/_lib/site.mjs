@@ -27,6 +27,12 @@ export const CLINIC = {
         addressRegion: 'SC',
         addressCountry: 'BR',
     },
+    // Segunda a sexta, com intervalo de almoço entre os dois turnos.
+    openingHours: [
+        { dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '08:30', closes: '12:00' },
+        { dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '13:15', closes: '18:30' },
+    ],
+    openingHoursText: 'Segunda a sexta, das 8h30 às 12h e das 13h15 às 18h30',
 };
 
 // Chave = valor do campo "author" em blog_posts.
@@ -89,6 +95,10 @@ export function clinicNode() {
         image: CLINIC.logo,
         telephone: CLINIC.telephone,
         address: { '@type': 'PostalAddress', ...CLINIC.address },
+        openingHoursSpecification: CLINIC.openingHours.map((h) => ({
+            '@type': 'OpeningHoursSpecification',
+            ...h,
+        })),
         medicalSpecialty: 'https://schema.org/Dermatology',
         sameAs: [CLINIC.instagram],
     };

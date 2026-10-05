@@ -31,6 +31,7 @@ export default {
 - Endereço: ${a.streetAddress}, ${a.addressLocality}-${a.addressRegion}, Brasil
 - Agendamento: WhatsApp (48) 99173-5899 — ${WHATSAPP_URL}
 - Instagram: ${CLINIC.instagram}
+- Horário de atendimento: ${CLINIC.openingHoursText}
 - O conteúdo do blog é informativo e não substitui consulta médica.
 
 ## A clínica

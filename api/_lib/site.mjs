@@ -41,10 +41,10 @@ export const AUTHORS = {
         type: 'Person',
         name: 'Dra. Karoline Rizzatti',
         jobTitle: 'Médica dermatologista',
-        credentials: 'CRM/SC 17360 · RQE 13318',
+        credentials: 'CRM/SC 17360 · RQE 13315',
         identifiers: [
             { propertyID: 'CRM/SC', value: '17360' },
-            { propertyID: 'RQE', value: '13318' },
+            { propertyID: 'RQE', value: '13315' },
         ],
         bio: 'Especialista pela Sociedade Brasileira de Dermatologia (SBD) em dermatologia clínica, estética e tricologia, em Palhoça-SC.',
         image: '/KAROLMED.jpg',

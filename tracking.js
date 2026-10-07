@@ -11,7 +11,8 @@
         if (!target) return;
 
         const destination = target.getAttribute('href') || target.getAttribute('onclick') || '';
-        if (!/wa\.me\/5548991735899(?:\b|\/|\?)/i.test(destination)) return;
+        // Qualquer wa.me conta: assim o evento sobrevive a uma troca de numero.
+        if (!/wa\.me\//i.test(destination)) return;
 
         window.dataLayer.push({ event: 'whatsapp_click' });
     }, true);

@@ -307,11 +307,26 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
 @media (max-width: 700px) { .closing h2 { font-size: clamp(1.7rem, 8.4vw, 2.1rem); } }
 .closing p:not(.eyebrow) { margin: 0 auto 2rem; font-weight: 300; }
 .closing .button { background: var(--bronze); }
-.site-footer { padding-block: 2.5rem; background: var(--cream); }
-.footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
-.footer-inner p { margin: 0; color: var(--ink); font-size: .77rem; }
-.footer-links { display: flex; flex-wrap: wrap; gap: 1.5rem; color: var(--ink); font-size: .77rem; }
-.footer-links a:hover { color: var(--bronze-dark); }
+.site-footer { background: var(--cream); border-top: 4px solid var(--bronze); }
+.footer-main { display: grid; grid-template-columns: 1.55fr .85fr 1.15fr 1.15fr; gap: clamp(2rem, 4vw, 4.5rem); padding-block: 5rem 4.5rem; }
+.footer-brand { display: inline-flex; align-items: center; gap: .9rem; font-family: var(--font-display); font-size: 1.7rem; letter-spacing: -.035em; line-height: 1.1; }
+.footer-brand img { width: 50px; height: 50px; object-fit: contain; }
+.footer-brand em { color: var(--bronze-dark); font-weight: 400; }
+.footer-about > p { max-width: 270px; margin: 1.6rem 0 1.25rem; color: var(--ink); font-size: .9rem; font-weight: 300; line-height: 1.7; }
+.footer-about small { display: block; max-width: 280px; color: var(--ink); font-size: .72rem; letter-spacing: .04em; line-height: 1.7; }
+.footer-column { display: flex; flex-direction: column; align-items: flex-start; gap: .8rem; }
+.footer-column h2 { margin: .35rem 0 .8rem; color: var(--bronze-dark); font-size: .68rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; }
+.footer-column a, .footer-column p, .footer-column address { margin: 0; color: var(--ink-deep); font-size: .83rem; font-style: normal; font-weight: 300; line-height: 1.65; }
+.footer-column a { text-decoration-color: transparent; text-underline-offset: 4px; transition: color .2s ease, text-decoration-color .2s ease; }
+.footer-column a:hover { color: var(--bronze-dark); text-decoration: underline; text-decoration-color: var(--bronze-dark); }
+.footer-column a span { color: var(--bronze-dark); }
+.footer-contact > p { margin-top: .55rem; }
+.footer-connect > p { max-width: 230px; }
+.footer-connect .footer-whatsapp { display: inline-flex; align-items: center; justify-content: space-between; gap: 1.2rem; width: 100%; margin: .45rem 0 .3rem; padding: .85rem 1rem; border: 1px solid var(--bronze); color: var(--ink-deep); font-weight: 500; }
+.footer-connect .footer-whatsapp:hover { background: var(--bronze); color: var(--white); text-decoration: none; }
+.footer-connect .footer-whatsapp:hover span { color: var(--white); }
+.footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding-block: 1.5rem 2rem; border-top: 1px solid var(--line); }
+.footer-bottom p { margin: 0; color: var(--ink); font-size: .71rem; letter-spacing: .02em; }
 
 /* Personal links */
 .links-page { min-height: 100svh; background: radial-gradient(circle at 50% -15%, #fff 0, var(--cream) 50%, var(--sand) 100%); }
@@ -378,6 +393,7 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
     .hero-visual img { height: 520px; }
     .intro-band-inner { gap: 2rem; }
     .about-grid, .place-grid, .faq-grid { gap: 3rem; }
+    .footer-main { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; }
 }
 @media (max-width: 700px) {
     .container { width: min(100% - 2rem, 540px); }
@@ -405,8 +421,11 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
     .about-image { max-width: 470px; margin-bottom: 1rem; }
     .about-image img { height: 530px; }
     .place-grid .place-image { order: 2; }
-    .footer-inner { display: block; }
-    .footer-links { margin-top: 1.3rem; }
+    .footer-main { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem 1.5rem; padding-block: 3.5rem; }
+    .footer-about, .footer-connect { grid-column: 1 / -1; }
+    .footer-about > p { margin-block: 1rem; }
+    .footer-column h2 { margin-bottom: .2rem; }
+    .footer-bottom { align-items: flex-start; flex-direction: column; gap: .4rem; }
 }
 @media (max-width: 390px) {
     .header-cta { max-width: 110px; text-align: center; }

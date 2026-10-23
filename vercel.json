@@ -1,5 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "proxy": {
+    "entrypoint": "proxy.js",
+    "matcher": "/"
+  },
   "redirects": [
     {
       "source": "/post.html",
@@ -11,11 +15,6 @@
     { "source": "/blog.html", "destination": "/blog", "statusCode": 301 }
   ],
   "rewrites": [
-    {
-      "source": "/",
-      "has": [{ "type": "host", "value": "karoline.clinicarizzatti.com.br" }],
-      "destination": "/karoline/links.html"
-    },
     { "source": "/links", "destination": "/links.html" },
     { "source": "/blog", "destination": "/api/blog" },
     { "source": "/blog/:slug", "destination": "/api/post?slug=:slug" },

@@ -2,6 +2,8 @@
 
 Landing page (index.html) preparada para o domínio drakarolinerizzatti.com. A página de links (links.html) é publicada em karoline.clinicarizzatti.com.br pelo projeto Vercel da Clínica Rizzatti. A identidade visual acompanha o site da clínica. O agendamento utiliza o WhatsApp da clínica: 5548991735899.
 
+Na publicação da clínica, `proxy.js` serve `karoline/links.html` na raiz do subdomínio. O DNS é administrado na HostGator: registro A `karoline` → `76.76.21.21`, conforme instrução da Vercel. O subdomínio já foi associado ao projeto `clinica-rizzati` na Vercel.
+
 ## Revisão antes da troca de domínio
 
 - Validar textos, fotos, CRM/SC 17360 e RQE 13315 com a Dra. Karoline.

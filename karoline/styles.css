@@ -142,13 +142,13 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
 .hero { overflow: hidden; }
 .hero-grid {
     display: grid;
-    grid-template-columns: 1.05fr .95fr;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
     align-items: center;
     gap: min(5vw, 5rem);
     min-height: 680px;
     padding-block: 4.5rem 6rem;
 }
-.hero-copy { position: relative; z-index: 1; }
+.hero-copy { position: relative; z-index: 1; min-width: 0; }
 .hero h1 {
     max-width: 720px;
     margin: 1.35rem 0 1.5rem;
@@ -177,6 +177,7 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
     position: relative;
     justify-self: end;
     width: min(100%, 520px);
+    min-width: 0;
     padding: 2rem 2rem 0 0;
 }
 .hero-visual::before {
@@ -221,7 +222,8 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
     text-transform: uppercase;
     writing-mode: vertical-rl;
 }
-.intro-band { background: var(--white); border-block: 1px solid var(--line); }
+.intro-band { position: relative; overflow: hidden; background: var(--white); border-block: 1px solid var(--line); }
+.intro-band::after { content: ''; position: absolute; right: max(2rem, calc((100vw - 1220px) / 2)); bottom: -3.5rem; width: 160px; height: 160px; background: url('./FLOR.png') center / contain no-repeat; opacity: .11; pointer-events: none; }
 .intro-band-inner {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -237,6 +239,7 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
 .section-heading p { max-width: 320px; margin: 0; color: var(--ink); font-weight: 300; }
 .care-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 .care-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     min-height: 320px;
@@ -244,6 +247,7 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
     border: 1px solid var(--line);
     background: var(--white);
 }
+.care-card::after { content: ''; position: absolute; top: 1.7rem; right: 1.8rem; width: 24px; height: 24px; background: url('./FLOR.png') center / contain no-repeat; opacity: .65; }
 .care-number { color: var(--bronze-dark); font-family: var(--font-display); font-size: 1.35rem; }
 .care-card h3 { margin: 2.7rem 0 .65rem; font-family: var(--font-display); font-size: 2rem; font-weight: 400; line-height: 1.2; }
 .care-card p { margin: 0; color: var(--ink); font-size: .94rem; font-weight: 300; }
@@ -256,7 +260,7 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
 .journey-grid h3 { margin: 1.1rem 0 .5rem; font-family: var(--font-display); font-size: 1.8rem; font-weight: 400; }
 .journey-grid p { margin: 0; color: var(--ink); font-size: .95rem; font-weight: 300; }
 .about { background: var(--mist); }
-.about-grid { display: grid; grid-template-columns: .9fr 1.1fr; align-items: center; gap: min(9vw, 8rem); }
+.about-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); align-items: center; gap: min(9vw, 8rem); }
 .about-image { position: relative; }
 .about-image img { width: 100%; height: 620px; object-fit: cover; object-position: center 30%; }
 .about-image::after { content: ''; position: absolute; inset: 1rem -1rem -1rem 1rem; z-index: -1; border: 1px solid var(--bronze); }
@@ -264,16 +268,20 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
 .about-copy > p:not(.eyebrow) { max-width: 560px; color: var(--ink); font-size: 1.03rem; font-weight: 300; }
 .credentials-list { display: grid; gap: .75rem; margin: 2rem 0 2.4rem; padding: 0; list-style: none; }
 .credentials-list li { display: flex; align-items: baseline; gap: .75rem; color: var(--ink); font-size: .91rem; }
-.credentials-list li::before { content: '✦'; color: var(--bronze-dark); font-size: .65rem; }
-.place-grid { display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: min(8vw, 7rem); }
-.place-image img { width: 100%; aspect-ratio: 1.25; object-fit: cover; }
+.credentials-list li::before { content: ''; display: inline-block; flex: 0 0 15px; width: 15px; height: 15px; background: url('./FLOR.png') center / contain no-repeat; }
+.place-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); align-items: center; gap: min(8vw, 7rem); }
+.place-image, .place-copy { min-width: 0; }
+.place-image img { width: 100%; height: auto; aspect-ratio: 1.25; object-fit: cover; }
+.place-copy { position: relative; padding-top: 2rem; border-top: 1px solid var(--line); }
+.place-copy::before { content: ''; position: absolute; top: -.8rem; left: 0; width: 26px; height: 26px; background: var(--cream) url('./FLOR.png') center / 18px no-repeat; }
 .place-copy h2 { margin: .9rem 0 1.25rem; font-size: clamp(2.5rem, 4vw, 4rem); }
 .place-copy p:not(.eyebrow) { color: var(--ink); font-weight: 300; }
 .place-address { margin-block: 1.5rem 2rem; padding-left: 1rem; border-left: 2px solid var(--bronze); font-size: .88rem; }
 .place-contact { margin: -1rem 0 1.7rem; font-size: .87rem; }
+.place-hours { margin: 0 0 1.5rem; font-size: .85rem; }
 .place-contact a, .faq-list a { color: var(--bronze-dark); border-bottom: 1px solid var(--bronze); }
 .faq { background: var(--white); }
-.faq-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 5rem; }
+.faq-grid { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 5rem; }
 .faq h2 { margin: .9rem 0 0; font-size: clamp(2.5rem, 4vw, 4rem); }
 .faq-list > div { padding: 1.3rem 0; border-top: 1px solid var(--line); }
 .faq-list > div:last-child { border-bottom: 1px solid var(--line); }

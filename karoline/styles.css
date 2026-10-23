@@ -208,7 +208,7 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
     background: var(--cream);
     box-shadow: 0 12px 28px rgba(53, 70, 81, .1);
 }
-.hero-seal img { width: 94px; height: 94px; object-fit: contain; border-radius: 0; }
+.hero-visual .hero-seal img { width: 94px; height: 94px; object-fit: contain; border-radius: 0; }
 .hero-caption {
     position: absolute;
     right: -1rem;
@@ -351,7 +351,7 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
 .links-clinic a { border-bottom: 1px solid var(--bronze); }
 
 @media (max-width: 900px) {
-    .header-nav { gap: 1.1rem; }
+    .header-nav a:not(.header-cta) { display: none; }
     .hero-grid { min-height: auto; gap: 2rem; }
     .hero-visual img { height: 520px; }
     .intro-band-inner { gap: 2rem; }
@@ -371,7 +371,7 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
     .hero-visual { justify-self: center; width: min(100%, 410px); margin-top: 1rem; }
     .hero-visual img { height: 490px; }
     .hero-seal { left: -.4rem; bottom: 1rem; width: 92px; height: 92px; }
-    .hero-seal img { width: 70px; height: 70px; }
+    .hero-visual .hero-seal img { width: 70px; height: 70px; }
     .hero-caption { right: -.3rem; }
     .intro-band-inner { padding-block: 3.5rem; gap: 1.1rem; }
     .section-heading { display: block; }

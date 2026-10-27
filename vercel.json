@@ -6,32 +6,155 @@
   },
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "clinica-rizzati.vercel.app"
+        }
+      ],
+      "destination": "https://www.clinicarizzatti.com.br/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/crm.html",
+      "destination": "/painel",
+      "statusCode": 301
+    },
+    {
+      "source": "/admin.html",
+      "destination": "/painel/blog",
+      "statusCode": 301
+    },
+    {
       "source": "/post.html",
-      "has": [{ "type": "query", "key": "slug", "value": "(?<slug>[a-z0-9-]+)" }],
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "(?<slug>[a-z0-9-]+)"
+        }
+      ],
       "destination": "/blog/:slug",
       "statusCode": 301
     },
-    { "source": "/post.html", "destination": "/blog", "statusCode": 301 },
-    { "source": "/blog.html", "destination": "/blog", "statusCode": 301 }
+    {
+      "source": "/post.html",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog.html",
+      "destination": "/blog",
+      "statusCode": 301
+    }
   ],
   "rewrites": [
-    { "source": "/links", "destination": "/links.html" },
-    { "source": "/blog", "destination": "/api/blog" },
-    { "source": "/blog/:slug", "destination": "/api/post?slug=:slug" },
-    { "source": "/sitemap.xml", "destination": "/api/sitemap" },
-    { "source": "/llms.txt", "destination": "/api/llms" }
+    {
+      "source": "/painel",
+      "destination": "/crm.html"
+    },
+    {
+      "source": "/painel/blog",
+      "destination": "/admin.html"
+    },
+    {
+      "source": "/links",
+      "destination": "/links.html"
+    },
+    {
+      "source": "/blog",
+      "destination": "/api/blog"
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/api/post?slug=:slug"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/sitemap"
+    },
+    {
+      "source": "/llms.txt",
+      "destination": "/api/llms"
+    }
   ],
   "headers": [
     {
       "source": "/blog-config.mjs",
-      "headers": [{ "key": "Content-Type", "value": "text/javascript; charset=utf-8" }]
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/javascript; charset=utf-8"
+        }
+      ]
     },
     {
       "source": "/admin.html",
       "headers": [
-        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "Referrer-Policy", "value": "same-origin" }
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "same-origin"
+        }
+      ]
+    },
+    {
+      "source": "/crm.html",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "same-origin"
+        }
+      ]
+    },
+    {
+      "source": "/painel",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "same-origin"
+        }
+      ]
+    },
+    {
+      "source": "/painel/blog",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "same-origin"
+        }
       ]
     }
   ]

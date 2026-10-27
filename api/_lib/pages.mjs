@@ -6,6 +6,7 @@ export const STATIC_PAGES = [
     { path: '/sobre.html', title: 'Sobre a clínica', section: 'clinica', description: 'História, estrutura e equipe da Clínica Rizzatti, na Pedra Branca, Palhoça-SC.' },
     { path: '/corpo-clinico.html', title: 'Corpo clínico', section: 'medicos', description: 'Equipe médica da Clínica Rizzatti: Dra. Karoline Rizzatti e Dr. Timotio Dorn.' },
     { path: '/medico-karoline.html', title: 'Dra. Karoline Rizzatti', section: 'medicos', description: 'Dermatologista, CRM/SC 17360, RQE 13315. Especialista pela SBD em dermatologia clínica, estética e tricologia.' },
+    { path: '/karoline/', title: 'Dra. Karoline Rizzatti — atendimento em Palhoça', section: 'medicos', description: 'Consulta dermatológica com a Dra. Karoline Rizzatti na Clínica Rizzatti, em Pedra Branca, Palhoça. Informações sobre pele, cabelos, formação e agendamento.' },
     { path: '/medico-timotio.html', title: 'Dr. Timotio Dorn', section: 'medicos', description: 'Dermatologista, CRM/SC 22594, RQE 13225. Oncologia cutânea, cirurgia dermatológica e cirurgia micrográfica de Mohs.' },
     { path: '/clinica.html', title: 'Dermatologia Clínica', section: 'especialidades', description: 'Diagnóstico e tratamento de doenças de pele, cabelo e unhas, com biópsias quando necessário.' },
     { path: '/cirurgica.html', title: 'Dermatologia Cirúrgica', section: 'especialidades', description: 'Cirurgia micrográfica de Mohs, câncer de pele e procedimentos dermatológicos.' },

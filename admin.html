@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>Admin do Blog | Rizzatti Dermatologia e Saúde</title>
-    <link rel="icon" type="image/png" sizes="any" href="FLOR.png">
+    <link rel="icon" type="image/png" sizes="any" href="/FLOR.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -30,6 +30,13 @@
         .topbar-actions a:hover { opacity: 1; }
         .btn-logout { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: var(--white); padding: 8px 16px; font-size: 0.8rem; letter-spacing: 0.05em; cursor: pointer; border-radius: 3px; }
         .btn-logout:hover { background: rgba(255,255,255,0.12); }
+
+        /* NAVEGAÇÃO DO PAINEL — idêntica no crm.html */
+        .painel-nav { background: var(--white); border-bottom: 1px solid var(--line); padding: 0 32px; display: flex; gap: 4px; overflow-x: auto; }
+        .painel-nav a { padding: 14px 18px; font-size: 0.9rem; color: rgba(69,82,94,0.65); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; }
+        .painel-nav a:hover { color: var(--navy-dark); }
+        .painel-nav a[aria-current="page"] { color: var(--navy-dark); border-bottom-color: var(--bronze); }
+        @media (max-width: 700px) { .painel-nav { padding: 0 8px; } .painel-nav a { padding: 13px 12px; } }
 
         /* LOGIN */
         .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
@@ -204,8 +211,8 @@
     <!-- LOGIN -->
     <div class="login-wrap" id="loginWrap">
         <div class="login-card">
-            <img src="LOGO.png" alt="Rizzatti" class="login-logo">
-            <div class="login-title">Painel do Blog</div>
+            <img src="/LOGO.png" alt="Rizzatti" class="login-logo">
+            <div class="login-title">Painel da Clínica</div>
             <div class="login-sub">Acesso restrito à equipe da clínica</div>
             <form id="loginForm">
                 <div class="field">
@@ -224,12 +231,20 @@
     <!-- DASHBOARD -->
     <div id="dash" hidden>
         <div class="topbar">
-            <div class="topbar-title">Rizzatti <span>Blog Admin</span></div>
+            <div class="topbar-title">Rizzatti <span>Painel</span></div>
             <div class="topbar-actions">
                 <a href="/blog" target="_blank" rel="noopener">Ver blog ↗</a>
                 <button class="btn-logout" id="logoutBtn">Sair</button>
             </div>
         </div>
+
+        <!-- Mesma barra do crm.html: funil e blog formam um painel só. -->
+        <nav class="painel-nav" aria-label="Painel">
+            <a href="/crm.html#cadastrar">Cadastrar</a>
+            <a href="/crm.html#funil">Funil</a>
+            <a href="/crm.html#relatorios">Relatórios</a>
+            <a href="/admin.html" aria-current="page">Blog</a>
+        </nav>
 
         <div class="dash-inner">
             <div class="dash-header">
@@ -480,7 +495,7 @@
 
     <script type="module">
         import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-        import { SUPABASE_URL, SUPABASE_ANON_KEY, ADMIN_EMAIL } from './blog-config.mjs';
+        import { SUPABASE_URL, SUPABASE_ANON_KEY, ADMIN_EMAIL } from '/blog-config.mjs';
 
         const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         const $ = (id) => document.getElementById(id);
@@ -530,7 +545,19 @@
         // ---------- LOGIN ----------
         async function checkSession() {
             const { data: { session } } = await supabase.auth.getSession();
-            session ? showDash() : showLogin();
+            if (!session) { showLogin(); return; }
+
+            // A sessão do Supabase é a mesma em todas as páginas do site. Quem
+            // entrou no funil (a agência, por exemplo) chegaria aqui já logado,
+            // então o painel do blog confere de quem é a sessão. O bloqueio real
+            // está nas políticas do banco; isto evita a tela enganosa.
+            if (session.user?.email?.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+                await supabase.auth.signOut();
+                showLogin();
+                $('loginMsg').textContent = 'Este painel é exclusivo da equipe da clínica.';
+                return;
+            }
+            showDash();
         }
         function showLogin() { $('loginWrap').hidden = false; $('dash').hidden = true; $('loginPassword').focus(); }
         function showDash() { $('loginWrap').hidden = true; $('dash').hidden = false; loadPosts(); }

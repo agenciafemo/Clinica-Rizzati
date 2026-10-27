@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Funil de Pacientes | Rizzatti Dermatologia e Saúde</title>
+    <link rel="icon" type="image/png" sizes="any" href="/FLOR.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #758899; --navy-dark: #45525e; --bronze: #c8886c; --azure: #d7bea8;
+            --white: #FFFFFF; --gray-light: #f3eee7; --danger: #b8574a; --ok: #3f8256; --warn: #b8862f;
+            --line: rgba(117,136,153,0.2);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        [hidden] { display: none !important; }
+        body { font-family: 'Jost', sans-serif; background: var(--gray-light); color: var(--navy-dark); min-height: 100vh; }
+        a { color: inherit; }
+        button { font-family: 'Jost', sans-serif; }
+
+        /* TOPBAR */
+        .topbar { background: var(--navy-dark); color: var(--white); padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; }
+        .topbar-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; letter-spacing: 0.02em; }
+        .topbar-title span { color: var(--bronze); font-style: italic; }
+        .topbar-actions { display: flex; align-items: center; gap: 16px; font-size: 0.85rem; }
+        .topbar-actions a { text-decoration: none; opacity: 0.85; }
+        .topbar-actions a:hover { opacity: 1; }
+        .btn-logout { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: var(--white); padding: 8px 16px; font-size: 0.8rem; letter-spacing: 0.05em; cursor: pointer; border-radius: 3px; }
+        .btn-logout:hover { background: rgba(255,255,255,0.12); }
+
+        /* LOGIN */
+        .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .login-card { background: var(--white); padding: 48px 40px; width: 100%; max-width: 380px; border-radius: 6px; box-shadow: 0 30px 70px rgba(45,58,74,0.15); text-align: center; }
+        .login-logo { height: 40px; margin-bottom: 24px; filter: brightness(0); opacity: 0.72; }
+        .login-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--navy-dark); margin-bottom: 6px; }
+        .login-sub { font-size: 0.85rem; color: rgba(69,82,94,0.6); margin-bottom: 30px; }
+        .password-wrap { position: relative; }
+        .password-wrap input { padding-right: 72px !important; }
+        .password-toggle { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--navy); font-size: 0.75rem; letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; padding: 6px 8px; }
+
+        .field { text-align: left; margin-bottom: 18px; }
+        .field label { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(69,82,94,0.72); margin-bottom: 6px; }
+        .field input, .field textarea, .field select {
+            width: 100%; padding: 11px 13px; border: 1px solid rgba(117,136,153,0.3); border-radius: 3px;
+            font-family: 'Jost', sans-serif; font-size: 0.95rem; color: var(--navy-dark); background: var(--white);
+        }
+        .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: var(--bronze); box-shadow: 0 0 0 3px rgba(200,136,108,0.12); }
+        .field textarea { resize: vertical; min-height: 70px; line-height: 1.5; }
+        .hint { font-size: 0.75rem; color: rgba(69,82,94,0.55); margin-top: 5px; line-height: 1.45; }
+        .check-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 18px; }
+        .check-row input { width: 17px; height: 17px; margin-top: 2px; flex-shrink: 0; accent-color: var(--bronze); }
+        .check-row label { font-size: 0.85rem; line-height: 1.45; color: var(--navy-dark); }
+
+        .btn-primary { width: 100%; background: var(--navy-dark); color: var(--white); border: none; padding: 13px; border-radius: 3px; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.25s ease; }
+        .btn-primary:hover { background: #38434d; }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-secondary { background: transparent; border: 1px solid rgba(117,136,153,0.35); color: var(--navy-dark); padding: 11px 20px; border-radius: 3px; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; }
+        .btn-secondary:hover { background: rgba(117,136,153,0.08); }
+        .form-msg { font-size: 0.82rem; margin-top: 14px; min-height: 18px; }
+        .form-msg.error { color: var(--danger); }
+
+        /* LAYOUT */
+        .dash-inner { max-width: 1400px; margin: 0 auto; padding: 32px 24px 80px; }
+        .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 14px; }
+        .dash-header h1 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--navy-dark); }
+        .btn-new { background: var(--bronze); color: var(--white); border: none; padding: 12px 22px; border-radius: 3px; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; }
+        .btn-new:hover { background: #b87a5f; }
+
+        /* NAVEGAÇÃO DO PAINEL — idêntica no admin.html */
+        .painel-nav { background: var(--white); border-bottom: 1px solid var(--line); padding: 0 32px; display: flex; gap: 4px; overflow-x: auto; }
+        .painel-nav a { padding: 14px 18px; font-size: 0.9rem; color: rgba(69,82,94,0.65); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; }
+        .painel-nav a:hover { color: var(--navy-dark); }
+        .painel-nav a[aria-current="page"] { color: var(--navy-dark); border-bottom-color: var(--bronze); }
+        @media (max-width: 700px) { .painel-nav { padding: 0 8px; } .painel-nav a { padding: 13px 12px; } }
+
+        /* KPIs */
+        .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(165px, 1fr)); gap: 14px; margin-bottom: 26px; }
+        .kpi { background: var(--white); border-radius: 6px; padding: 18px 20px; box-shadow: 0 10px 30px rgba(45,58,74,0.06); }
+        .kpi-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(69,82,94,0.55); margin-bottom: 7px; }
+        .kpi-value { font-family: 'Playfair Display', serif; font-size: 1.75rem; color: var(--navy-dark); font-variant-numeric: tabular-nums; line-height: 1.1; }
+        .kpi-value.ok { color: var(--ok); } .kpi-value.warn { color: var(--warn); } .kpi-value.bad { color: var(--danger); }
+        .kpi-sub { font-size: 0.75rem; color: rgba(69,82,94,0.55); margin-top: 5px; }
+
+        /* CADASTRO RÁPIDO — a tela em que o painel abre */
+        .quick-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start; }
+        .quick-card { background: var(--white); border-radius: 6px; padding: 28px 30px 30px; box-shadow: 0 10px 30px rgba(45,58,74,0.06); }
+        .quick-card .btn-primary { margin-top: 10px; padding: 15px; font-size: 0.9rem; }
+        .quick-step { display: flex; align-items: center; gap: 10px; margin: 22px 0 12px; }
+        .quick-step:first-child { margin-top: 0; }
+        .quick-num { width: 24px; height: 24px; border-radius: 50%; background: var(--bronze); color: var(--white); display: grid; place-items: center; font-size: 0.78rem; flex-shrink: 0; }
+        .quick-step label { font-size: 0.95rem; color: var(--navy-dark); }
+        .quick-step .counter { text-transform: none; letter-spacing: 0; color: rgba(69,82,94,0.5); font-size: 0.78rem; }
+
+        .canal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 9px; }
+        .canal-btn { display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 15px 8px; border: 1px solid rgba(117,136,153,0.3); border-radius: 5px; background: var(--white); color: var(--navy-dark); font-size: 0.85rem; cursor: pointer; transition: border-color 0.15s ease, background 0.15s ease; }
+        .canal-btn svg { width: 24px; height: 24px; opacity: 0.7; }
+        .canal-btn:hover { border-color: var(--bronze); }
+        .canal-btn[aria-checked="true"] { border-color: var(--bronze); background: rgba(200,136,108,0.1); box-shadow: 0 0 0 2px rgba(200,136,108,0.18); }
+        .canal-btn[aria-checked="true"] svg { opacity: 1; color: var(--bronze); }
+
+        .quick-side { background: var(--white); border-radius: 6px; padding: 22px 22px 14px; box-shadow: 0 10px 30px rgba(45,58,74,0.06); }
+        .quick-side h3 { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(69,82,94,0.55); margin-bottom: 14px; }
+        .today-row { display: flex; align-items: baseline; gap: 8px; padding: 9px 0; border-bottom: 1px solid rgba(117,136,153,0.1); font-size: 0.86rem; }
+        .today-row:last-child { border-bottom: none; }
+        .today-row time { margin-left: auto; font-size: 0.74rem; color: rgba(69,82,94,0.5); font-variant-numeric: tabular-nums; }
+        .today-empty { font-size: 0.82rem; color: rgba(69,82,94,0.45); padding: 6px 0 14px; line-height: 1.5; }
+        .quick-ok { background: rgba(63,130,86,0.1); color: var(--ok); border-radius: 4px; padding: 11px 14px; font-size: 0.85rem; margin-bottom: 16px; }
+
+        /* OPÇÕES DE UM CLIQUE (serviços, motivos) */
+        .chip-grid { display: flex; flex-wrap: wrap; gap: 7px; }
+        .chip { padding: 8px 13px; border: 1px solid rgba(117,136,153,0.3); border-radius: 20px; background: var(--white); color: var(--navy-dark); font-size: 0.84rem; cursor: pointer; transition: border-color 0.15s ease, background 0.15s ease; }
+        .chip:hover { border-color: var(--bronze); }
+        .chip[aria-checked="true"] { border-color: var(--bronze); background: var(--bronze); color: var(--white); }
+        .chip.custom { border-style: dashed; }
+        .chip-outro { margin-top: 10px; }
+
+        /* JANELA DE ETAPA */
+        .etapa-card { max-width: 560px; }
+        .etapa-kicker { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bronze); margin-bottom: 3px; }
+        .etapa-close { background: none; border: none; font-size: 1.6rem; line-height: 1; color: rgba(69,82,94,0.55); cursor: pointer; padding: 0 4px; }
+        .etapa-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px; }
+        .etapa-actions .btn-primary { width: auto; padding: 12px 28px; }
+        .etapa-label { font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(69,82,94,0.72); margin-bottom: 8px; }
+        .etapa-bloco { margin-bottom: 20px; }
+        .etapa-resumo { background: var(--gray-light); border-radius: 4px; padding: 11px 14px; font-size: 0.85rem; line-height: 1.55; margin-bottom: 20px; color: var(--navy-dark); }
+        .etapa-resumo b { font-weight: 500; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+        /* QUADRO DO FUNIL */
+        .board { display: grid; grid-auto-flow: column; grid-auto-columns: 255px; gap: 14px; overflow-x: auto; padding-bottom: 14px; align-items: start; }
+        .col { background: rgba(255,255,255,0.6); border-radius: 6px; border: 1px solid var(--line); min-height: 110px; }
+        .col.drop { border-color: var(--bronze); background: rgba(200,136,108,0.07); }
+        .col-head { padding: 13px 15px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+        .col-name { font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--navy-dark); }
+        .col-count { font-size: 0.78rem; color: rgba(69,82,94,0.55); font-variant-numeric: tabular-nums; }
+        .col-sum { font-size: 0.72rem; color: var(--bronze); padding: 0 15px 10px; margin-top: -4px; }
+        .col-sum.aberto { color: rgba(69,82,94,0.6); }
+        .col-body { padding: 10px; display: flex; flex-direction: column; gap: 9px; }
+        .col-empty { font-size: 0.78rem; color: rgba(69,82,94,0.4); text-align: center; padding: 14px 6px; }
+
+        .card { background: var(--white); border-radius: 5px; padding: 12px 13px; border: 1px solid var(--line); cursor: grab; box-shadow: 0 2px 6px rgba(45,58,74,0.05); }
+        .card:hover { border-color: var(--bronze); }
+        .card.dragging { opacity: 0.45; }
+        .card-name { font-size: 0.92rem; color: var(--navy-dark); margin-bottom: 3px; }
+        .card-phone { font-size: 0.78rem; color: rgba(69,82,94,0.6); font-variant-numeric: tabular-nums; }
+        .card-info { font-size: 0.78rem; color: var(--navy-dark); margin-top: 7px; line-height: 1.4; }
+        .card-info .when { display: block; color: var(--bronze); font-variant-numeric: tabular-nums; }
+        .card-meta { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; margin-top: 9px; }
+        .card-value { font-size: 0.8rem; color: var(--bronze); font-variant-numeric: tabular-nums; }
+        .card-age { font-size: 0.72rem; color: rgba(69,82,94,0.5); margin-left: auto; }
+        .card-age.late { color: var(--danger); }
+
+        .badge { display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; background: rgba(117,136,153,0.14); color: var(--navy-dark); }
+        .badge.facebook { background: rgba(66,103,178,0.14); color: #3b5998; }
+        .badge.google { background: rgba(219,68,55,0.12); color: #b23b31; }
+        .badge.indicacao { background: rgba(63,130,86,0.13); color: var(--ok); }
+        .badge.instagram { background: rgba(193,53,132,0.12); color: #a62b72; }
+        .badge.retorno { background: rgba(200,136,108,0.16); color: var(--bronze); }
+
+        /* RELATÓRIO */
+        .panel { background: var(--white); border-radius: 6px; padding: 26px 28px; box-shadow: 0 10px 30px rgba(45,58,74,0.06); margin-bottom: 20px; }
+        .panel h2 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--navy-dark); margin-bottom: 4px; }
+        .panel-sub { font-size: 0.82rem; color: rgba(69,82,94,0.6); margin-bottom: 22px; }
+
+        .funnel-row { display: grid; grid-template-columns: 150px 1fr 120px; gap: 14px; align-items: center; margin-bottom: 11px; font-size: 0.85rem; }
+        .funnel-label { color: var(--navy-dark); }
+        .funnel-track { background: rgba(117,136,153,0.1); border-radius: 3px; height: 26px; overflow: hidden; }
+        .funnel-fill { height: 100%; background: linear-gradient(90deg, var(--navy), var(--azure)); border-radius: 3px; transition: width 0.4s ease; }
+        .funnel-fill.loss { background: linear-gradient(90deg, var(--danger), #d08a7f); }
+        .funnel-num { text-align: right; font-variant-numeric: tabular-nums; color: rgba(69,82,94,0.72); font-size: 0.82rem; }
+        .funnel-num b { color: var(--navy-dark); font-weight: 500; }
+
+        .data-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+        .data-table th { text-align: left; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(69,82,94,0.55); font-weight: 400; padding: 0 12px 10px; border-bottom: 1px solid var(--line); }
+        .data-table th.num, .data-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+        .data-table td { padding: 12px; border-bottom: 1px solid rgba(117,136,153,0.1); }
+        .data-table tr:last-child td { border-bottom: none; }
+
+        /* MODAL */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(30,38,46,0.55); z-index: 2000; align-items: flex-start; justify-content: center; padding: 32px 16px; overflow-y: auto; }
+        .modal-overlay.open { display: flex; }
+        .modal-card { background: var(--white); width: 100%; max-width: 720px; border-radius: 8px; box-shadow: 0 40px 90px rgba(0,0,0,0.3); }
+        .modal-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 30px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--white); z-index: 5; border-radius: 8px 8px 0 0; }
+        .modal-head h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy-dark); }
+        .modal-head-actions { display: flex; gap: 10px; align-items: center; }
+        .modal-head-actions .btn-primary { width: auto; padding: 11px 24px; }
+        .modal-body { padding: 24px 30px 30px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        fieldset { border: none; margin-bottom: 26px; }
+        legend { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--bronze); padding-bottom: 10px; margin-bottom: 16px; border-bottom: 1px solid var(--line); width: 100%; }
+        legend small { font-weight: 400; letter-spacing: 0.02em; text-transform: none; color: rgba(69,82,94,0.55); margin-left: 6px; }
+        .lgpd-note { background: var(--gray-light); border-left: 3px solid var(--azure); border-radius: 0 4px 4px 0; padding: 11px 14px; font-size: 0.78rem; line-height: 1.5; color: rgba(69,82,94,0.78); margin-bottom: 16px; }
+        .timeline { list-style: none; font-size: 0.82rem; }
+        .timeline li { display: grid; grid-template-columns: 130px 1fr; gap: 12px; padding: 7px 0; border-bottom: 1px solid rgba(117,136,153,0.1); }
+        .timeline li:last-child { border-bottom: none; }
+        .timeline time { color: rgba(69,82,94,0.55); font-variant-numeric: tabular-nums; }
+        .modal-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 6px; }
+        .btn-danger-link { background: none; border: none; color: var(--danger); font-size: 0.82rem; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; padding: 0; }
+        .empty-state { padding: 50px 20px; text-align: center; color: rgba(69,82,94,0.55); }
+
+        @media (max-width: 920px) {
+            .quick-wrap { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 700px) {
+            .dash-inner { padding: 22px 14px 70px; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .quick-card { padding: 22px 18px 24px; }
+            .canal-grid { grid-template-columns: repeat(3, 1fr); }
+            .funnel-row { grid-template-columns: 110px 1fr; }
+            .funnel-num { grid-column: 2; text-align: left; }
+            .modal-head { flex-direction: column; align-items: stretch; padding: 18px 20px; }
+            .modal-body { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOGIN -->
+    <div class="login-wrap" id="loginWrap">
+        <div class="login-card">
+            <img src="/LOGO.png" alt="Rizzatti" class="login-logo">
+            <div class="login-title">Painel da Clínica</div>
+            <div class="login-sub">Acesso restrito à clínica e à agência</div>
+            <form id="loginForm">
+                <div class="field">
+                    <label for="loginPassword">Senha</label>
+                    <div class="password-wrap">
+                        <input type="password" id="loginPassword" required autocomplete="current-password" autofocus>
+                        <button type="button" class="password-toggle" id="passwordToggle" aria-label="Mostrar senha">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary" id="loginBtn">Entrar</button>
+                <div class="form-msg error" id="loginMsg" role="alert"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- PAINEL -->
+    <div id="dash" hidden>
+        <div class="topbar">
+            <div class="topbar-title">Rizzatti <span>Painel</span></div>
+            <div class="topbar-actions">
+                <span id="whoami"></span>
+                <button class="btn-logout" id="logoutBtn">Sair</button>
+            </div>
+        </div>
+
+        <!-- Mesma barra do admin.html: funil e blog formam um painel só.
+             As abas daqui são só âncoras (#funil), para trocar de tela sem
+             recarregar e funcionar igual em /painel e em /crm.html. O link
+             do blog aponta para o arquivo; no site publicado o vercel.json
+             leva para /painel/blog. -->
+        <nav class="painel-nav" aria-label="Painel">
+            <a href="#cadastrar" data-nav="new">Cadastrar</a>
+            <a href="#funil" data-nav="board">Funil</a>
+            <a href="#relatorios" data-nav="report">Relatórios</a>
+            <a href="/admin.html" data-nav="blog" id="navBlog" hidden>Blog</a>
+        </nav>
+
+        <div class="dash-inner">
+            <div class="dash-header">
+                <h1 id="viewTitle">Novo contato</h1>
+                <button class="btn-new" id="newLeadBtn" hidden>+ Novo contato</button>
+            </div>
+
+            <!-- TELA 1: cadastro rápido, onde o painel abre -->
+            <div id="viewNew">
+                <div class="quick-wrap">
+                    <form id="quickForm" class="quick-card">
+                        <div class="quick-step">
+                            <span class="quick-num">1</span>
+                            <label>Como ela nos conheceu?</label>
+                        </div>
+                        <div class="canal-grid" id="canalGrid" role="radiogroup" aria-label="Canal"></div>
+
+                        <div class="quick-step">
+                            <span class="quick-num">2</span>
+                            <label for="qNome">Quem é</label>
+                        </div>
+                        <div class="field">
+                            <input type="text" id="qNome" placeholder="Nome da paciente" autocomplete="off">
+                        </div>
+                        <div class="field">
+                            <input type="tel" id="qTelefone" placeholder="(48) 99999-9999" autocomplete="off">
+                            <div class="hint" id="qDuplicado"></div>
+                        </div>
+
+                        <div class="quick-step">
+                            <span class="quick-num">3</span>
+                            <label>O que ela procura <span class="counter">opcional</span></label>
+                        </div>
+                        <div class="chip-grid" id="qServicos" role="radiogroup" aria-label="O que ela procura"></div>
+                        <div class="field chip-outro" id="qOutroWrap" hidden>
+                            <input type="text" id="qOutro" placeholder="Digite o que ela procura" autocomplete="off">
+                            <div class="hint">Na próxima vez, essa opção já aparece na lista para escolher com um clique.</div>
+                        </div>
+
+                        <button type="submit" class="btn-primary" id="quickSave">Salvar e ver o funil</button>
+                        <div class="form-msg error" id="quickMsg" role="alert"></div>
+                    </form>
+
+                    <aside class="quick-side">
+                        <h3>Cadastrados hoje</h3>
+                        <div id="todayList"></div>
+                    </aside>
+                </div>
+            </div>
+
+            <div id="viewBoard" hidden>
+                <div class="kpis" id="kpis"></div>
+                <div class="board" id="board"></div>
+            </div>
+
+
+            <div id="viewReport" hidden>
+                <div class="panel">
+                    <h2>Onde o paciente se perde</h2>
+                    <div class="panel-sub">Últimos 90 dias, etapa por etapa. A queda maior mostra onde atuar primeiro.</div>
+                    <div id="funnelChart"></div>
+                </div>
+                <div class="panel">
+                    <h2>Desempenho por canal</h2>
+                    <div class="panel-sub">Indicação e anúncio juntos escondem a verdade. Aqui ficam separados.</div>
+                    <div id="originTable"></div>
+                </div>
+                <div class="panel">
+                    <h2>Motivos de perda</h2>
+                    <div class="panel-sub">O que fazer com o tráfego depende de por que a paciente não fechou.</div>
+                    <div id="lossTable"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ETAPA: abre quando o card muda para uma coluna que pede informação -->
+    <div class="modal-overlay" id="etapaModal">
+        <div class="modal-card etapa-card">
+            <div class="modal-head">
+                <div>
+                    <div class="etapa-kicker" id="etapaKicker"></div>
+                    <h2 id="etapaTitle"></h2>
+                </div>
+                <button type="button" class="etapa-close" id="etapaClose" aria-label="Cancelar">×</button>
+            </div>
+            <form class="modal-body" id="etapaForm">
+                <div id="etapaBody"></div>
+                <div class="form-msg error" id="etapaMsg" role="alert"></div>
+                <div class="etapa-actions">
+                    <button type="button" class="btn-secondary" id="etapaCancel">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="etapaSave">Confirmar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DO LEAD -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-card">
+            <div class="modal-head">
+                <h2 id="modalTitle">Novo contato</h2>
+                <div class="modal-head-actions">
+                    <button class="btn-secondary" id="cancelBtn">Cancelar</button>
+                    <button class="btn-primary" id="saveBtn">Salvar</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form id="leadForm">
+                    <fieldset>
+                        <legend>Contato</legend>
+                        <div class="grid-2">
+                            <div class="field">
+                                <label for="fNome">Nome</label>
+                                <input type="text" id="fNome" required autocomplete="off">
+                            </div>
+                            <div class="field">
+                                <label for="fTelefone">WhatsApp</label>
+                                <input type="tel" id="fTelefone" required placeholder="(48) 99999-9999" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="grid-2">
+                            <div class="field">
+                                <label for="fEmail">E-mail <span class="counter">opcional</span></label>
+                                <input type="email" id="fEmail" autocomplete="off">
+                                <div class="hint">Melhora o reconhecimento da paciente nas plataformas de anúncio.</div>
+                            </div>
+                            <div class="field">
+                                <label for="fStatus">Etapa do funil</label>
+                                <select id="fStatus"></select>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Canal <small>de onde essa paciente veio</small></legend>
+                        <div class="grid-2">
+                            <div class="field">
+                                <label for="fRefCode">Código da mensagem <span class="counter">opcional</span></label>
+                                <input type="text" id="fRefCode" placeholder="A7F3" autocomplete="off" maxlength="12" style="text-transform: uppercase;">
+                                <div class="hint">Veio no fim da primeira mensagem do WhatsApp. Com ele, o canal é preenchido sozinho.</div>
+                            </div>
+                            <div class="field">
+                                <label for="fCanal">Canal</label>
+                                <select id="fCanal"></select>
+                            </div>
+                        </div>
+                        <div class="hint" id="refInfo"></div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Atendimento</legend>
+                        <div class="grid-2">
+                            <div class="field">
+                                <label for="fProfissional">Profissional</label>
+                                <select id="fProfissional"></select>
+                            </div>
+                            <div class="field">
+                                <label for="fAgendadoPara">Consulta marcada para</label>
+                                <input type="datetime-local" id="fAgendadoPara">
+                            </div>
+                        </div>
+                        <div class="lgpd-note">
+                            Os dois campos abaixo são dados de saúde e ficam só aqui dentro. Eles nunca são enviados para a Meta nem para o Google.
+                        </div>
+                        <div class="grid-2">
+                            <div class="field">
+                                <label for="fInteresse">O que procurou</label>
+                                <input type="text" id="fInteresse" list="listaServicos" autocomplete="off">
+                            </div>
+                            <div class="field">
+                                <label for="fProcedimento">Procedimento orçado</label>
+                                <input type="text" id="fProcedimento" list="listaServicos" autocomplete="off">
+                            </div>
+                        </div>
+                        <datalist id="listaServicos"></datalist>
+                        <div class="field">
+                            <label for="fObs">Observações</label>
+                            <textarea id="fObs"></textarea>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Valores</legend>
+                        <div class="grid-3">
+                            <div class="field">
+                                <label for="fValorConsulta">Consulta (R$)</label>
+                                <input type="number" id="fValorConsulta" min="0" step="0.01">
+                                <div class="hint">Paga no agendamento. Já conta como receita.</div>
+                            </div>
+                            <div class="field">
+                                <label for="fValorEstimado">Orçamento (R$)</label>
+                                <input type="number" id="fValorEstimado" min="0" step="0.01">
+                                <div class="hint">Em aberto. Não conta como receita.</div>
+                            </div>
+                            <div class="field">
+                                <label for="fValorFechado">Fechado (R$)</label>
+                                <input type="number" id="fValorFechado" min="0" step="0.01">
+                                <div class="hint">Só aqui o procedimento vira receita.</div>
+                            </div>
+                        </div>
+                        <div class="field" id="perdaWrap" hidden>
+                            <label for="fMotivoPerda">Motivo da perda</label>
+                            <select id="fMotivoPerda"></select>
+                        </div>
+                        <div class="check-row">
+                            <input type="checkbox" id="fSemMarketing">
+                            <label for="fSemMarketing">A paciente pediu para não ser usada em campanhas. Marcando aqui, ela fica fora do envio para a Meta e o Google.</label>
+                        </div>
+                    </fieldset>
+
+                    <fieldset id="histWrap" hidden>
+                        <legend>Histórico</legend>
+                        <ul class="timeline" id="timeline"></ul>
+                    </fieldset>
+
+                    <div class="modal-foot">
+                        <button type="button" class="btn-danger-link" id="deleteBtn" hidden>Excluir contato</button>
+                        <div class="form-msg error" id="formMsg" role="alert"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+        import { SUPABASE_URL, SUPABASE_ANON_KEY, ADMIN_EMAIL, PERFIS_FUNIL } from '/blog-config.mjs';
+
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const EMAIL_CLINICA = ADMIN_EMAIL.toLowerCase();
+        const $ = (id) => document.getElementById(id);
+
+        // As duas fases do funil. "faltou" e "perdido" ficam fora do quadro
+        // principal, nas colunas de saída no fim.
+        const STATUS = [
+            { key: 'novo',           label: 'Novo contato' },
+            { key: 'em_atendimento', label: 'Em atendimento' },
+            { key: 'agendado',       label: 'Agendado' },
+            { key: 'confirmado',     label: 'Confirmado' },
+            { key: 'compareceu',     label: 'Compareceu' },
+            { key: 'orcamento',      label: 'Orçamento' },
+            { key: 'negociacao',     label: 'Negociação' },
+            { key: 'fechado',        label: 'Fechado' },
+            { key: 'realizado',      label: 'Realizado' },
+            { key: 'faltou',         label: 'Faltou' },
+            { key: 'perdido',        label: 'Perdido' }
+        ];
+        const STATUS_LABEL = Object.fromEntries(STATUS.map((s) => [s.key, s.label]));
+
+        // "Como você nos conheceu?", na ordem em que a recepção mais ouve.
+        // O ícone existe para a escolha ser feita no reflexo, sem leitura.
+        const ICONES = {
+            instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>',
+            facebook: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 3h-2.5A3.5 3.5 0 0 0 9 6.5V9H6.5v3H9v9h3v-9h2.5l.5-3H12V6.5a1 1 0 0 1 1-1h2z"/></svg>',
+            google: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
+            site: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg>',
+            indicacao: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 18.5V20"/><circle cx="10" cy="8" r="3.2"/><path d="M19 11V5M22 8h-6"/></svg>',
+            retorno: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4h-4"/></svg>',
+            outro: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.6 2.6 0 1 1 3.2 2.5c-.5.2-.7.6-.7 1.1v.4"/><circle cx="12" cy="16.8" r="0.9" fill="currentColor" stroke="none"/></svg>'
+        };
+        const CANAIS = [
+            { key: 'instagram', label: 'Instagram' },
+            { key: 'facebook',  label: 'Facebook' },
+            { key: 'google',    label: 'Google' },
+            { key: 'site',      label: 'Site' },
+            { key: 'indicacao', label: 'Indicação' },
+            { key: 'retorno',   label: 'Já é paciente' },
+            { key: 'outro',     label: 'Outro' }
+        ];
+        const CANAL_LABEL = { ...Object.fromEntries(CANAIS.map((c) => [c.key, c.label])), nao_informado: 'Não informado' };
+
+        const MOTIVOS = [
+            { key: '',                   label: '—' },
+            { key: 'preco',              label: 'Preço' },
+            { key: 'sem_resposta',       label: 'Parou de responder' },
+            { key: 'demora_atendimento', label: 'Demora no atendimento' },
+            { key: 'distancia',          label: 'Distância' },
+            { key: 'so_pesquisando',     label: 'Só pesquisando' },
+            { key: 'escolheu_outra',     label: 'Escolheu outra clínica' },
+            { key: 'fora_do_perfil',     label: 'Fora do perfil' },
+            { key: 'outro',              label: 'Outro' }
+        ];
+        const MOTIVO_LABEL = Object.fromEntries(MOTIVOS.map((m) => [m.key, m.label]));
+
+        const DOCTORS = ['Dra. Karoline Rizzatti', 'Dr. Timotio Dorn'];
+
+        // Serviços das páginas do site, no nome que a recepção usa. O que for
+        // digitado em "Outro" entra na lista sozinho (ver opcoesServico), sem
+        // precisar mexer aqui.
+        const SERVICOS = [
+            'Consulta',
+            'Toxina botulínica',
+            'Preenchimento',
+            'Bioestimulador',
+            'Bioremodelador',
+            'Ultrassom Liftera',
+            'MegaDERM',
+            'Laser CO₂',
+            'Etherea MX',
+            'Microagulhamento',
+            'PRP / Exossomos',
+            'MesojectGun',
+            'Queda de cabelo',
+            'Doença de pele',
+            'Biópsia / pequena cirurgia',
+            'Câncer de pele (Mohs)'
+        ];
+        const OUTRO = 'Outro';
+
+        // Lista padrão mais o que já foi digitado em "Outro" nos cadastros, do
+        // mais usado para o menos usado. É assim que uma opção nova "aparece na
+        // lista": ela está no banco, em algum lead, e a tela a recolhe dali.
+        function opcoesServico() {
+            const padrao = new Set(SERVICOS.map((s) => s.toLowerCase()));
+            const contagem = new Map();
+            leads.forEach((l) => {
+                [l.interesse, l.procedimento].forEach((v) => {
+                    const nome = String(v || '').trim();
+                    if (!nome || padrao.has(nome.toLowerCase())) return;
+                    const chave = nome.toLowerCase();
+                    const atual = contagem.get(chave) || { nome, n: 0 };
+                    atual.n++;
+                    contagem.set(chave, atual);
+                });
+            });
+            const extras = [...contagem.values()].sort((a, b) => b.n - a.n).map((e) => e.nome);
+            return { padrao: SERVICOS, extras };
+        }
+
+        // Grade de opções de um clique, com "Outro" abrindo um campo de texto.
+        // Usada no cadastro e nas janelas de etapa.
+        function montarChips(container, outroWrap, outroInput, selecionado) {
+            const { padrao, extras } = opcoesServico();
+            const todas = [...padrao, ...extras];
+            const marcado = selecionado && !todas.some((o) => o.toLowerCase() === selecionado.toLowerCase())
+                ? OUTRO
+                : selecionado;
+
+            container.innerHTML = [
+                ...padrao.map((o) => ({ o, custom: false })),
+                ...extras.map((o) => ({ o, custom: true })),
+                { o: OUTRO, custom: false }
+            ].map(({ o, custom }) => `
+                <button type="button" class="chip${custom ? ' custom' : ''}" role="radio"
+                    aria-checked="${String(marcado ? o.toLowerCase() === marcado.toLowerCase() : false)}"
+                    data-valor="${escapeHtml(o)}">${escapeHtml(o)}</button>
+            `).join('');
+
+            outroWrap.hidden = marcado !== OUTRO;
+            outroInput.value = marcado === OUTRO ? selecionado : '';
+
+            container.querySelectorAll('.chip').forEach((chip) => {
+                chip.addEventListener('click', () => {
+                    // Clicar sempre marca, nunca desmarca: a sugestão já vem
+                    // marcada, e quem clica nela para confirmar não pode apagá-la.
+                    container.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-checked', String(c === chip)));
+                    const ehOutro = chip.dataset.valor === OUTRO;
+                    outroWrap.hidden = !ehOutro;
+                    if (ehOutro) outroInput.focus();
+                });
+            });
+        }
+
+        function valorDosChips(container, outroInput) {
+            const marcado = container.querySelector('.chip[aria-checked="true"]');
+            if (!marcado) return null;
+            if (marcado.dataset.valor === OUTRO) return outroInput.value.trim() || null;
+            return marcado.dataset.valor;
+        }
+
+        // Dias numa etapa antes de o card acender em vermelho. Lead novo
+        // esfria em horas, negociação de cirurgia leva semanas.
+        const SLA_DIAS = { novo: 1, em_atendimento: 2, agendado: 30, confirmado: 7, compareceu: 3, orcamento: 7, negociacao: 21 };
+
+        // Até onde o lead chegou no funil, como número. A recepção pula etapas
+        // o tempo todo (marca "fechado" direto, volta um status atrás), então o
+        // progresso vem do maior marco atingido, nunca só do status atual. Sem
+        // isso, uma etapa poderia ter mais gente que a anterior.
+        const ORDEM = {
+            novo: 0, em_atendimento: 1, perdido: 1,
+            agendado: 2, confirmado: 3, faltou: 3,
+            compareceu: 4, orcamento: 5, negociacao: 5,
+            fechado: 6, realizado: 6
+        };
+        function alcance(lead) {
+            let r = ORDEM[lead.status] ?? 0;
+            if (lead.respondido_em) r = Math.max(r, 1);
+            if (lead.agendado_para || lead.valor_consulta) r = Math.max(r, 2);
+            if (lead.compareceu_em) r = Math.max(r, 4);
+            if (lead.valor_estimado) r = Math.max(r, 5);
+            if (lead.fechado_em) r = Math.max(r, 6);
+            return r;
+        }
+
+        let leads = [];
+        let editing = null;
+
+        const escapeHtml = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        const money = (v) => Number(v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+        const pct = (part, total) => (total ? Math.round((part / total) * 100) : 0);
+        const formatDateTime = (iso) => new Date(iso).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' });
+        const daysSince = (iso) => Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
+
+        function formatPhone(raw) {
+            const d = String(raw || '').replace(/\D/g, '').slice(0, 11);
+            if (d.length <= 2) return d;
+            if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`;
+            if (d.length <= 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
+            return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
+        }
+
+        function toLocalInput(value) {
+            if (!value) return '';
+            const d = new Date(value);
+            const pad = (n) => String(n).padStart(2, '0');
+            return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+        }
+
+        function fillSelect(el, options, selected) {
+            el.innerHTML = options.map((o) => {
+                const key = o.key ?? o;
+                const label = o.label ?? o;
+                return `<option value="${escapeHtml(key)}"${key === selected ? ' selected' : ''}>${escapeHtml(label)}</option>`;
+            }).join('');
+        }
+
+        // ---------- LOGIN ----------
+        async function checkSession() {
+            const { data: { session } } = await supabase.auth.getSession();
+            session ? showDash() : showLogin();
+        }
+        function showLogin() { $('loginWrap').hidden = false; $('dash').hidden = true; $('loginPassword').focus(); }
+        async function showDash() {
+            $('loginWrap').hidden = true;
+            $('dash').hidden = false;
+
+            // Com dois perfis no mesmo painel, fica claro quem está logado. O
+            // atalho para o blog só aparece para quem tem acesso a ele.
+            const { data: { user } } = await supabase.auth.getUser();
+            const email = user?.email || '';
+            $('whoami').textContent = email;
+            $('navBlog').hidden = email.toLowerCase() !== EMAIL_CLINICA;
+
+            showView(viewDoEndereco());
+            loadLeads();
+        }
+
+        $('passwordToggle').addEventListener('click', () => {
+            const input = $('loginPassword');
+            const show = input.type === 'password';
+            input.type = show ? 'text' : 'password';
+            $('passwordToggle').textContent = show ? 'Ocultar' : 'Mostrar';
+            $('passwordToggle').setAttribute('aria-label', show ? 'Ocultar senha' : 'Mostrar senha');
+        });
+
+        $('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = $('loginBtn');
+            $('loginMsg').textContent = '';
+            btn.disabled = true;
+            btn.textContent = 'Entrando...';
+
+            // A tela pede só a senha, como a do blog. Como aqui existe mais de
+            // um perfil, o painel tenta cada e-mail até um autenticar. Por isso
+            // as contas precisam de senhas diferentes entre si.
+            const senha = $('loginPassword').value;
+            let erro = null;
+            for (const email of PERFIS_FUNIL) {
+                const { error } = await supabase.auth.signInWithPassword({ email, password: senha });
+                erro = error;
+                if (!error || error.status === 429) break;
+            }
+
+            btn.disabled = false;
+            btn.textContent = 'Entrar';
+            if (erro) {
+                $('loginMsg').textContent = erro.status === 429
+                    ? 'Muitas tentativas. Aguarde alguns minutos e tente de novo.'
+                    : 'Senha incorreta.';
+                $('loginPassword').select();
+                return;
+            }
+            $('loginPassword').value = '';
+            showDash();
+        });
+
+        $('logoutBtn').addEventListener('click', async () => {
+            await supabase.auth.signOut();
+            showLogin();
+        });
+
+        // ---------- CARGA ----------
+        async function loadLeads() {
+            $('board').innerHTML = '<div class="empty-state">Carregando...</div>';
+            const { data, error } = await supabase
+                .from('crm_leads')
+                .select('*')
+                .order('primeiro_contato_em', { ascending: false });
+
+            if (error) {
+                $('board').innerHTML = `<div class="empty-state">Erro ao carregar: ${escapeHtml(error.message)}</div>`;
+                return;
+            }
+            leads = data || [];
+            renderKpis();
+            renderBoard();
+            renderReport();
+            renderToday();
+            renderServicosCadastro();
+        }
+
+        // ---------- INDICADORES ----------
+        function renderKpis() {
+            const noMes = leads.filter((l) => daysSince(l.primeiro_contato_em) <= 30);
+            const total = noMes.length;
+            const agendaram = noMes.filter((l) => alcance(l) >= 2).length;
+            const compareceram = noMes.filter((l) => alcance(l) >= 4).length;
+            const faltaram = noMes.filter((l) => l.status === 'faltou').length;
+
+            // Fechamento e receita olham 90 dias, não 30: entre a consulta e a
+            // cirurgia passam semanas, e numa janela curta o número daria sempre
+            // perto de zero sem que nada estivesse errado.
+            const noTrimestre = leads.filter((l) => daysSince(l.primeiro_contato_em) <= 90);
+            const compareceram90 = noTrimestre.filter((l) => alcance(l) >= 4).length;
+            const fecharam = noTrimestre.filter((l) => ['fechado', 'realizado'].includes(l.status)).length;
+
+            // Três dinheiros diferentes, que não podem se misturar:
+            // consulta é paga no agendamento, então já é caixa; procedimento só
+            // é caixa quando fecha; orçamento é promessa, mostrado à parte.
+            const receitaConsultas = noMes.reduce((sum, l) => sum + Number(l.valor_consulta || 0), 0);
+            const receitaProcedimentos = noTrimestre.reduce((sum, l) => sum + (['fechado', 'realizado'].includes(l.status) ? Number(l.valor_fechado || 0) : 0), 0);
+            const abertos = leads.filter((l) => ['orcamento', 'negociacao'].includes(l.status));
+            const valorAberto = abertos.reduce((sum, l) => sum + Number(l.valor_estimado || 0), 0);
+
+            const respondidos = noMes.filter((l) => l.respondido_em);
+            const mediaResposta = respondidos.length
+                ? respondidos.reduce((sum, l) => sum + (new Date(l.respondido_em) - new Date(l.primeiro_contato_em)), 0) / respondidos.length / 60000
+                : null;
+
+            const taxaFalta = pct(faltaram, compareceram + faltaram);
+            const tempoLabel = mediaResposta === null ? '—'
+                : mediaResposta < 60 ? `${Math.round(mediaResposta)} min`
+                : `${(mediaResposta / 60).toFixed(1)} h`;
+
+            const cards = [
+                { label: 'Contatos no mês', value: total, sub: 'últimos 30 dias' },
+                { label: 'Viraram consulta', value: `${pct(agendaram, total)}%`, sub: `${agendaram} de ${total}`, tone: pct(agendaram, total) >= 40 ? 'ok' : pct(agendaram, total) >= 25 ? 'warn' : 'bad' },
+                { label: 'Tempo de resposta', value: tempoLabel, sub: 'média até o primeiro retorno', tone: mediaResposta === null ? '' : mediaResposta <= 15 ? 'ok' : mediaResposta <= 60 ? 'warn' : 'bad' },
+                { label: 'Faltas', value: `${taxaFalta}%`, sub: `${faltaram} falta(s)`, tone: taxaFalta <= 10 ? 'ok' : taxaFalta <= 20 ? 'warn' : 'bad' },
+                { label: 'Consulta em procedimento', value: `${pct(fecharam, compareceram90)}%`, sub: `${fecharam} de ${compareceram90} · 90 dias` },
+                { label: 'Consultas pagas', value: money(receitaConsultas), sub: 'últimos 30 dias' },
+                { label: 'Procedimentos fechados', value: money(receitaProcedimentos), sub: 'últimos 90 dias' },
+                { label: 'Orçamentos em aberto', value: money(valorAberto), sub: `${abertos.length} aguardando · ainda não é receita` }
+            ];
+
+            $('kpis').innerHTML = cards.map((c) => `
+                <div class="kpi">
+                    <div class="kpi-label">${escapeHtml(c.label)}</div>
+                    <div class="kpi-value ${c.tone || ''}">${escapeHtml(String(c.value))}</div>
+                    <div class="kpi-sub">${escapeHtml(c.sub)}</div>
+                </div>
+            `).join('');
+        }
+
+        // ---------- QUADRO ----------
+        const ETAPAS_CONSULTA = ['agendado', 'confirmado', 'compareceu', 'faltou'];
+        const ETAPAS_ORCAMENTO = ['orcamento', 'negociacao'];
+        const ETAPAS_FECHADO = ['fechado', 'realizado'];
+
+        // O valor que importa muda conforme a etapa: na fase de consulta é o
+        // que ela pagou para consultar, no orçamento é o preço proposto, depois
+        // de fechado é o que fechou.
+        function valorDaEtapa(lead) {
+            if (ETAPAS_CONSULTA.includes(lead.status)) return lead.valor_consulta;
+            if (ETAPAS_ORCAMENTO.includes(lead.status)) return lead.valor_estimado;
+            if (ETAPAS_FECHADO.includes(lead.status)) return lead.valor_fechado || lead.valor_estimado;
+            return null;
+        }
+
+        const formatDia = (iso) => new Date(iso).toLocaleString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+
+        function cardHtml(lead) {
+            const dias = daysSince(lead.updated_at || lead.primeiro_contato_em);
+            const limite = SLA_DIAS[lead.status];
+            const late = limite && dias > limite;
+            const valor = valorDaEtapa(lead);
+
+            // Na fase de consulta o card mostra quando e o que ela busca; do
+            // orçamento em diante, o procedimento orçado.
+            const naConsulta = ['agendado', 'confirmado'].includes(lead.status);
+            const assunto = ETAPAS_ORCAMENTO.includes(lead.status) || ETAPAS_FECHADO.includes(lead.status)
+                ? (lead.procedimento || lead.interesse)
+                : lead.interesse;
+            const quando = naConsulta && lead.agendado_para ? `<span class="when">${escapeHtml(formatDia(lead.agendado_para))}</span>` : '';
+            const info = quando || assunto ? `<div class="card-info">${quando}${assunto ? escapeHtml(assunto) : ''}</div>` : '';
+
+            return `
+                <div class="card" draggable="true" data-id="${lead.id}" tabindex="0" role="button">
+                    <div class="card-name">${escapeHtml(lead.nome)}</div>
+                    <div class="card-phone">${escapeHtml(formatPhone(lead.telefone))}</div>
+                    ${info}
+                    <div class="card-meta">
+                        <span class="badge ${escapeHtml(lead.canal)}">${escapeHtml(CANAL_LABEL[lead.canal] || lead.canal)}</span>
+                        ${valor ? `<span class="card-value">${money(valor)}</span>` : ''}
+                        <span class="card-age ${late ? 'late' : ''}">${dias === 0 ? 'hoje' : `${dias}d`}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderBoard() {
+            $('board').innerHTML = STATUS.map((s) => {
+                const items = leads.filter((l) => l.status === s.key);
+                const soma = items.reduce((sum, l) => sum + Number(valorDaEtapa(l) || 0), 0);
+                // Orçamento em aberto aparece apagado, para não ser lido como caixa.
+                const emAberto = ETAPAS_ORCAMENTO.includes(s.key);
+                const rotulo = ETAPAS_CONSULTA.includes(s.key) ? 'em consultas'
+                    : emAberto ? 'em aberto'
+                    : ETAPAS_FECHADO.includes(s.key) ? 'fechado' : '';
+                return `
+                    <div class="col" data-status="${s.key}">
+                        <div class="col-head">
+                            <span class="col-name">${escapeHtml(s.label)}</span>
+                            <span class="col-count">${items.length}</span>
+                        </div>
+                        ${soma ? `<div class="col-sum${emAberto ? ' aberto' : ''}">${money(soma)} ${rotulo}</div>` : ''}
+                        <div class="col-body">
+                            ${items.length ? items.map(cardHtml).join('') : '<div class="col-empty">vazio</div>'}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            wireBoard();
+        }
+
+        function wireBoard() {
+            const board = $('board');
+
+            board.querySelectorAll('.card').forEach((card) => {
+                card.addEventListener('click', () => openModal(leads.find((l) => l.id === card.dataset.id)));
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openModal(leads.find((l) => l.id === card.dataset.id));
+                    }
+                });
+                card.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', card.dataset.id);
+                    e.dataTransfer.effectAllowed = 'move';
+                    card.classList.add('dragging');
+                });
+                card.addEventListener('dragend', () => card.classList.remove('dragging'));
+            });
+
+            board.querySelectorAll('.col').forEach((col) => {
+                col.addEventListener('dragover', (e) => { e.preventDefault(); col.classList.add('drop'); });
+                col.addEventListener('dragleave', () => col.classList.remove('drop'));
+                col.addEventListener('drop', async (e) => {
+                    e.preventDefault();
+                    col.classList.remove('drop');
+                    const id = e.dataTransfer.getData('text/plain');
+                    const lead = leads.find((l) => l.id === id);
+                    if (!lead || lead.status === col.dataset.status) return;
+                    await moveLead(lead, col.dataset.status);
+                });
+            });
+        }
+
+        // ---------- MUDANÇA DE ETAPA ----------
+        // Algumas colunas só fazem sentido com informação junto: agendou sem
+        // data, orçou sem procedimento e preço, fechou sem valor. Mover o card
+        // para elas abre uma janela curta com as perguntas daquela etapa, já
+        // preenchida com o que o lead trouxe das etapas anteriores.
+        const PERGUNTAS = {
+            agendado: 'agendado',
+            orcamento: 'orcamento', negociacao: 'orcamento',
+            fechado: 'fechado', realizado: 'fechado',
+            perdido: 'perda', faltou: 'perda'
+        };
+
+        function precisaPerguntar(lead, status) {
+            if (!PERGUNTAS[status]) return false;
+            // Negociação e realizado só perguntam se a etapa anterior foi pulada.
+            if (status === 'negociacao') return !lead.procedimento || !lead.valor_estimado;
+            if (status === 'realizado') return !lead.valor_fechado;
+            return true;
+        }
+
+        async function moveLead(lead, status) {
+            if (precisaPerguntar(lead, status)) {
+                abrirEtapa(lead, status);
+                return;
+            }
+            const error = await salvarMovimento(lead, { status });
+            if (error) alert(`Não foi possível mover: ${error.message}`);
+        }
+
+        // Move na tela antes de o banco responder, para o arraste não parecer
+        // travado, e desfaz se o banco recusar.
+        async function salvarMovimento(lead, payload) {
+            const anterior = { ...lead };
+            Object.assign(lead, payload);
+            renderBoard();
+            renderKpis();
+
+            const { error } = await supabase.from('crm_leads').update(payload).eq('id', lead.id);
+            if (error) {
+                Object.assign(lead, anterior);
+                renderBoard();
+                renderKpis();
+                return error;
+            }
+            loadLeads();
+            return null;
+        }
+
+        const numero = (el) => (el && el.value !== '' ? Number(el.value) : null);
+        let etapaAtual = null;
+
+        function blocoServicos(rotulo) {
+            return `
+                <div class="etapa-bloco">
+                    <div class="etapa-label">${escapeHtml(rotulo)}</div>
+                    <div class="chip-grid" id="eServicos" role="radiogroup" aria-label="${escapeHtml(rotulo)}"></div>
+                    <div class="field chip-outro" id="eOutroWrap" hidden>
+                        <input type="text" id="eOutro" placeholder="Digite qual é" autocomplete="off">
+                    </div>
+                </div>`;
+        }
+
+        function abrirEtapa(lead, status) {
+            const tipo = PERGUNTAS[status];
+            etapaAtual = { lead, status, tipo };
+            $('etapaMsg').textContent = '';
+            $('etapaTitle').textContent = lead.nome;
+            const corpo = $('etapaBody');
+
+            if (tipo === 'agendado') {
+                $('etapaKicker').textContent = 'Agendou a consulta';
+                corpo.innerHTML = `
+                    ${blocoServicos('O que ela busca na consulta')}
+                    <div class="grid-2">
+                        <div class="field">
+                            <label for="eData">Dia e hora</label>
+                            <input type="datetime-local" id="eData">
+                        </div>
+                        <div class="field">
+                            <label for="eValorConsulta">Valor da consulta (R$) <span class="counter">opcional</span></label>
+                            <input type="number" id="eValorConsulta" min="0" step="0.01">
+                            <div class="hint">Pago no agendamento, já entra como receita.</div>
+                        </div>
+                    </div>`;
+                montarChips($('eServicos'), $('eOutroWrap'), $('eOutro'), lead.interesse || '');
+                $('eData').value = toLocalInput(lead.agendado_para);
+                $('eValorConsulta').value = lead.valor_consulta ?? '';
+            }
+
+            if (tipo === 'orcamento') {
+                $('etapaKicker').textContent = 'Orçamento';
+                const resumo = [
+                    lead.interesse ? `Procurou <b>${escapeHtml(lead.interesse)}</b>` : '',
+                    lead.agendado_para ? `consulta em ${escapeHtml(formatDia(lead.agendado_para))}` : '',
+                    lead.valor_consulta ? `consulta paga ${money(lead.valor_consulta)}` : ''
+                ].filter(Boolean).join(' · ');
+                // "Consulta" não é procedimento: se foi isso que ela procurou,
+                // não sugere como resposta.
+                const sugestao = lead.procedimento || (lead.interesse && lead.interesse !== 'Consulta' ? lead.interesse : '');
+                corpo.innerHTML = `
+                    ${resumo ? `<div class="etapa-resumo">${resumo}</div>` : ''}
+                    ${blocoServicos('Procedimento que ela quer fazer')}
+                    <div class="field">
+                        <label for="eValorOrcamento">Valor do orçamento (R$)</label>
+                        <input type="number" id="eValorOrcamento" min="0" step="0.01">
+                        <div class="hint">Fica em aberto. Só vira receita quando ela fechar.</div>
+                    </div>`;
+                montarChips($('eServicos'), $('eOutroWrap'), $('eOutro'), sugestao);
+                $('eValorOrcamento').value = lead.valor_estimado ?? '';
+            }
+
+            if (tipo === 'fechado') {
+                $('etapaKicker').textContent = status === 'realizado' ? 'Procedimento realizado' : 'Fechou o procedimento';
+                const resumo = [
+                    lead.procedimento ? `<b>${escapeHtml(lead.procedimento)}</b>` : '',
+                    lead.valor_estimado ? `orçado em ${money(lead.valor_estimado)}` : ''
+                ].filter(Boolean).join(' · ');
+                corpo.innerHTML = `
+                    ${resumo ? `<div class="etapa-resumo">${resumo}</div>` : ''}
+                    ${lead.procedimento ? '' : blocoServicos('Qual procedimento')}
+                    <div class="field">
+                        <label for="eValorFechado">Valor fechado (R$)</label>
+                        <input type="number" id="eValorFechado" min="0" step="0.01">
+                        <div class="hint">A partir de agora conta como receita.</div>
+                    </div>`;
+                if (!lead.procedimento) montarChips($('eServicos'), $('eOutroWrap'), $('eOutro'), lead.interesse !== 'Consulta' ? (lead.interesse || '') : '');
+                $('eValorFechado').value = lead.valor_fechado ?? lead.valor_estimado ?? '';
+            }
+
+            if (tipo === 'perda') {
+                $('etapaKicker').textContent = status === 'faltou' ? 'Não compareceu' : 'Perdido';
+                corpo.innerHTML = `
+                    <div class="etapa-bloco">
+                        <div class="etapa-label">Por quê?</div>
+                        <div class="chip-grid" id="eMotivos" role="radiogroup" aria-label="Motivo">
+                            ${MOTIVOS.filter((m) => m.key).map((m) => `
+                                <button type="button" class="chip" role="radio" aria-checked="${String(lead.motivo_perda === m.key)}" data-valor="${m.key}">${escapeHtml(m.label)}</button>
+                            `).join('')}
+                        </div>
+                        <div class="hint">É esse motivo que mostra, nos relatórios, o que precisa ser corrigido.</div>
+                    </div>`;
+                $('eMotivos').querySelectorAll('.chip').forEach((chip) => {
+                    chip.addEventListener('click', () => {
+                        $('eMotivos').querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-checked', String(c === chip)));
+                    });
+                });
+            }
+
+            $('etapaModal').classList.add('open');
+            const primeiro = corpo.querySelector('input:not([type="hidden"]), .chip');
+            if (primeiro && tipo !== 'agendado') primeiro.focus();
+            if (tipo === 'agendado') $('eData').focus();
+        }
+
+        function fecharEtapa() {
+            $('etapaModal').classList.remove('open');
+            etapaAtual = null;
+        }
+
+        $('etapaForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!etapaAtual) return;
+            const { lead, status, tipo } = etapaAtual;
+            const erro = (msg) => { $('etapaMsg').textContent = msg; };
+            const payload = { status };
+
+            if (tipo === 'agendado') {
+                if (!$('eData').value) return erro('Coloque o dia e a hora da consulta.');
+                payload.agendado_para = new Date($('eData').value).toISOString();
+                payload.interesse = valorDosChips($('eServicos'), $('eOutro')) ?? lead.interesse ?? null;
+                payload.valor_consulta = numero($('eValorConsulta'));
+            }
+
+            if (tipo === 'orcamento') {
+                const procedimento = valorDosChips($('eServicos'), $('eOutro'));
+                if (!procedimento) return erro('Escolha o procedimento orçado.');
+                const valor = numero($('eValorOrcamento'));
+                if (valor === null) return erro('Coloque o valor do orçamento.');
+                payload.procedimento = procedimento;
+                payload.valor_estimado = valor;
+            }
+
+            if (tipo === 'fechado') {
+                if ($('eServicos')) {
+                    const procedimento = valorDosChips($('eServicos'), $('eOutro'));
+                    if (!procedimento) return erro('Escolha o procedimento.');
+                    payload.procedimento = procedimento;
+                }
+                const valor = numero($('eValorFechado'));
+                if (valor === null) return erro('Coloque o valor fechado.');
+                payload.valor_fechado = valor;
+            }
+
+            if (tipo === 'perda') {
+                const marcado = $('eMotivos').querySelector('.chip[aria-checked="true"]');
+                if (!marcado) return erro('Escolha o motivo.');
+                payload.motivo_perda = marcado.dataset.valor;
+            }
+
+            const btn = $('etapaSave');
+            btn.disabled = true;
+            btn.textContent = 'Salvando...';
+            const error = await salvarMovimento(lead, payload);
+            btn.disabled = false;
+            btn.textContent = 'Confirmar';
+
+            if (error) return erro(`Não deu para salvar: ${error.message}`);
+            fecharEtapa();
+        });
+
+        $('etapaCancel').addEventListener('click', fecharEtapa);
+        $('etapaClose').addEventListener('click', fecharEtapa);
+        $('etapaModal').addEventListener('click', (e) => { if (e.target === $('etapaModal')) fecharEtapa(); });
+
+        // ---------- RELATÓRIOS ----------
+        function renderReport() {
+            const base = leads.filter((l) => daysSince(l.primeiro_contato_em) <= 90);
+            const total = base.length;
+
+            const etapas = [
+                { label: 'Contatos', n: total },
+                { label: 'Respondidos', n: base.filter((l) => alcance(l) >= 1).length },
+                { label: 'Agendados', n: base.filter((l) => alcance(l) >= 2).length },
+                { label: 'Compareceram', n: base.filter((l) => alcance(l) >= 4).length },
+                { label: 'Receberam orçamento', n: base.filter((l) => alcance(l) >= 5).length },
+                { label: 'Fecharam', n: base.filter((l) => alcance(l) >= 6).length }
+            ];
+
+            $('funnelChart').innerHTML = total === 0
+                ? '<div class="empty-state">Sem contatos nos últimos 90 dias.</div>'
+                : etapas.map((e, i) => {
+                    const anterior = i === 0 ? null : etapas[i - 1].n;
+                    const queda = anterior ? anterior - e.n : 0;
+                    const quedaPct = anterior ? pct(queda, anterior) : 0;
+                    return `
+                        <div class="funnel-row">
+                            <span class="funnel-label">${escapeHtml(e.label)}</span>
+                            <div class="funnel-track">
+                                <div class="funnel-fill ${quedaPct >= 50 ? 'loss' : ''}" style="width: ${pct(e.n, total)}%"></div>
+                            </div>
+                            <span class="funnel-num"><b>${e.n}</b>${anterior ? ` · perde ${quedaPct}%` : ''}</span>
+                        </div>
+                    `;
+                }).join('');
+
+            // Por canal
+            const porCanal = {};
+            base.forEach((l) => {
+                const o = porCanal[l.canal] || (porCanal[l.canal] = { leads: 0, compareceram: 0, fecharam: 0, receita: 0 });
+                o.leads++;
+                if (alcance(l) >= 4) o.compareceram++;
+                // Receita real do canal: consultas pagas mais procedimentos
+                // fechados. Orçamento em aberto não entra.
+                o.receita += Number(l.valor_consulta || 0);
+                if (['fechado', 'realizado'].includes(l.status)) {
+                    o.fecharam++;
+                    o.receita += Number(l.valor_fechado || 0);
+                }
+            });
+            const linhas = Object.entries(porCanal).sort((a, b) => b[1].leads - a[1].leads);
+
+            $('originTable').innerHTML = linhas.length === 0
+                ? '<div class="empty-state">Sem dados no período.</div>'
+                : `<table class="data-table">
+                        <thead><tr>
+                            <th>Canal</th><th class="num">Contatos</th><th class="num">Compareceram</th>
+                            <th class="num">Fecharam</th><th class="num">Conversão</th><th class="num">Receita</th>
+                        </tr></thead>
+                        <tbody>${linhas.map(([canal, o]) => `
+                            <tr>
+                                <td><span class="badge ${escapeHtml(canal)}">${escapeHtml(CANAL_LABEL[canal] || canal)}</span></td>
+                                <td class="num">${o.leads}</td>
+                                <td class="num">${o.compareceram}</td>
+                                <td class="num">${o.fecharam}</td>
+                                <td class="num">${pct(o.fecharam, o.leads)}%</td>
+                                <td class="num">${money(o.receita)}</td>
+                            </tr>`).join('')}
+                        </tbody>
+                   </table>`;
+
+            // Motivos de perda
+            const perdidos = base.filter((l) => l.motivo_perda);
+            const porMotivo = {};
+            perdidos.forEach((l) => { porMotivo[l.motivo_perda] = (porMotivo[l.motivo_perda] || 0) + 1; });
+            const motivos = Object.entries(porMotivo).sort((a, b) => b[1] - a[1]);
+
+            $('lossTable').innerHTML = motivos.length === 0
+                ? '<div class="empty-state">Nenhuma perda registrada com motivo.</div>'
+                : `<table class="data-table">
+                        <thead><tr><th>Motivo</th><th class="num">Casos</th><th class="num">Do total de perdas</th></tr></thead>
+                        <tbody>${motivos.map(([m, n]) => `
+                            <tr>
+                                <td>${escapeHtml(MOTIVO_LABEL[m] || m)}</td>
+                                <td class="num">${n}</td>
+                                <td class="num">${pct(n, perdidos.length)}%</td>
+                            </tr>`).join('')}
+                        </tbody>
+                   </table>`;
+        }
+
+        // ---------- TELAS ----------
+        // Cada tela tem endereço próprio (#cadastrar, #funil, #relatorios), para
+        // o link vindo do blog cair direto na tela certa.
+        const TITULOS = { new: 'Novo contato', board: 'Funil de Pacientes', report: 'Relatórios' };
+        const ENDERECOS = { new: 'cadastrar', board: 'funil', report: 'relatorios' };
+
+        function viewDoEndereco() {
+            const hash = location.hash.replace('#', '');
+            return Object.keys(ENDERECOS).find((v) => ENDERECOS[v] === hash) || 'new';
+        }
+
+        function showView(view) {
+            document.querySelectorAll('.painel-nav a').forEach((a) => {
+                if (a.dataset.nav === view) a.setAttribute('aria-current', 'page');
+                else a.removeAttribute('aria-current');
+            });
+            $('viewNew').hidden = view !== 'new';
+            $('viewBoard').hidden = view !== 'board';
+            $('viewReport').hidden = view !== 'report';
+            $('viewTitle').textContent = TITULOS[view];
+            // O atalho de cadastrar só faz sentido fora da própria tela de cadastro.
+            $('newLeadBtn').hidden = view === 'new';
+            if (location.hash !== `#${ENDERECOS[view]}`) history.replaceState(null, '', `#${ENDERECOS[view]}`);
+            if (view === 'new') $('qNome').focus();
+        }
+
+        window.addEventListener('hashchange', () => showView(viewDoEndereco()));
+
+        // ---------- CADASTRO RÁPIDO ----------
+        let canalEscolhido = '';
+
+        $('canalGrid').innerHTML = CANAIS.map((c) => `
+            <button type="button" class="canal-btn" role="radio" aria-checked="false" data-canal="${c.key}">
+                ${ICONES[c.key] || ''}
+                <span>${escapeHtml(c.label)}</span>
+            </button>
+        `).join('');
+
+        $('canalGrid').querySelectorAll('.canal-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                canalEscolhido = btn.dataset.canal;
+                $('canalGrid').querySelectorAll('.canal-btn').forEach((b) => b.setAttribute('aria-checked', String(b === btn)));
+                $('quickMsg').textContent = '';
+                $('qNome').focus();
+            });
+        });
+
+        montarChips($('qServicos'), $('qOutroWrap'), $('qOutro'), '');
+
+        $('qTelefone').addEventListener('input', (e) => {
+            e.target.value = formatPhone(e.target.value);
+
+            // Avisa antes de duplicar: numa clínica a mesma paciente volta a
+            // escrever, e dois cadastros do mesmo telefone estragam o funil.
+            const digitos = e.target.value.replace(/\D/g, '');
+            const jaExiste = digitos.length >= 10
+                ? leads.find((l) => String(l.telefone || '').replace(/\D/g, '') === digitos)
+                : null;
+            $('qDuplicado').textContent = jaExiste
+                ? `Esse WhatsApp já está cadastrado em ${jaExiste.nome} (${STATUS_LABEL[jaExiste.status]}).`
+                : '';
+        });
+
+        // Remontada a cada carga, para incluir as opções novas que alguém
+        // digitou em "Outro", preservando o que já estava marcado.
+        function renderServicosCadastro() {
+            const atual = $('qServicos').children.length ? valorDosChips($('qServicos'), $('qOutro')) : '';
+            montarChips($('qServicos'), $('qOutroWrap'), $('qOutro'), atual || '');
+        }
+
+        function limparCadastro() {
+            canalEscolhido = '';
+            $('canalGrid').querySelectorAll('.canal-btn').forEach((b) => b.setAttribute('aria-checked', 'false'));
+            ['qNome', 'qTelefone', 'qOutro'].forEach((id) => { $(id).value = ''; });
+            montarChips($('qServicos'), $('qOutroWrap'), $('qOutro'), '');
+            $('qDuplicado').textContent = '';
+            $('quickMsg').textContent = '';
+        }
+
+        function renderToday() {
+            const hoje = new Date().toDateString();
+            const doDia = leads.filter((l) => new Date(l.primeiro_contato_em).toDateString() === hoje);
+
+            $('todayList').innerHTML = doDia.length === 0
+                ? '<div class="today-empty">Nenhum contato cadastrado hoje ainda.</div>'
+                : doDia.map((l) => `
+                    <div class="today-row">
+                        <span>${escapeHtml(l.nome)}</span>
+                        <span class="badge ${escapeHtml(l.canal)}">${escapeHtml(CANAL_LABEL[l.canal] || l.canal)}</span>
+                        <time>${new Date(l.primeiro_contato_em).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</time>
+                    </div>
+                `).join('');
+        }
+
+        $('quickForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nome = $('qNome').value.trim();
+            const telefone = $('qTelefone').value.trim();
+
+            if (!canalEscolhido) { $('quickMsg').textContent = 'Escolha por onde ela chegou.'; return; }
+            if (!nome) { $('quickMsg').textContent = 'Falta o nome.'; $('qNome').focus(); return; }
+            if (telefone.replace(/\D/g, '').length < 10) { $('quickMsg').textContent = 'Falta o WhatsApp.'; $('qTelefone').focus(); return; }
+
+            const btn = $('quickSave');
+            btn.disabled = true;
+            btn.textContent = 'Salvando...';
+
+            const { error } = await supabase.from('crm_leads').insert({
+                nome,
+                telefone,
+                canal: canalEscolhido,
+                interesse: valorDosChips($('qServicos'), $('qOutro')),
+                status: 'novo'
+            });
+
+            btn.disabled = false;
+            btn.textContent = 'Salvar e ver o funil';
+
+            if (error) {
+                $('quickMsg').textContent = `Não deu para salvar: ${error.message}`;
+                return;
+            }
+
+            limparCadastro();
+            await loadLeads();
+            showView('board');
+        });
+
+        // ---------- CADASTRO ----------
+        function openModal(lead, statusForcado) {
+            editing = lead || null;
+            $('modalTitle').textContent = lead ? lead.nome : 'Novo contato';
+            $('formMsg').textContent = '';
+            $('refInfo').textContent = '';
+            $('deleteBtn').hidden = !lead;
+
+            fillSelect($('fStatus'), STATUS, statusForcado || lead?.status || 'novo');
+            fillSelect($('fCanal'), CANAIS, lead?.canal || 'nao_informado');
+            fillSelect($('fProfissional'), ['', ...DOCTORS].map((d) => ({ key: d, label: d || '—' })), lead?.profissional || '');
+            fillSelect($('fMotivoPerda'), MOTIVOS, lead?.motivo_perda || '');
+
+            $('fNome').value = lead?.nome || '';
+            $('fTelefone').value = formatPhone(lead?.telefone || '');
+            $('fEmail').value = lead?.email || '';
+            $('fRefCode').value = lead?.ref_code || '';
+            $('fInteresse').value = lead?.interesse || '';
+            $('fProcedimento').value = lead?.procedimento || '';
+            $('fObs').value = lead?.observacoes || '';
+            $('fAgendadoPara').value = toLocalInput(lead?.agendado_para);
+            $('fValorConsulta').value = lead?.valor_consulta ?? '';
+            $('fValorEstimado').value = lead?.valor_estimado ?? '';
+
+            const { padrao, extras } = opcoesServico();
+            $('listaServicos').innerHTML = [...padrao, ...extras].map((o) => `<option value="${escapeHtml(o)}">`).join('');
+            $('fValorFechado').value = lead?.valor_fechado ?? '';
+            $('fSemMarketing').checked = lead ? lead.consentimento_marketing === false : false;
+
+            togglePerda();
+            renderTimeline(lead);
+
+            $('modal').classList.add('open');
+            $('fNome').focus();
+        }
+
+        function closeModal() {
+            $('modal').classList.remove('open');
+            editing = null;
+        }
+
+        function togglePerda() {
+            $('perdaWrap').hidden = !['perdido', 'faltou'].includes($('fStatus').value);
+        }
+        $('fStatus').addEventListener('change', togglePerda);
+
+        $('fTelefone').addEventListener('input', (e) => { e.target.value = formatPhone(e.target.value); });
+
+        // Mostra de onde veio o clique assim que o código é digitado.
+        $('fRefCode').addEventListener('change', async () => {
+            const code = $('fRefCode').value.trim().toUpperCase();
+            $('fRefCode').value = code;
+            if (!code) { $('refInfo').textContent = ''; return; }
+
+            const { data, error } = await supabase
+                .from('crm_cliques')
+                .select('utm_campaign, utm_source, gclid, fbclid, created_at')
+                .eq('ref_code', code)
+                .maybeSingle();
+
+            if (error || !data) {
+                $('refInfo').textContent = 'Código não encontrado. O canal pode ser escolhido na mão.';
+                return;
+            }
+            const campanha = data.utm_campaign || data.utm_source || (data.gclid ? 'Google Ads' : data.fbclid ? 'Meta Ads' : 'sem campanha');
+            $('refInfo').textContent = `Clique de ${formatDateTime(data.created_at)} · ${campanha}`;
+        });
+
+        async function renderTimeline(lead) {
+            $('histWrap').hidden = !lead;
+            if (!lead) return;
+
+            const { data } = await supabase
+                .from('crm_eventos')
+                .select('para_status, valor, created_at')
+                .eq('lead_id', lead.id)
+                .order('created_at', { ascending: false });
+
+            $('timeline').innerHTML = (data || []).map((e) => `
+                <li>
+                    <time>${formatDateTime(e.created_at)}</time>
+                    <span>${escapeHtml(STATUS_LABEL[e.para_status] || e.para_status)}${e.valor ? ` · ${money(e.valor)}` : ''}</span>
+                </li>
+            `).join('') || '<li><span>Sem histórico ainda.</span></li>';
+        }
+
+        $('saveBtn').addEventListener('click', async () => {
+            const nome = $('fNome').value.trim();
+            const telefone = $('fTelefone').value.trim();
+            if (!nome || !telefone) {
+                $('formMsg').textContent = 'Nome e WhatsApp são obrigatórios.';
+                return;
+            }
+
+            const status = $('fStatus').value;
+            const motivo = $('fMotivoPerda').value;
+            if (['perdido', 'faltou'].includes(status) && !motivo) {
+                $('formMsg').textContent = 'Escolha o motivo da perda. É esse campo que mostra o que corrigir depois.';
+                return;
+            }
+
+            const payload = {
+                nome,
+                telefone,
+                email: $('fEmail').value.trim() || null,
+                status,
+                ref_code: $('fRefCode').value.trim().toUpperCase() || null,
+                canal: $('fCanal').value,
+                profissional: $('fProfissional').value || null,
+                interesse: $('fInteresse').value.trim() || null,
+                procedimento: $('fProcedimento').value.trim() || null,
+                observacoes: $('fObs').value.trim() || null,
+                agendado_para: $('fAgendadoPara').value ? new Date($('fAgendadoPara').value).toISOString() : null,
+                valor_consulta: $('fValorConsulta').value === '' ? null : Number($('fValorConsulta').value),
+                valor_estimado: $('fValorEstimado').value === '' ? null : Number($('fValorEstimado').value),
+                valor_fechado: $('fValorFechado').value === '' ? null : Number($('fValorFechado').value),
+                motivo_perda: ['perdido', 'faltou'].includes(status) ? motivo : null,
+                consentimento_marketing: !$('fSemMarketing').checked
+            };
+
+            const btn = $('saveBtn');
+            btn.disabled = true;
+            btn.textContent = 'Salvando...';
+            $('formMsg').textContent = '';
+
+            const { error } = editing
+                ? await supabase.from('crm_leads').update(payload).eq('id', editing.id)
+                : await supabase.from('crm_leads').insert(payload);
+
+            btn.disabled = false;
+            btn.textContent = 'Salvar';
+
+            if (error) {
+                // O ref_code tem chave estrangeira: código inexistente não grava.
+                $('formMsg').textContent = error.code === '23503'
+                    ? 'Esse código de mensagem não existe. Apague o campo ou confira o código.'
+                    : `Erro ao salvar: ${error.message}`;
+                return;
+            }
+            closeModal();
+            loadLeads();
+        });
+
+        $('deleteBtn').addEventListener('click', async () => {
+            if (!editing) return;
+            if (!confirm(`Excluir o contato de ${editing.nome}? O histórico dele também será apagado.`)) return;
+
+            const { error } = await supabase.from('crm_leads').delete().eq('id', editing.id);
+            if (error) {
+                $('formMsg').textContent = `Erro ao excluir: ${error.message}`;
+                return;
+            }
+            closeModal();
+            loadLeads();
+        });
+
+        // O botao do topo volta para a tela de cadastro, nao abre o cadastro completo.
+        $('newLeadBtn').addEventListener('click', () => showView('new'));
+        $('cancelBtn').addEventListener('click', closeModal);
+        $('modal').addEventListener('click', (e) => { if (e.target === $('modal')) closeModal(); });
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'Escape') return;
+            if ($('etapaModal').classList.contains('open')) fecharEtapa();
+            else if ($('modal').classList.contains('open')) closeModal();
+        });
+        $('leadForm').addEventListener('submit', (e) => { e.preventDefault(); $('saveBtn').click(); });
+
+        checkSession();
+    </script>
+</body>
+</html>

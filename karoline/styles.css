@@ -176,14 +176,27 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
 .whatsapp-float svg { width: 31px; height: 31px; }
 .whatsapp-float:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(20, 90, 50, .38); }
 .whatsapp-float:focus-visible { outline: 3px solid var(--ink-deep); outline-offset: 3px; }
-.hero { overflow: hidden; }
+.hero { position: relative; overflow: hidden; }
+
+/* Onda na base do hero. A camada de fundo balança devagar; a da frente fica
+   parada e emenda no branco da faixa seguinte. */
+.hero-wave { position: absolute; inset: auto 0 0; height: 96px; pointer-events: none; }
+.hero-wave svg { position: absolute; bottom: 0; left: 0; display: block; width: 100%; height: 100%; }
+.hero-wave .wave-back { left: -4%; width: 108%; fill: var(--sand); opacity: .55; transform-origin: bottom; animation: hero-wave 16s ease-in-out infinite alternate; }
+.wave-front .wave-fill { fill: var(--white); }
+.wave-front .wave-line { stroke: var(--bronze); stroke-width: 1; opacity: .55; vector-effect: non-scaling-stroke; }
+@keyframes hero-wave {
+    from { transform: translateX(-2.5%) scaleY(.9); }
+    to { transform: translateX(2.5%) scaleY(1.08); }
+}
+.hero + .intro-band { border-top: 0; }
 .hero-grid {
     display: grid;
     grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
     align-items: center;
     gap: min(5vw, 5rem);
     min-height: 620px;
-    padding-block: 4rem 4.5rem;
+    padding-block: 4rem 6.5rem;
 }
 .hero-copy { position: relative; z-index: 1; min-width: 0; }
 .hero h1 {
@@ -479,7 +492,8 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
     .hero-grid, .intro-band-inner, .about-grid, .place-grid, .faq-grid { grid-template-columns: 1fr; }
     /* No celular a foto vem antes do texto: quem chega pelo Instagram vê a
        médica já na primeira tela, e o título logo abaixo. */
-    .hero-grid { padding-block: 1.5rem 4.5rem; }
+    .hero-grid { padding-block: 1.5rem 5rem; }
+    .hero-wave { height: 56px; }
     .hero h1 { font-size: clamp(2.6rem, 10vw, 3.4rem); }
     .hero-visual { order: -1; justify-self: center; width: min(100%, 410px); margin-top: 0; }
     .hero-visual img { height: 360px; }
@@ -510,6 +524,7 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
 }
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
+    .hero-wave .wave-back { animation: none; }
     .button, .links-primary, .links-item { transition: none; }
     .button:hover, .links-primary:hover, .links-item:hover { transform: none; }
 }

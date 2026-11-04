@@ -176,27 +176,14 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
 .whatsapp-float svg { width: 31px; height: 31px; }
 .whatsapp-float:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(20, 90, 50, .38); }
 .whatsapp-float:focus-visible { outline: 3px solid var(--ink-deep); outline-offset: 3px; }
-.hero { position: relative; overflow: hidden; }
-
-/* Onda na base do hero. A camada de fundo balança devagar; a da frente fica
-   parada e emenda no branco da faixa seguinte. */
-.hero-wave { position: absolute; inset: auto 0 0; height: 96px; pointer-events: none; }
-.hero-wave svg { position: absolute; bottom: 0; left: 0; display: block; width: 100%; height: 100%; }
-.hero-wave .wave-back { left: -4%; width: 108%; fill: var(--sand); opacity: .55; transform-origin: bottom; animation: hero-wave 16s ease-in-out infinite alternate; }
-.wave-front .wave-fill { fill: var(--white); }
-.wave-front .wave-line { stroke: var(--bronze); stroke-width: 1; opacity: .55; vector-effect: non-scaling-stroke; }
-@keyframes hero-wave {
-    from { transform: translateX(-2.5%) scaleY(.9); }
-    to { transform: translateX(2.5%) scaleY(1.08); }
-}
-.hero + .intro-band { border-top: 0; }
+.hero { overflow: hidden; }
 .hero-grid {
     display: grid;
     grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
     align-items: center;
     gap: min(5vw, 5rem);
     min-height: 620px;
-    padding-block: 4rem 6.5rem;
+    padding-block: 4rem 4.5rem;
 }
 .hero-copy { position: relative; z-index: 1; min-width: 0; }
 .hero h1 {
@@ -351,6 +338,62 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
 .place-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); align-items: center; gap: min(8vw, 7rem); }
 .place-image, .place-copy { min-width: 0; }
 .place-image img { width: 100%; height: auto; aspect-ratio: 1.25; object-fit: cover; }
+
+/* Carrossel da clínica: as fotos se sobrepõem e trocam por fade; a ativa
+   recua devagar de um zoom leve, para a imagem nunca ficar parada. */
+.clinic-carousel { position: relative; overflow: hidden; aspect-ratio: 1.25; background: var(--sand); }
+.carousel-track { position: absolute; inset: 0; }
+.carousel-slide { position: absolute; inset: 0; margin: 0; opacity: 0; transition: opacity 1.2s ease; }
+.carousel-slide.is-active { z-index: 1; opacity: 1; }
+.clinic-carousel .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    transform: scale(1.06);
+    transition: transform 6.5s ease-out;
+}
+.clinic-carousel .carousel-slide.is-active img { transform: scale(1); }
+.carousel-slide figcaption {
+    position: absolute;
+    left: 1.25rem;
+    bottom: 1.25rem;
+    padding: .5rem .85rem;
+    background: rgba(247, 243, 237, .92);
+    color: var(--ink-deep);
+    font-size: .64rem;
+    font-weight: 500;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+.carousel-arrow {
+    position: absolute;
+    bottom: 1.25rem;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, .7);
+    border-radius: 50%;
+    background: rgba(53, 70, 81, .35);
+    color: var(--white);
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: background .2s ease;
+}
+.carousel-arrow svg { width: 18px; height: 18px; }
+.carousel-arrow:hover { background: var(--bronze); border-color: var(--bronze); }
+.carousel-arrow:focus-visible, .carousel-dots button:focus-visible { outline: 2px solid var(--white); outline-offset: 2px; }
+.carousel-prev { right: calc(1.25rem + 50px); }
+.carousel-next { right: 1.25rem; }
+/* Indicadores como traços finos no topo: mostram quantas fotos há sem
+   disputar espaço com a legenda e as setas embaixo. */
+.carousel-dots { position: absolute; top: .75rem; left: 1.25rem; right: 1.25rem; z-index: 3; display: flex; gap: 6px; }
+.carousel-dots button { flex: 1; height: 18px; padding: 0; border: 0; background: none; cursor: pointer; }
+.carousel-dots button::after { content: ''; display: block; height: 2px; background: rgba(255, 255, 255, .5); transition: background .3s ease; }
+.carousel-dots button[aria-current="true"]::after { background: var(--white); }
 .place-copy { position: relative; padding-top: 2rem; border-top: 1px solid var(--line); }
 .place-copy::before { content: ''; position: absolute; top: -.8rem; left: 0; width: 26px; height: 26px; background: var(--cream) url('./FLOR.png') center / 18px no-repeat; }
 .place-copy h2 { margin: .9rem 0 1.25rem; font-size: clamp(2.5rem, 4vw, 4rem); }
@@ -492,8 +535,7 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
     .hero-grid, .intro-band-inner, .about-grid, .place-grid, .faq-grid { grid-template-columns: 1fr; }
     /* No celular a foto vem antes do texto: quem chega pelo Instagram vê a
        médica já na primeira tela, e o título logo abaixo. */
-    .hero-grid { padding-block: 1.5rem 5rem; }
-    .hero-wave { height: 56px; }
+    .hero-grid { padding-block: 1.5rem 4.5rem; }
     .hero h1 { font-size: clamp(2.6rem, 10vw, 3.4rem); }
     .hero-visual { order: -1; justify-self: center; width: min(100%, 410px); margin-top: 0; }
     .hero-visual img { height: 360px; }
@@ -509,6 +551,12 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
     .journey-grid { grid-template-columns: 1fr; gap: 1.2rem; }
     .about-image { --arch-top: 90px; max-width: 470px; height: 560px; margin-bottom: 1rem; }
     .place-grid .place-image { order: 2; }
+    /* Setas no meio das laterais: no canto de baixo elas ficariam sob o
+       botão flutuante do WhatsApp. */
+    .carousel-arrow { top: 50%; bottom: auto; width: 38px; height: 38px; transform: translateY(-50%); }
+    .carousel-prev { left: .75rem; right: auto; }
+    .carousel-next { right: .75rem; }
+    .carousel-slide figcaption { left: .75rem; bottom: .75rem; }
     .footer-main { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem 1.5rem; padding-block: 3.5rem; }
     .footer-about, .footer-connect { grid-column: 1 / -1; }
     .footer-about > p { margin-block: 1rem; }
@@ -524,7 +572,8 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
 }
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .hero-wave .wave-back { animation: none; }
+    .clinic-carousel .carousel-slide img { transform: none; transition: none; }
+    .carousel-slide { transition-duration: .3s; }
     .button, .links-primary, .links-item { transition: none; }
     .button:hover, .links-primary:hover, .links-item:hover { transform: none; }
 }

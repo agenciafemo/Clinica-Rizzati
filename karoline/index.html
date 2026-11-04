@@ -118,15 +118,6 @@
                     <span class="hero-caption">Dra. Karoline Rizzatti</span>
                 </div>
             </div>
-            <!-- Onda de passagem para a faixa branca abaixo: camada de fundo em
-                 areia, frente em branco e um fio bronze seguindo a curva. -->
-            <div class="hero-wave" aria-hidden="true">
-                <svg class="wave-back" viewBox="0 0 1440 110" preserveAspectRatio="none"><path d="M0 58C210 98 430 18 720 44s520 62 720 14v52H0Z"/></svg>
-                <svg class="wave-front" viewBox="0 0 1440 110" preserveAspectRatio="none">
-                    <path class="wave-fill" d="M0 80c260-44 520 26 780 6 250-20 460-26 660 10v14H0Z"/>
-                    <path class="wave-line" d="M0 80c260-44 520 26 780 6 250-20 460-26 660 10" fill="none"/>
-                </svg>
-            </div>
         </section>
 
         <section class="intro-band">
@@ -192,7 +183,42 @@
 
         <section class="section-pad" id="clinica" aria-labelledby="place-title">
             <div class="container place-grid">
-                <div class="place-image"><img src="/karoline/RECEPCAO.jpg" alt="Recepção da Clínica Rizzatti no Passeio Pedra Branca, em Palhoça" width="1800" height="1013" loading="lazy" decoding="async"></div>
+                <!-- Carrossel da clínica: troca sozinho a cada 5 s com fade e um
+                     zoom lento; pausa ao passar o mouse, ao focar e com a aba
+                     oculta; aceita arrastar no celular. -->
+                <div class="place-image clinic-carousel" role="region" aria-roledescription="carrossel" aria-label="Fotos da Clínica Rizzatti">
+                    <div class="carousel-track" aria-live="off">
+                        <figure class="carousel-slide is-active" role="group" aria-roledescription="slide" aria-label="1 de 5: Recepção">
+                            <img src="./clinica-recepcao.jpg" alt="Recepção da Clínica Rizzatti, com balcão em mármore e painéis de madeira" width="1400" height="1120" decoding="async">
+                            <figcaption>Recepção</figcaption>
+                        </figure>
+                        <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="2 de 5: Atendimento">
+                            <img src="./clinica-atendimento.jpg" alt="Área de atendimento da clínica, com luz natural e poltronas" width="1400" height="1120" loading="lazy" decoding="async">
+                            <figcaption>Atendimento</figcaption>
+                        </figure>
+                        <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="3 de 5: Consultório">
+                            <img src="./clinica-consultorio.jpg" alt="Consultório da Dra. Karoline, com mesa e maca de exame" width="1400" height="1120" loading="lazy" decoding="async">
+                            <figcaption>Consultório</figcaption>
+                        </figure>
+                        <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="4 de 5: Sala de procedimentos">
+                            <img src="./clinica-procedimentos.jpg" alt="Sala de procedimentos dermatológicos" width="1400" height="1120" loading="lazy" decoding="async">
+                            <figcaption>Sala de procedimentos</figcaption>
+                        </figure>
+                        <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="5 de 5: Vista para o jardim">
+                            <img src="./clinica-jardim.jpg" alt="Área de espera com vista para o jardim" width="1400" height="1120" loading="lazy" decoding="async">
+                            <figcaption>Vista para o jardim</figcaption>
+                        </figure>
+                    </div>
+                    <button type="button" class="carousel-arrow carousel-prev" aria-label="Foto anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+                    <button type="button" class="carousel-arrow carousel-next" aria-label="Próxima foto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+                    <div class="carousel-dots" role="group" aria-label="Escolher foto">
+                        <button type="button" aria-label="Ver foto 1" aria-current="true"></button>
+                        <button type="button" aria-label="Ver foto 2"></button>
+                        <button type="button" aria-label="Ver foto 3"></button>
+                        <button type="button" aria-label="Ver foto 4"></button>
+                        <button type="button" aria-label="Ver foto 5"></button>
+                    </div>
+                </div>
                 <div class="place-copy">
                     <p class="eyebrow">Onde atendo</p>
                     <h2 class="display" id="place-title">Um espaço para você se sentir <em>bem cuidada.</em></h2>
@@ -284,6 +310,63 @@
         function atualizar() { header.classList.toggle('is-scrolled', window.scrollY > 24); }
         atualizar();
         window.addEventListener('scroll', atualizar, { passive: true });
+    })();
+    </script>
+
+    <script>
+    // Carrossel da clínica. Troca sozinho a cada 5 s; para quando a pessoa
+    // está olhando (mouse em cima ou foco nos botões) e com a aba escondida.
+    // Com "reduzir movimento" ativo, não troca sozinho.
+    (function () {
+        var root = document.querySelector('.clinic-carousel');
+        if (!root) return;
+        var slides = root.querySelectorAll('.carousel-slide');
+        var dots = root.querySelectorAll('.carousel-dots button');
+        var atual = 0, timer = null, pausado = false;
+        var semMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function mostrar(i) {
+            atual = (i + slides.length) % slides.length;
+            slides.forEach(function (s, n) { s.classList.toggle('is-active', n === atual); });
+            dots.forEach(function (d, n) {
+                if (n === atual) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
+            });
+            // Pré-carrega a próxima, para a troca nunca mostrar foto pela metade.
+            var prox = slides[(atual + 1) % slides.length].querySelector('img');
+            if (prox.loading === 'lazy') prox.loading = 'eager';
+        }
+        function iniciar() {
+            parar();
+            if (!semMovimento && !pausado && !document.hidden) timer = setInterval(function () { mostrar(atual + 1); }, 5000);
+        }
+        function parar() { clearInterval(timer); timer = null; }
+        // Navegar na mão reinicia a contagem, para a foto escolhida não sumir logo.
+        function ir(i) { mostrar(i); iniciar(); }
+
+        root.querySelector('.carousel-prev').addEventListener('click', function () { ir(atual - 1); });
+        root.querySelector('.carousel-next').addEventListener('click', function () { ir(atual + 1); });
+        dots.forEach(function (d, n) { d.addEventListener('click', function () { ir(n); }); });
+
+        // Só mouse de verdade pausa: no celular o toque simula um "mouse em
+        // cima" que nunca sai, e o carrossel ficaria parado para sempre.
+        root.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { pausado = true; parar(); } });
+        root.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') { pausado = false; iniciar(); } });
+        root.addEventListener('focusin', function () { pausado = true; parar(); });
+        root.addEventListener('focusout', function () { pausado = false; iniciar(); });
+        document.addEventListener('visibilitychange', iniciar);
+
+        // Arrastar para o lado no celular.
+        var inicioX = null;
+        root.addEventListener('touchstart', function (e) { inicioX = e.touches[0].clientX; }, { passive: true });
+        root.addEventListener('touchend', function (e) {
+            if (inicioX === null) return;
+            var dx = e.changedTouches[0].clientX - inicioX;
+            if (Math.abs(dx) > 40) ir(atual + (dx < 0 ? 1 : -1));
+            inicioX = null;
+        });
+
+        mostrar(0);
+        iniciar();
     })();
     </script>
 </body>

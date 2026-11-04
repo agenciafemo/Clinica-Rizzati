@@ -176,37 +176,14 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
 .whatsapp-float svg { width: 31px; height: 31px; }
 .whatsapp-float:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(20, 90, 50, .38); }
 .whatsapp-float:focus-visible { outline: 3px solid var(--ink-deep); outline-offset: 3px; }
-.hero { position: relative; overflow: hidden; }
-
-/* Onda na base do hero. Três camadas com curvas em fase oposta: fundo em
-   bronze bem diluído, meio em areia e frente em branco. O contraste entre
-   elas é o que as faz serem lidas como camadas, sem pesar no hero. As duas de
-   trás se movem devagar em sentidos opostos; a da frente fica parada,
-   emenda no branco da faixa seguinte e carrega o fio bronze. */
-.hero-wave { position: absolute; inset: auto 0 0; height: 160px; pointer-events: none; }
-.hero-wave svg { position: absolute; bottom: 0; left: 0; display: block; width: 100%; height: 100%; }
-.hero-wave .wave-back,
-.hero-wave .wave-mid { left: -4%; width: 108%; transform-origin: bottom; }
-.hero-wave .wave-back { fill: var(--bronze); opacity: .2; animation: hero-wave-a 18s ease-in-out infinite alternate; }
-.hero-wave .wave-mid { fill: var(--sand); animation: hero-wave-b 23s ease-in-out infinite alternate; }
-.wave-front .wave-fill { fill: var(--white); }
-.wave-front .wave-line { stroke: var(--bronze); stroke-width: 1.5; opacity: .9; vector-effect: non-scaling-stroke; }
-@keyframes hero-wave-a {
-    from { transform: translateX(-3%) scaleY(.92); }
-    to { transform: translateX(3%) scaleY(1.06); }
-}
-@keyframes hero-wave-b {
-    from { transform: translateX(2.5%) scaleY(1.04); }
-    to { transform: translateX(-2.5%) scaleY(.94); }
-}
-.hero + .intro-band { border-top: 0; }
+.hero { overflow: hidden; }
 .hero-grid {
     display: grid;
     grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
     align-items: center;
     gap: min(5vw, 5rem);
     min-height: 620px;
-    padding-block: 4rem 10.75rem;
+    padding-block: 4rem 4.5rem;
 }
 .hero-copy { position: relative; z-index: 1; min-width: 0; }
 .hero h1 {
@@ -558,8 +535,7 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
     .hero-grid, .intro-band-inner, .about-grid, .place-grid, .faq-grid { grid-template-columns: 1fr; }
     /* No celular a foto vem antes do texto: quem chega pelo Instagram vê a
        médica já na primeira tela, e o título logo abaixo. */
-    .hero-grid { padding-block: 1.5rem 6.25rem; }
-    .hero-wave { height: 84px; }
+    .hero-grid { padding-block: 1.5rem 4.5rem; }
     .hero h1 { font-size: clamp(2.6rem, 10vw, 3.4rem); }
     .hero-visual { order: -1; justify-self: center; width: min(100%, 410px); margin-top: 0; }
     .hero-visual img { height: 360px; }
@@ -596,7 +572,6 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
 }
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .hero-wave .wave-back, .hero-wave .wave-mid { animation: none; }
     .clinic-carousel .carousel-slide img { transform: none; transition: none; }
     .carousel-slide { transition-duration: .3s; }
     .button, .links-primary, .links-item { transition: none; }

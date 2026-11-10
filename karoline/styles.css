@@ -428,6 +428,10 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
 @media (max-width: 700px) { .closing h2 { font-size: clamp(1.7rem, 8.4vw, 2.1rem); } }
 .closing p:not(.eyebrow) { margin: 0 auto 2rem; font-weight: 300; }
 .closing .button { background: var(--bronze); }
+/* Mapa de "Onde atendo": faixa larga abaixo do carrossel e do texto, com
+   moldura fina e cores levemente suavizadas para conversar com a paleta. */
+.place-map { position: relative; height: 340px; margin-top: clamp(2.5rem, 5vw, 4rem); border: 1px solid var(--line); background: var(--sand); overflow: hidden; }
+.place-map iframe { display: block; width: 100%; height: 100%; border: 0; filter: grayscale(.3) sepia(.08); }
 /* Faixa de fotos acima do rodapé: de ponta a ponta, fotos coladas e paradas.
    Cada quadro tem duas camadas de imagem; o script troca a foto acendendo a
    camada de cima (.is-on) por cima da outra, o que dá o fade suave. */
@@ -567,6 +571,7 @@ a:focus-visible { outline: 2px solid var(--bronze-dark); outline-offset: 4px; }
     .carousel-prev { left: .75rem; right: auto; }
     .carousel-next { right: .75rem; }
     .carousel-slide figcaption { left: .75rem; bottom: .75rem; }
+    .place-map { height: 260px; }
     .photo-strip-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .strip-tile:nth-child(n + 4) { display: none; }
     .footer-main { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem 1.5rem; padding-block: 3.5rem; }

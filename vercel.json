@@ -10,6 +10,17 @@
       "has": [
         {
           "type": "host",
+          "value": "www.drakarolinerizzatti.com"
+        }
+      ],
+      "destination": "https://drakarolinerizzatti.com/:path*",
+      "statusCode": 308
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
           "value": "clinica-rizzati.vercel.app"
         }
       ],
@@ -50,6 +61,16 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "drakarolinerizzatti.com"
+        }
+      ],
+      "destination": "/karoline/index.html"
+    },
     {
       "source": "/painel",
       "destination": "/crm.html"

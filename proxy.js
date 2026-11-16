@@ -12,5 +12,14 @@ export default function proxy(request) {
     return rewrite('https://www.clinicarizzatti.com.br/karoline/links.html');
   }
 
+  if (url.hostname === 'www.drakarolinerizzatti.com') {
+    return Response.redirect('https://drakarolinerizzatti.com' + url.pathname + url.search, 308);
+  }
+
+  if (url.hostname === 'drakarolinerizzatti.com') {
+    url.pathname = '/karoline/index.html';
+    return rewrite(url);
+  }
+
   return next();
 }
